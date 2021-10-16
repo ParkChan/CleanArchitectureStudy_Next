@@ -1,6 +1,6 @@
 # CleanArchitectureStudy
 
-##History
+## History
 - [클린아키텍처 학습에서 진행한 모듈을 App 패키지로 통합](https://github.com/ParkChan/CleanArchitectureStudy/blob/master/README.md)
 
 ## 학습목표
