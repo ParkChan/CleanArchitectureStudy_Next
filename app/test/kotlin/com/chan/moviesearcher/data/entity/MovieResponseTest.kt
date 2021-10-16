@@ -27,7 +27,7 @@ class MovieResponseTest {
 
     @Test
     fun `json 파일을 읽어와서 엔티티로 변환합니다`() {
-        val json = File("src/test/resources/api-response/1.json").readText()
+        val json = File("test/resources/api-response/1.json").readText()
         val response = jsonAdapter.fromJson(json) ?: MovieResponse()
 
         assertEquals(88, response.total)
@@ -37,7 +37,7 @@ class MovieResponseTest {
 
     @Test
     fun `Json 엔티티를 Dto로 변환합니다`() {
-        val json = File("src/test/resources/api-response/1.json").readText()
+        val json = File("test/resources/api-response/1.json").readText()
         val dto = (jsonAdapter.fromJson(json) ?: MovieResponse()).mapToDto()
 
         assertEquals(88, dto.total)

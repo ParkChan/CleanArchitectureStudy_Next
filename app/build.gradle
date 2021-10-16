@@ -6,6 +6,8 @@ plugins {
     id 'dagger.hilt.android.plugin'
 }
 
+apply from: '../jacoco.gradle'
+
 android {
     compileSdk AndroidConfig.COMPILE_AND_TARGET_SDK
 
@@ -18,6 +20,7 @@ android {
 
         testInstrumentationRunner AndroidConfig.ANDROID_JUNIT_RUNNER
         testInstrumentationRunnerArgument AndroidConfig.RUNNER_BUILDER, AndroidConfig.ANDROID_JUNIT5_BUILDER
+
     }
 
     sourceSets {
@@ -30,6 +33,9 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+        debug {
+        }
+
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -50,6 +56,7 @@ dependencies {
 
     implementation project(":common")
 
+    implementation JetBrain.KOTLIN_STDLIB
     implementation AndroidXConfig.CORE_KTX
     implementation AndroidXConfig.APPCOMPAT
     implementation GoogleConfig.MATERIAL
@@ -90,5 +97,4 @@ dependencies {
     api NetworkConfig.MOSHI_ADAPTERS
 
     implementation LogConfig.TIMBER
-
 }
