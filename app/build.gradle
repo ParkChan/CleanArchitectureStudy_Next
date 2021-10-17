@@ -54,7 +54,7 @@ android {
 
 dependencies {
 
-    implementation project(":common")
+    implementation project(path: ':common:ui')
 
     implementation JetBrain.KOTLIN_STDLIB
     implementation AndroidXConfig.CORE_KTX

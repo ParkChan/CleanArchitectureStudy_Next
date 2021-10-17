@@ -1,0 +1,39 @@
+android {
+    compileSdk AndroidConfig.COMPILE_AND_TARGET_SDK
+
+    defaultConfig {
+        minSdk AndroidConfig.MIN_SDK
+        targetSdk AndroidConfig.COMPILE_AND_TARGET_SDK
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    buildFeatures {
+        viewBinding = true
+    }
+}
+
+dependencies {
+    implementation AndroidXConfig.APPCOMPAT
+    implementation AndroidXConfig.CORE_KTX
+
+    implementation CoroutineConfig.ANDROID
+    implementation AndroidXConfig.ACTIVITY_KTX
+    implementation AndroidXConfig.FRAGMENT_KTX
+}
