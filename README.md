@@ -17,11 +17,11 @@
 - Source Test
 - ViewModel Test
 
-#### CI(Bitrise)
+### CI(Bitrise)
 - Build Project
 - JaCoCo
 
-#### CD
+### CD
 - 슬랙을 통해 앱을 배포 합니다.
 
 ---
