@@ -9,13 +9,22 @@
 - 검색 결과 리스트
 - 페이징
 
+## 적용사항
+---
+### 적용된 유닛 테스트 코드
+- Entity Test
+- Repository Test
+- Source Test
+- ViewModel Test
 
-## CI(Bitrise)
+#### CI(Bitrise)
 - Build Project
 - JaCoCo
 
-## CD
+#### CD
 - 슬랙을 통해 앱을 배포 합니다.
+
+---
 
 ## 기타
 - 네이버 OPEN API 검색 > 영화
