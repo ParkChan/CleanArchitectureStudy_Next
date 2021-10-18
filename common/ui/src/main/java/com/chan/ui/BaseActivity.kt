@@ -3,9 +3,9 @@ package com.chan.ui
 import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity
-import androidx.viewbinding.ViewBinding
+import androidx.databinding.ViewDataBinding
 
-abstract class BaseActivity<B : ViewBinding>(
+abstract class BaseActivity<B : ViewDataBinding>(
     private val inflater: (LayoutInflater) -> B
 ) : AppCompatActivity() {
 

@@ -25,12 +25,13 @@ android {
         jvmTarget = '1.8'
     }
     buildFeatures {
-        viewBinding = true
+        dataBinding = true
     }
 }
 
 dependencies {
     implementation AndroidXConfig.APPCOMPAT
+    implementation GoogleConfig.MATERIAL
     implementation AndroidXConfig.CORE_KTX
 
     implementation CoroutineConfig.ANDROID
