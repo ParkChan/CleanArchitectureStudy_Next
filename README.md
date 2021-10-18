@@ -12,6 +12,12 @@
 - 검색 결과 리스트
 - 페이징
 
+### 기타
+- 네이버 OPEN API 검색 > 영화
+  [링크주소]
+  (https://developers.naver.com/docs/search/movie/)
+
+
 ## 적용사항
 
 ### Unit Test Code
@@ -26,12 +32,5 @@
 
 ### CD
 - 슬랙을 통해 앱을 배포
-
----
-
-## 기타
-- 네이버 OPEN API 검색 > 영화
-  [링크주소]
-  (https://developers.naver.com/docs/search/movie/)
 
 ---
