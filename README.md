@@ -9,7 +9,13 @@
 - 검색 결과 리스트
 - 페이징
 
-- CI/CD
+
+## CI(Bitrise)
+- Build Project
+- JaCoCo
+
+## CD
+- 슬랙을 통해 앱을 배포 합니다.
 
 ## 기타
 - 네이버 OPEN API 검색 > 영화
