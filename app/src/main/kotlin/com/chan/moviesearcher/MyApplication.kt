@@ -1,7 +1,7 @@
-package com.chan.moviesearcher.ui
+package com.chan.moviesearcher
 
 import android.app.Application
-import com.chan.moviesearcher.BuildConfig
+import com.chan.ui.BuildConfig
 import dagger.hilt.android.HiltAndroidApp
 import timber.log.Timber
 

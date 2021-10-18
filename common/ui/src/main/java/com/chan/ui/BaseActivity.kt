@@ -5,22 +5,23 @@ import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.ViewDataBinding
 
-abstract class BaseActivity<B : ViewDataBinding>(
-    private val inflater: (LayoutInflater) -> B
+abstract class BaseActivity<VDB : ViewDataBinding>(
+    private val inflater: (LayoutInflater) -> VDB
 ) : AppCompatActivity() {
 
-    protected lateinit var binding: B
+    protected lateinit var binding: VDB
         private set
-
-    protected open fun bindViewModel() = Unit
-    protected open fun setupObserve() = Unit
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = inflater(layoutInflater)
+        initBinding()
+    }
+
+    private fun initBinding(){
+        binding = inflater(layoutInflater).apply {
+            lifecycleOwner = this@BaseActivity
+        }
         setContentView(binding.root)
-        bindViewModel()
-        setupObserve()
     }
 
 }
