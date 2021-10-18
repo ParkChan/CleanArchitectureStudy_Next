@@ -10,8 +10,8 @@
 - 페이징
 
 ## 적용사항
----
-### 적용된 유닛 테스트 코드
+
+### Unit Test Code
 - Entity Test
 - Repository Test
 - Source Test
