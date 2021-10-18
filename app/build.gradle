@@ -97,4 +97,7 @@ dependencies {
     api NetworkConfig.MOSHI_ADAPTERS
 
     implementation LogConfig.TIMBER
+
+    implementation Glide.GLIDE
+    annotationProcessor Glide.COMPILER
 }

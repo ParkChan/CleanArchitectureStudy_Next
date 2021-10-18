@@ -101,3 +101,9 @@ object NetworkConfig {
 object LogConfig {
     const val TIMBER = "com.jakewharton.timber:timber:5.0.1"
 }
+
+object Glide {
+    private const val VERSION = "4.12.0"
+    const val GLIDE = "com.github.bumptech.glide:glide:$VERSION"
+    const val COMPILER = "com.github.bumptech.glide:compiler:$VERSION"
+}
