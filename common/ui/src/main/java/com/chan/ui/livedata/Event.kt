@@ -1,10 +1,12 @@
-package com.chan.ui.common
+package com.chan.ui.livedata
 
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 
+/**
+ * https://gist.github.com/JoseAlcerreca/5b661f1800e1e654f07cc54fe87441af#file-event-kt
+ */
 open class Event<T>(value: T) {
     var value = value
         private set
@@ -25,7 +27,3 @@ fun <T> LiveData<Event<T>>.observeEvent(owner: LifecycleOwner, observer: Observe
             observer.onChanged(it.value)
         }
     }
-
-fun MutableLiveData<Event<Unit>>.emit() = postValue(Event(Unit))
-fun <T> MutableLiveData<Event<T>>.emit(value: T) = postValue(Event(value))
-

@@ -7,8 +7,10 @@ android {
         versionCode 1
         versionName "1.0"
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner AndroidConfig.ANDROID_JUNIT_RUNNER
+        testInstrumentationRunnerArgument AndroidConfig.RUNNER_BUILDER, AndroidConfig.ANDROID_JUNIT5_BUILDER
         consumerProguardFiles "consumer-rules.pro"
+
     }
 
     buildTypes {
@@ -27,6 +29,9 @@ android {
     buildFeatures {
         dataBinding = true
     }
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
 }
 
 dependencies {
@@ -37,4 +42,17 @@ dependencies {
     implementation CoroutineConfig.ANDROID
     implementation AndroidXConfig.ACTIVITY_KTX
     implementation AndroidXConfig.FRAGMENT_KTX
+
+    testImplementation TestConfig.JUNIT_JUPITER_API
+    testRuntimeOnly TestConfig.JUNIT_JUPITER_ENGINE
+    testImplementation TestConfig.JUNIT_JUPITER_PARAMS
+    testImplementation TestConfig.ASSERTJ_CORE
+    testImplementation TestConfig.MOCKK
+
+    androidTestImplementation TestConfig.ANDROID_CORE_TESTING
+    androidTestImplementation TestConfig.JUNIT_JUPITER_API
+    androidTestImplementation TestConfig.ASSERTJ_CORE
+    androidTestImplementation TestConfig.ANDROID_TEST_CORE
+    androidTestRuntimeOnly TestConfig.ANDROID_TEST_RUNNER
+    androidTestImplementation TestConfig.CORE
 }

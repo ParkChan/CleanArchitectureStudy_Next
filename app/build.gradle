@@ -98,5 +98,5 @@ dependencies {
     implementation LogConfig.TIMBER
 
     implementation Glide.GLIDE
-    annotationProcessor Glide.COMPILER
+    kapt Glide.COMPILER
 }
