@@ -1,14 +1,14 @@
 android {
-    compileSdk AndroidConfig.COMPILE_AND_TARGET_SDK
+    compileSdk AndroidConfig.compileSdk
 
     defaultConfig {
-        minSdk AndroidConfig.MIN_SDK
-        targetSdk AndroidConfig.COMPILE_AND_TARGET_SDK
+        minSdk AndroidConfig.minSdk
+        targetSdk AndroidConfig.targetSdk
         versionCode 1
         versionName "1.0"
 
-        testInstrumentationRunner AndroidConfig.ANDROID_JUNIT_RUNNER
-        testInstrumentationRunnerArgument AndroidConfig.RUNNER_BUILDER, AndroidConfig.ANDROID_JUNIT5_BUILDER
+        testInstrumentationRunner AndroidConfig.androidJunitRunner
+        testInstrumentationRunnerArgument AndroidConfig.runnerBuilder, AndroidConfig.androidJunit5Builder
         consumerProguardFiles "consumer-rules.pro"
 
     }
@@ -35,24 +35,24 @@ android {
 }
 
 dependencies {
-    implementation AndroidXConfig.APPCOMPAT
-    implementation GoogleConfig.MATERIAL
-    implementation AndroidXConfig.CORE_KTX
+    implementation AndroidXConfig.appcompat
+    implementation GoogleConfig.material
+    implementation AndroidXConfig.coreKtx
 
-    implementation CoroutineConfig.ANDROID
-    implementation AndroidXConfig.ACTIVITY_KTX
-    implementation AndroidXConfig.FRAGMENT_KTX
+    implementation CoroutineConfig.android
+    implementation AndroidXConfig.activityKtx
+    implementation AndroidXConfig.fragmentKtx
 
-    testImplementation TestConfig.JUNIT_JUPITER_API
-    testRuntimeOnly TestConfig.JUNIT_JUPITER_ENGINE
-    testImplementation TestConfig.JUNIT_JUPITER_PARAMS
-    testImplementation TestConfig.ASSERTJ_CORE
-    testImplementation TestConfig.MOCKK
+    testImplementation TestConfig.junitJupiterApi
+    testRuntimeOnly TestConfig.junitJupiterEngine
+    testImplementation TestConfig.junitJupiterParams
+    testImplementation TestConfig.assertjCore
+    testImplementation TestConfig.mockk
 
-    androidTestImplementation TestConfig.ANDROID_CORE_TESTING
-    androidTestImplementation TestConfig.JUNIT_JUPITER_API
-    androidTestImplementation TestConfig.ASSERTJ_CORE
-    androidTestImplementation TestConfig.ANDROID_TEST_CORE
-    androidTestRuntimeOnly TestConfig.ANDROID_TEST_RUNNER
-    androidTestImplementation TestConfig.CORE
+    androidTestImplementation TestConfig.coreTesting
+    androidTestImplementation TestConfig.junitJupiterApi
+    androidTestImplementation TestConfig.assertjCore
+    androidTestImplementation TestConfig.androidTestCore
+    androidTestRuntimeOnly TestConfig.androidTestRunner
+    androidTestImplementation TestConfig.testCore
 }

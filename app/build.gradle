@@ -9,17 +9,17 @@ plugins {
 apply from: '../jacoco.gradle'
 
 android {
-    compileSdk AndroidConfig.COMPILE_AND_TARGET_SDK
+    compileSdk AndroidConfig.compileSdk
 
     defaultConfig {
         applicationId "com.chan.moviesearcher"
-        minSdk AndroidConfig.MIN_SDK
-        targetSdk AndroidConfig.COMPILE_AND_TARGET_SDK
-        versionCode AndroidConfig.VERSION_CODE
-        versionName AndroidConfig.VERSION_NAME
+        minSdk AndroidConfig.minSdk
+        targetSdk AndroidConfig.targetSdk
+        versionCode AndroidConfig.versionCode
+        versionName AndroidConfig.versionName
 
-        testInstrumentationRunner AndroidConfig.ANDROID_JUNIT_RUNNER
-        testInstrumentationRunnerArgument AndroidConfig.RUNNER_BUILDER, AndroidConfig.ANDROID_JUNIT5_BUILDER
+        testInstrumentationRunner AndroidConfig.androidJunitRunner
+        testInstrumentationRunnerArgument AndroidConfig.runnerBuilder, AndroidConfig.androidJunit5Builder
 
     }
 
@@ -56,47 +56,49 @@ dependencies {
 
     implementation project(path: ':common:ui')
 
-    implementation AndroidXConfig.CORE_KTX
-    implementation AndroidXConfig.APPCOMPAT
-    implementation GoogleConfig.MATERIAL
-    implementation AndroidXConfig.CONSTRAINT_LAYOUT
-    implementation AndroidXConfig.ACTIVITY_KTX
-    implementation AndroidXConfig.FRAGMENT_KTX
+    implementation AndroidXConfig.coreKtx
+    implementation AndroidXConfig.appcompat
+    implementation GoogleConfig.material
+    implementation AndroidXConfig.constraintLayout
+    implementation AndroidXConfig.activityKtx
+    implementation AndroidXConfig.fragmentKtx
 
-    implementation AndroidXConfig.LIFECYCLE_VIEW_MODEL
-    implementation AndroidXConfig.LIFECYCLE_RUNTIME
-    implementation AndroidXConfig.LIFECYCLE_LIVEDATA
+    implementation AndroidXConfig.lifecycleViewModel
+    implementation AndroidXConfig.lifecycleRuntime
+    implementation AndroidXConfig.lifecycleLivedata
+    implementation AndroidXConfig.viewpager2
 
-    testImplementation TestConfig.JUNIT_JUPITER_API
-    testRuntimeOnly TestConfig.JUNIT_JUPITER_ENGINE
-    testImplementation TestConfig.JUNIT_JUPITER_PARAMS
-    testImplementation TestConfig.ASSERTJ_CORE
-    testImplementation TestConfig.MOCKK
 
-    androidTestImplementation TestConfig.ANDROID_CORE_TESTING
-    androidTestImplementation TestConfig.JUNIT_JUPITER_API
-    androidTestImplementation TestConfig.ASSERTJ_CORE
-    androidTestImplementation TestConfig.ANDROID_TEST_CORE
-    androidTestRuntimeOnly TestConfig.ANDROID_TEST_RUNNER
-    androidTestImplementation TestConfig.CORE
+    testImplementation TestConfig.junitJupiterApi
+    testRuntimeOnly TestConfig.junitJupiterEngine
+    testImplementation TestConfig.junitJupiterParams
+    testImplementation TestConfig.assertjCore
+    testImplementation TestConfig.mockk
 
-    implementation DaggerHiltConfig.ANDROID
-    kapt DaggerHiltConfig.COMPILER
+    androidTestImplementation TestConfig.testCore
+    androidTestImplementation TestConfig.coreTesting
+    androidTestImplementation TestConfig.junitJupiterApi
+    androidTestImplementation TestConfig.assertjCore
+    androidTestImplementation TestConfig.androidTestCore
+    androidTestRuntimeOnly TestConfig.androidTestRunner
 
-    implementation CoroutineConfig.CORE
-    implementation CoroutineConfig.ANDROID
-    testImplementation CoroutineConfig.TEST
+    implementation DaggerHiltConfig.android
+    kapt DaggerHiltConfig.compiler
 
-    implementation NetworkConfig.RETROFIT
-    implementation NetworkConfig.LOGGING_INTERCEPTOR
-    implementation NetworkConfig.CONVERTER_MOSHI
+    implementation CoroutineConfig.core
+    implementation CoroutineConfig.android
+    testImplementation CoroutineConfig.test
 
-    implementation NetworkConfig.MOSHI_KOTLIN
-    kapt NetworkConfig.MOSHI_KOTLIN_CODEGEN
-    implementation NetworkConfig.MOSHI_ADAPTERS
+    implementation NetworkConfig.retrofit
+    implementation NetworkConfig.loggingInterceptor
+    implementation NetworkConfig.converterMoshi
 
-    implementation LogConfig.TIMBER
+    implementation NetworkConfig.moshiKotlin
+    kapt NetworkConfig.moshiKotlinCodegen
+    implementation NetworkConfig.moshiAdapters
 
-    implementation Glide.GLIDE
-    kapt Glide.COMPILER
+    implementation LogConfig.timber
+
+    implementation Glide.glide
+    kapt Glide.compiler
 }
