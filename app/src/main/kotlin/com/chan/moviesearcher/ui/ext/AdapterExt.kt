@@ -8,10 +8,9 @@ import com.chan.moviesearcher.R
 
 @BindingAdapter("setGlideThumb")
 fun bindingGlideThumb(imageView: ImageView, uri: String?) {
-    if (uri.isNullOrBlank()) return
-
     Glide.with(imageView)
         .load(uri)
-        .error(R.drawable.ic_launcher_background)
+        .error(R.drawable.ic_bg_error)
+        .fallback(R.drawable.ic_bg_error)
         .into(imageView)
 }

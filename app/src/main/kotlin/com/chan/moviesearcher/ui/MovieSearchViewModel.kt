@@ -4,8 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.chan.moviesearcher.domain.dto.MovieDto
+import com.chan.moviesearcher.domain.dto.ItemDto
 import com.chan.moviesearcher.domain.usecase.MovieSearchUseCase
+import com.chan.moviesearcher.ui.data.PageData
+import com.chan.moviesearcher.ui.data.PageInfo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
@@ -17,27 +19,50 @@ class MovieSearchViewModel @Inject constructor(
     private val useCase: MovieSearchUseCase
 ) : ViewModel() {
 
-    private val _movies = MutableLiveData<MovieDto>()
-    val movies: LiveData<MovieDto> get() = _movies
-
-    private val _throwable = MutableLiveData<Throwable>()
-    val throwable: LiveData<Throwable> get() = _throwable
+    private val _movies = MutableLiveData<List<ItemDto>>()
+    val movies: LiveData<List<ItemDto>> = _movies
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, exception ->
         Timber.e(exception.message)
     }
 
-    fun getMovieList(start: Int = 1, query: String) =
+    private val pagingInfo = PageInfo(PageData())
+
+    private fun fetchMovieList(page: Int, query: String, isFirst: Boolean) =
         viewModelScope.launch(coroutineExceptionHandler) {
-            useCase.request(start, query)
+            if (isFirst) {
+                initPaging()
+                clearData()
+            }
+            useCase.request(page, query)
                 .onSuccess {
-                    _movies.value = it
+                    pagingInfo.pageInfo(
+                        start = it.start,
+                        total = it.total
+                    )
+                    _movies.value = (_movies.value ?: emptyList()).plus(it.items)
                 }.onFailure {
-                    _throwable.value = it
+                    Timber.e(it.message)
                 }
         }
 
-    fun clearMovieList() = viewModelScope.launch(coroutineExceptionHandler) {
-        _movies.value = MovieDto()
+    fun getMovieList(query: String) {
+        fetchMovieList(pagingInfo.startPage(), query, true)
+    }
+
+    fun moreMovieList(query: String) {
+        if (pagingInfo.isPaging()) {
+            fetchMovieList(pagingInfo.nextPage(), query, false)
+        } else {
+            Timber.d("Paging is End")
+        }
+    }
+
+    private fun initPaging() {
+        pagingInfo.init()
+    }
+
+    private fun clearData() {
+        _movies.value = emptyList()
     }
 }
