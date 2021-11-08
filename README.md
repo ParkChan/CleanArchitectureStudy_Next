@@ -31,3 +31,7 @@
 - 슬랙을 통해 앱을 배포
 
 ---
+
+## 예제화면
+![device-2021-11-09-020632](https://user-images.githubusercontent.com/7857824/140786632-ff029d0e-29fd-498b-a33b-f15f124a3388.png)
+
