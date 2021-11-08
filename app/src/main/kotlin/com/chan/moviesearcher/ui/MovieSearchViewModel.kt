@@ -62,7 +62,7 @@ class MovieSearchViewModel @Inject constructor(
         pagingInfo.init()
     }
 
-    private fun clearData() {
+    fun clearData() {
         _movies.value = emptyList()
     }
 }

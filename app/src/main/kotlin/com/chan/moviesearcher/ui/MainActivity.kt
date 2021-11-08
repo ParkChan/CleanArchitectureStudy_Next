@@ -33,6 +33,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
                 if (inputText.isNotEmpty()) {
                     delay(INTERVAL_KEYWORD_SEARCH)
                     viewModel.getMovieList(query = inputText)
+                }else{
+                    viewModel.clearData()
                 }
             }
         }
