@@ -5,6 +5,8 @@ import android.text.Editable
 import android.text.TextWatcher
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.chan.moviesearcher.BR
 import com.chan.moviesearcher.R
 import com.chan.moviesearcher.databinding.ActivityMainBinding
@@ -31,8 +33,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
                 if (inputText.isNotEmpty()) {
                     delay(INTERVAL_KEYWORD_SEARCH)
                     viewModel.getMovieList(query = inputText)
-                } else {
-                    viewModel.clearMovieList()
                 }
             }
         }
@@ -43,6 +43,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
 
         initViewModel()
         initRecyclerView()
+        initPagingListener()
     }
 
     override fun onPostResume() {
@@ -59,16 +60,28 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
     }
 
     private fun initRecyclerView() {
-        binding.rvMainContent.adapter = BaseAdapter<ItemDto>(
+        binding.rvContent.adapter = BaseAdapter<ItemDto>(
             layoutResourceId = R.layout.rv_main_item,
             viewHolderBindingId = BR.item,
             viewModel = mapOf(BR.viewModel to viewModel)
         )
     }
 
-    override fun onPause() {
-        super.onPause()
-        binding.etInput.removeTextChangedListener(watcher)
+    private fun initPagingListener() {
+        val layoutManager = binding.rvContent.layoutManager as GridLayoutManager
+        binding.rvContent.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+
+                val lastVisiblePosition: Int = layoutManager.findLastVisibleItemPosition()
+                val totalCount: Int = binding.rvContent.adapter!!.itemCount - 1
+                val isScrollEnd = !recyclerView.canScrollVertically(1)
+
+                if (isScrollEnd && lastVisiblePosition >= totalCount) {
+                    viewModel.moreMovieList(binding.etInput.text.toString())
+                }
+            }
+        })
     }
 
     companion object {
