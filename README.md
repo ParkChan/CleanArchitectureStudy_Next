@@ -25,7 +25,6 @@
 
 ### CI(Bitrise)
 - Build Project
-- JaCoCo
 
 ### CD
 - 슬랙을 통해 앱을 배포
