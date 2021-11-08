@@ -7,7 +7,7 @@ import androidx.lifecycle.Observer
 /**
  * https://gist.github.com/JoseAlcerreca/5b661f1800e1e654f07cc54fe87441af#file-event-kt
  */
-open class Event<T>(value: T) {
+class Event<T>(value: T) {
     var value = value
         private set
 

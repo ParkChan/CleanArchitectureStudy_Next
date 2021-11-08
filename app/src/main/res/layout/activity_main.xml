@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="viewModel"
             type="com.chan.moviesearcher.ui.MovieSearchViewModel" />
@@ -23,7 +22,6 @@
             android:inputType="text"
             android:paddingStart="@dimen/activity_main_padding_horizontal"
             android:paddingEnd="@dimen/activity_main_padding_horizontal"
-            android:text="@={viewModel.query}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

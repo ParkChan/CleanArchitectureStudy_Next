@@ -1,10 +1,14 @@
 package com.chan.moviesearcher.ui
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.chan.moviesearcher.domain.dto.MovieDto
 import com.chan.moviesearcher.domain.usecase.MovieSearchUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -16,7 +20,6 @@ class MovieSearchViewModel @Inject constructor(
     private val _movies = MutableLiveData<MovieDto>()
     val movies: LiveData<MovieDto> get() = _movies
 
-    val query: MutableLiveData<String> = MutableLiveData()
     private val _throwable = MutableLiveData<Throwable>()
     val throwable: LiveData<Throwable> get() = _throwable
 
@@ -33,4 +36,8 @@ class MovieSearchViewModel @Inject constructor(
                     _throwable.value = it
                 }
         }
+
+    fun clearMovieList() = viewModelScope.launch(coroutineExceptionHandler) {
+        _movies.value = MovieDto()
+    }
 }
