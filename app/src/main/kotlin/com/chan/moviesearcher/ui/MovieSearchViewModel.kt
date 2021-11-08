@@ -1,13 +1,13 @@
 package com.chan.moviesearcher.ui
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chan.moviesearcher.domain.dto.ItemDto
 import com.chan.moviesearcher.domain.usecase.MovieSearchUseCase
 import com.chan.moviesearcher.ui.data.PageData
 import com.chan.moviesearcher.ui.data.PageInfo
-import com.chan.ui.livedata.ListLiveData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
@@ -19,8 +19,8 @@ class MovieSearchViewModel @Inject constructor(
     private val useCase: MovieSearchUseCase
 ) : ViewModel() {
 
-    private val _movies = ListLiveData<ItemDto>()
-    val movies: LiveData<MutableList<ItemDto>> = _movies
+    private val _movies = MutableLiveData<List<ItemDto>>()
+    val movies: LiveData<List<ItemDto>> = _movies
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, exception ->
         Timber.e(exception.message)
@@ -28,9 +28,9 @@ class MovieSearchViewModel @Inject constructor(
 
     private val pagingInfo = PageInfo(PageData())
 
-    fun fetchMovieList(page: Int, query: String, isFirst: Boolean) =
+    private fun fetchMovieList(page: Int, query: String, isFirst: Boolean) =
         viewModelScope.launch(coroutineExceptionHandler) {
-            if(isFirst){
+            if (isFirst) {
                 initPaging()
                 clearData()
             }
@@ -40,7 +40,7 @@ class MovieSearchViewModel @Inject constructor(
                         start = it.start,
                         total = it.total
                     )
-                    _movies.addAll(it.items)
+                    _movies.value = (_movies.value ?: emptyList()).plus(it.items)
                 }.onFailure {
                     Timber.e(it.message)
                 }
@@ -53,7 +53,7 @@ class MovieSearchViewModel @Inject constructor(
     fun moreMovieList(query: String) {
         if (pagingInfo.isPaging()) {
             fetchMovieList(pagingInfo.nextPage(), query, false)
-        }else{
+        } else {
             Timber.d("Paging is End")
         }
     }
@@ -63,6 +63,6 @@ class MovieSearchViewModel @Inject constructor(
     }
 
     private fun clearData() {
-        _movies.clear(true)
+        _movies.value = emptyList()
     }
 }
