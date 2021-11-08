@@ -25,9 +25,13 @@
 
 ### CI(Bitrise)
 - Build Project
-- JaCoCo
 
 ### CD
 - 슬랙을 통해 앱을 배포
 
 ---
+
+## 예제화면
+![device-2021-11-09-020632 (1)](https://user-images.githubusercontent.com/7857824/140786792-f2b9fa4b-5538-4312-9abd-d0ff23886c63.png)
+)
+
