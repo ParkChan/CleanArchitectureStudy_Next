@@ -6,7 +6,6 @@ import com.chan.moviesearcher.ui.MovieSearchViewModel
 import com.chan.moviesearcher.util.InstantExecutorExtension
 import com.chan.moviesearcher.util.getOrAwaitValue
 import io.mockk.coEvery
-import io.mockk.coVerify
 import io.mockk.mockk
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -43,13 +42,6 @@ class MovieSearchViewModelTest {
         viewModel.getMovieList(
             query
         )
-
-        coVerify {
-            viewModel.fetchMovieList(
-                page = page,
-                query = query,
-                isFirst = true)
-        }
 
         assertEquals(
             mockRes,
