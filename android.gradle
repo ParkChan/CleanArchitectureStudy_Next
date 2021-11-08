@@ -1,14 +1,16 @@
 android {
-    compileSdk AndroidConfig.COMPILE_AND_TARGET_SDK
+    compileSdk AndroidConfig.compileSdk
 
     defaultConfig {
-        minSdk AndroidConfig.MIN_SDK
-        targetSdk AndroidConfig.COMPILE_AND_TARGET_SDK
+        minSdk AndroidConfig.minSdk
+        targetSdk AndroidConfig.targetSdk
         versionCode 1
         versionName "1.0"
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner AndroidConfig.androidJunitRunner
+        testInstrumentationRunnerArgument AndroidConfig.runnerBuilder, AndroidConfig.androidJunit5Builder
         consumerProguardFiles "consumer-rules.pro"
+
     }
 
     buildTypes {
@@ -27,14 +29,30 @@ android {
     buildFeatures {
         dataBinding = true
     }
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
 }
 
 dependencies {
-    implementation AndroidXConfig.APPCOMPAT
-    implementation GoogleConfig.MATERIAL
-    implementation AndroidXConfig.CORE_KTX
+    implementation AndroidXConfig.appcompat
+    implementation GoogleConfig.material
+    implementation AndroidXConfig.coreKtx
 
-    implementation CoroutineConfig.ANDROID
-    implementation AndroidXConfig.ACTIVITY_KTX
-    implementation AndroidXConfig.FRAGMENT_KTX
+    implementation CoroutineConfig.android
+    implementation AndroidXConfig.activityKtx
+    implementation AndroidXConfig.fragmentKtx
+
+    testImplementation TestConfig.junitJupiterApi
+    testRuntimeOnly TestConfig.junitJupiterEngine
+    testImplementation TestConfig.junitJupiterParams
+    testImplementation TestConfig.assertjCore
+    testImplementation TestConfig.mockk
+
+    androidTestImplementation TestConfig.coreTesting
+    androidTestImplementation TestConfig.junitJupiterApi
+    androidTestImplementation TestConfig.assertjCore
+    androidTestImplementation TestConfig.androidTestCore
+    androidTestRuntimeOnly TestConfig.androidTestRunner
+    androidTestImplementation TestConfig.testCore
 }

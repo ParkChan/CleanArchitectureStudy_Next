@@ -1,11 +1,12 @@
 package com.chan.moviesearcher.ui.viewmodel
 
-import com.chan.moviesearcher.domain.dto.MovieDto
+import com.chan.moviesearcher.domain.dto.ItemDto
 import com.chan.moviesearcher.domain.usecase.MovieSearchUseCaseImpl
 import com.chan.moviesearcher.ui.MovieSearchViewModel
 import com.chan.moviesearcher.util.InstantExecutorExtension
 import com.chan.moviesearcher.util.getOrAwaitValue
 import io.mockk.coEvery
+import io.mockk.coVerify
 import io.mockk.mockk
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -27,7 +28,7 @@ class MovieSearchViewModelTest {
     @Test
     fun `영화 리스트를 불러옵니다`() = runBlocking {
 
-        val mockRes: MovieDto = mockk(relaxed = true)
+        val mockRes: List<ItemDto> = emptyList()
 
         val page = 1
         val query = "a"
@@ -36,12 +37,19 @@ class MovieSearchViewModelTest {
             useCase.request(
                 page,
                 query
-            ).getOrNull()
+            ).getOrNull()?.items
         } returns mockRes
 
         viewModel.getMovieList(
-            page, query
+            query
         )
+
+        coVerify {
+            viewModel.fetchMovieList(
+                page = page,
+                query = query,
+                isFirst = true)
+        }
 
         assertEquals(
             mockRes,

@@ -1,109 +1,145 @@
 object Version {
-    const val KOTLIN = "1.5.31"
-    const val HILT = "2.39.1"
+    const val gradle = "7.0.2"
+    const val kotlin = "1.5.31"
+    const val hilt = "2.39.1"
+    const val junit5 = "1.8.0.0"
+
+    const val appcompat = "1.3.1"
+    const val activityKtx = "1.3.1"
+    const val fragmentKtx = "1.3.6"
+    const val material = "1.1.0"
+    const val constraintLayout = "1.1.3"
+    const val viewpager2 = "1.0.0"
+    const val pagingVersion = "1.1.0-beta01"
+
+    const val coroutine = "1.5.1"
+
+    const val testCore = "1.3.0"
+    const val coreTesting = "2.1.0"
+    const val jupiter = "5.8.1"
+    const val assertjCore = "3.21.0"
+    const val mockk = "1.10.6"
+    const val androidTestCore = "1.3.0"
+    const val androidTestRunner = "1.3.0"
+
+    const val retrofit = "2.9.0"
+    const val moshi = "1.12.0"
+    const val loggingInterceptor = "4.8.0"
+    const val lifecycleVersion = "2.3.1"
+
+    const val gson = "2.8.8"
+    const val timber = "5.0.1"
+    const val glide = "4.12.0"
+
+    const val desugarJdkLibs = "1.1.5"
+
 }
 
 object ProjectConfig {
-    const val GRADLE = "com.android.tools.build:gradle:7.0.2"
-    const val KOTLIN_GRADLE_PLUGIN = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Version.KOTLIN}"
-    const val HILT_ANDROID_GRADLE_PLUGIN =
-        "com.google.dagger:hilt-android-gradle-plugin:${Version.HILT}"
-    const val ANDROID_JUNIT5 = "de.mannodermaus.gradle.plugins:android-junit5:1.8.0.0"
+    const val gradle = "com.android.tools.build:gradle:${Version.gradle}"
+    const val kotlinGradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Version.kotlin}"
+    const val hiltAndroidGradlePlugin =
+        "com.google.dagger:hilt-android-gradle-plugin:${Version.hilt}"
+    const val androidJunit5 = "de.mannodermaus.gradle.plugins:android-junit5:${Version.junit5}"
 }
 
 object AndroidConfig {
-    const val COMPILE_AND_TARGET_SDK = 30
-    const val BUILD_TOOLS_VERSION = "30.0.3"
-    const val MIN_SDK = 21
-    const val TARGER_SDK = 30
-    const val VERSION_CODE = 1
-    const val VERSION_NAME = "1.0.0"
-    const val ANDROID_JUNIT_RUNNER = "androidx.test.runner.AndroidJUnitRunner"
-    const val RUNNER_BUILDER = "runnerBuilder"
-    const val ANDROID_JUNIT5_BUILDER = "de.mannodermaus.junit5.AndroidJUnit5Builder"
+    const val compileSdk = 30
+    const val minSdk = 21
+    const val targetSdk = 30
+    const val versionCode = 1
+    const val versionName = "1.0.0"
+    const val androidJunitRunner = "androidx.test.runner.AndroidJUnitRunner"
+    const val runnerBuilder = "runnerBuilder"
+    const val androidJunit5Builder = "de.mannodermaus.junit5.AndroidJUnit5Builder"
 
 }
 
 object JetBrain {
-    private const val KOTLIN_STDLIB = "org.jetbrains.kotlin:kotlin-stdlib:${Version.KOTLIN}"
+    private const val kotlinStdlib = "org.jetbrains.kotlin:kotlin-stdlib:${Version.kotlin}"
 }
 
 object CoroutineConfig {
-    private const val COROUTINE_VERSION = "1.5.1"
-    const val CORE = "org.jetbrains.kotlinx:kotlinx-coroutines-core:$COROUTINE_VERSION"
-    const val ANDROID = "org.jetbrains.kotlinx:kotlinx-coroutines-android:$COROUTINE_VERSION"
-    const val TEST = "org.jetbrains.kotlinx:kotlinx-coroutines-test:$COROUTINE_VERSION"
+    const val core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Version.coroutine}"
+    const val android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Version.coroutine}"
+    const val test = "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Version.coroutine}"
 }
 
 object TestConfig {
-    private const val JUNIT_VERSION = "5.8.1"
+    const val testCore = "androidx.test:core:${Version.testCore}"
+    const val coreTesting = "androidx.arch.core:core-testing:${Version.coreTesting}"
+    const val junitJupiterApi = "org.junit.jupiter:junit-jupiter-api:${Version.jupiter}"
+    const val junitJupiterEngine = "org.junit.jupiter:junit-jupiter-engine:${Version.jupiter}"
+    const val junitJupiterParams = "org.junit.jupiter:junit-jupiter-params:${Version.jupiter}"
+    const val assertjCore = "org.assertj:assertj-core:${Version.assertjCore}"
+    const val androidTestCore =
+        "de.mannodermaus.junit5:android-test-core:${Version.androidTestCore}"
+    const val androidTestRunner =
+        "de.mannodermaus.junit5:android-test-runner:${Version.androidTestRunner}"
 
-    const val EXT_JUNIT = "androidx.test.ext:junit:1.1.1"
-    const val ANDROID_CORE_TESTING = "androidx.arch.core:core-testing:2.1.0"
-    const val JUNIT_JUPITER_API = "org.junit.jupiter:junit-jupiter-api:$JUNIT_VERSION"
-    const val JUNIT_JUPITER_ENGINE = "org.junit.jupiter:junit-jupiter-engine:$JUNIT_VERSION"
-    const val JUNIT_JUPITER_PARAMS = "org.junit.jupiter:junit-jupiter-params:$JUNIT_VERSION"
-    const val ASSERTJ_CORE = "org.assertj:assertj-core:3.21.0"
-
-    const val MOCKK = "io.mockk:mockk:1.10.6"
-
-    const val ANDROID_TEST_CORE = "de.mannodermaus.junit5:android-test-core:1.3.0"
-    const val ANDROID_TEST_RUNNER = "de.mannodermaus.junit5:android-test-runner:1.3.0"
-    const val CORE = "androidx.test:core:1.3.0"
+    const val mockk = "io.mockk:mockk:${Version.mockk}"
 
 }
 
 object AndroidXConfig {
-    private const val LIFECYCLE_VERSION = "2.3.1"
-    private const val PAGING_VERSION = "3.0.1"
 
-    const val APPCOMPAT = "androidx.appcompat:appcompat:1.3.1"
+    const val appcompat = "androidx.appcompat:appcompat:${Version.appcompat}"
 
-    const val CORE_KTX = "androidx.core:core-ktx:1.6.0"
-    const val LIFECYCLE_VIEW_MODEL = "androidx.lifecycle:lifecycle-viewmodel-ktx:$LIFECYCLE_VERSION"
-    const val LIFECYCLE_RUNTIME = "androidx.lifecycle:lifecycle-runtime-ktx:$LIFECYCLE_VERSION"
-    const val LIFECYCLE_LIVEDATA = "androidx.lifecycle:lifecycle-livedata-ktx:$LIFECYCLE_VERSION"
+    const val coreKtx = "androidx.core:core-ktx:1.6.0"
+    const val lifecycleViewModel =
+        "androidx.lifecycle:lifecycle-viewmodel-ktx:${Version.lifecycleVersion}"
+    const val lifecycleRuntime =
+        "androidx.lifecycle:lifecycle-runtime-ktx:${Version.lifecycleVersion}"
+    const val lifecycleLivedata =
+        "androidx.lifecycle:lifecycle-livedata-ktx:${Version.lifecycleVersion}"
 
-    const val CONSTRAINT_LAYOUT = "androidx.constraintlayout:constraintlayout:1.1.3"
+    const val constraintLayout =
+        "androidx.constraintlayout:constraintlayout:${Version.constraintLayout}"
 
-    //ActivityResultContract
-    const val ACTIVITY_KTX = "androidx.activity:activity-ktx:1.3.1"
-    const val FRAGMENT_KTX = "androidx.fragment:fragment-ktx:1.3.6"
+    const val activityKtx = "androidx.activity:activity-ktx:${Version.activityKtx}"
+    const val fragmentKtx = "androidx.fragment:fragment-ktx:${Version.fragmentKtx}"
 
-    //Paging 3.0 core dependencies Injection
-    const val PAGING = "androidx.paging:paging-runtime:$PAGING_VERSION"
+    const val viewpager2 = "androidx.viewpager2:viewpager2:${Version.viewpager2}"
+
+    const val paging = "androidx.paging:paging-runtime:${Version.pagingVersion}"
 }
 
 object GoogleConfig {
-    const val MATERIAL = "com.google.android.material:material:1.1.0"
+    const val material = "com.google.android.material:material:${Version.material}"
 }
 
 object DaggerHiltConfig {
-    const val ANDROID = "com.google.dagger:hilt-android:${Version.HILT}"
+    const val android = "com.google.dagger:hilt-android:${Version.hilt}"
 
-    const val CORE = "com.google.dagger:hilt-core:${Version.HILT}"
-    const val COMPILER = "com.google.dagger:hilt-compiler:${Version.HILT}"
+    const val core = "com.google.dagger:hilt-core:${Version.hilt}"
+    const val compiler = "com.google.dagger:hilt-compiler:${Version.hilt}"
 }
 
 object NetworkConfig {
-    private const val RETROFIT_VERSION = "2.9.0"
-    private const val MOSHI_VERSION = "1.12.0"
+    const val retrofit = "com.squareup.retrofit2:retrofit:${Version.retrofit}"
+    const val loggingInterceptor =
+        "com.squareup.okhttp3:logging-interceptor:${Version.loggingInterceptor}"
+    const val gsonConverter = "com.squareup.retrofit2:converter-gson:${Version.retrofit}"
+    const val converterMoshi = "com.squareup.retrofit2:converter-moshi:${Version.retrofit}"
 
-    const val RETROFIT = "com.squareup.retrofit2:retrofit:$RETROFIT_VERSION"
-    const val LOGGING_INTERCEPTOR = "com.squareup.okhttp3:logging-interceptor:4.8.0"
-    const val CONVERTER_MOSHI = "com.squareup.retrofit2:converter-moshi:$RETROFIT_VERSION"
-
-    const val MOSHI_KOTLIN = "com.squareup.moshi:moshi-kotlin:$MOSHI_VERSION"
-    const val MOSHI_KOTLIN_CODEGEN = "com.squareup.moshi:moshi-kotlin-codegen:$MOSHI_VERSION"
-    const val MOSHI_ADAPTERS = "com.squareup.moshi:moshi-adapters:$MOSHI_VERSION"
+    const val moshiKotlin = "com.squareup.moshi:moshi-kotlin:${Version.moshi}"
+    const val moshiKotlinCodegen = "com.squareup.moshi:moshi-kotlin-codegen:${Version.moshi}"
+    const val moshiAdapters = "com.squareup.moshi:moshi-adapters:${Version.moshi}"
 }
 
 object LogConfig {
-    const val TIMBER = "com.jakewharton.timber:timber:5.0.1"
+    const val timber = "com.jakewharton.timber:timber:${Version.timber}"
 }
 
 object Glide {
-    private const val VERSION = "4.12.0"
-    const val GLIDE = "com.github.bumptech.glide:glide:$VERSION"
-    const val COMPILER = "com.github.bumptech.glide:compiler:$VERSION"
+    const val glide = "com.github.bumptech.glide:glide:${Version.glide}"
+    const val compiler = "com.github.bumptech.glide:compiler:${Version.glide}"
+}
+
+object Gson {
+    const val gson = "com.google.code.gson:gson:${Version.gson}"
+}
+
+object Desugar {
+    const val jdkLibs = "com.android.tools:desugar_jdk_libs:${Version.desugarJdkLibs}"
 }
