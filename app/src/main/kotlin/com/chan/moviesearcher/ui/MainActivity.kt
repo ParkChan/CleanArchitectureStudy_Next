@@ -50,14 +50,14 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
 
     override fun onPostResume() {
         super.onPostResume()
-        initViewModelObserve()
+        initTextChangedListener()
     }
 
     private fun initViewModel() {
         binding.viewModel = viewModel
     }
 
-    private fun initViewModelObserve() {
+    private fun initTextChangedListener() {
         binding.etInput.addTextChangedListener(watcher)
     }
 

@@ -16,8 +16,8 @@ class EventTest {
     private val owner: LifecycleOwner = mockk(relaxed = true)
 
     @Test
-    fun `화면 회전등의 뷰파기로 인한 observe 가 전달 되지 않도록 합니다`() {
-        liveData.observeEvent(owner, {
+    fun `Event 를 사용한 observe 를 테스트 합니다`() {
+        liveData.observeEvent(owner, observer = {
             println("전달받은 값은 $it")
         })
 
@@ -28,12 +28,12 @@ class EventTest {
 
         assertEquals(
             data1,
-            liveData.getOrAwaitValue().value
+            liveData.getOrAwaitValue().peek()
         )
         liveData.postValue(Event(data2))
         assertEquals(
             data2,
-            liveData.getOrAwaitValue().value
+            liveData.getOrAwaitValue().peek()
         )
     }
 }
