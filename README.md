@@ -25,7 +25,7 @@
 
 ### CI(Bitrise)
 - Build Project
-- ![image](https://user-images.githubusercontent.com/7857824/140909093-7a0c660d-7288-4991-84e7-c8098724fbdd.png)
+- ![140909093-7a0c660d-7288-4991-84e7-c8098724fbdd](https://user-images.githubusercontent.com/7857824/140920679-0e5115c3-61db-48dd-9419-68534650e398.png)
 
 
 ### CD
