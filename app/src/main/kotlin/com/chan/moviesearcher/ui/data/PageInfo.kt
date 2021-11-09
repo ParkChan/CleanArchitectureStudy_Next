@@ -20,12 +20,16 @@ class PageInfo(private val pageData: PageData) {
             })
     }
 
-
     fun isPaging(): Boolean {
-        return pageData.start.plus(pageData.display).minus(1) <= pageData.total
+        return nextPage().minus(1) <= pageData.total
+                && nextPage() <= DEFAULT_START_MAX
     }
 
     fun nextPage(): Int = pageData.start.plus(pageData.display)
     fun startPage(): Int = pageData.start
+
+    companion object {
+        private const val DEFAULT_START_MAX = 1_000
+    }
 
 }
