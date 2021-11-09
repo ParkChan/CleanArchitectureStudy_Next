@@ -1,5 +1,6 @@
 package com.chan.ui.livedata
 
+import androidx.annotation.MainThread
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
@@ -7,23 +8,28 @@ import androidx.lifecycle.Observer
 /**
  * https://gist.github.com/JoseAlcerreca/5b661f1800e1e654f07cc54fe87441af#file-event-kt
  */
-class Event<T>(value: T) {
-    var value = value
-        private set
+class Event<out T>(private val content: T) {
+    private val consumedScopes = HashSet<String>()
 
-    private var isAlreadyHandled = false
+    fun isConsumed(scope: String = "") = consumedScopes.contains(scope)
 
-    fun isActive(): Boolean = if (isAlreadyHandled) {
-        false
-    } else {
-        isAlreadyHandled = true
-        true
-    }
-}
-
-fun <T> LiveData<Event<T>>.observeEvent(owner: LifecycleOwner, observer: Observer<T>) =
-    observe(owner) {
-        if (it.isActive()) {
-            observer.onChanged(it.value)
+    @MainThread
+    fun consume(scope: String = ""): T? {
+        return if (isConsumed(scope)) {
+            null
+        } else {
+            consumedScopes.add(scope)
+            content
         }
     }
+
+    fun peek(): T = content
+}
+
+fun <T> LiveData<Event<T>>.observeEvent(
+    lifecycleOwner: LifecycleOwner,
+    scope: String = "",
+    observer: Observer<T>
+) = observe(lifecycleOwner) { event ->
+    event?.consume(scope)?.let { observer.onChanged(it) }
+}

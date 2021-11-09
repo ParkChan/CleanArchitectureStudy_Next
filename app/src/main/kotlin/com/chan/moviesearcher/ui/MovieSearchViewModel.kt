@@ -22,6 +22,8 @@ class MovieSearchViewModel @Inject constructor(
     private val _movies = MutableLiveData<List<ItemDto>>()
     val movies: LiveData<List<ItemDto>> = _movies
 
+    private val movieList = mutableListOf<ItemDto>()
+
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, exception ->
         Timber.e(exception.message)
     }
@@ -40,7 +42,9 @@ class MovieSearchViewModel @Inject constructor(
                         start = it.start,
                         total = it.total
                     )
-                    _movies.value = (_movies.value ?: emptyList()).plus(it.items)
+                    _movies.value = movieList.apply {
+                        addAll(it.items)
+                    }
                 }.onFailure {
                     Timber.e(it.message)
                 }
@@ -63,6 +67,8 @@ class MovieSearchViewModel @Inject constructor(
     }
 
     fun clearData() {
-        _movies.value = emptyList()
+        _movies.value = movieList.apply {
+            clear()
+        }
     }
 }
