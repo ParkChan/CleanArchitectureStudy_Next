@@ -25,6 +25,8 @@
 
 ### CI(Bitrise)
 - Build Project
+- ![image](https://user-images.githubusercontent.com/7857824/140909093-7a0c660d-7288-4991-84e7-c8098724fbdd.png)
+
 
 ### CD
 - 슬랙을 통해 앱을 배포
