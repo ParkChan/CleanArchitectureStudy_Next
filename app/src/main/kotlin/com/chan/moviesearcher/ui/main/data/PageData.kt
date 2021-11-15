@@ -1,4 +1,4 @@
-package com.chan.moviesearcher.ui.data
+package com.chan.moviesearcher.ui.main.data
 
 data class PageData(
     var start: Int = DEFAULT_START,

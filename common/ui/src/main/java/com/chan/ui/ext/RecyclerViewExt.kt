@@ -7,11 +7,11 @@ import com.chan.ui.adapter.BaseAdapter
 
 @SuppressLint("NotifyDataSetChanged")
 @BindingAdapter("bind_recyclerView_replaceItem")
-fun replaceItem(recyclerView: RecyclerView, items: List<Any>?) {
+fun <T> replaceItem(recyclerView: RecyclerView, items: List<T>?) {
     if (items == null) return
 
     @Suppress("UNCHECKED_CAST")
-    (recyclerView.adapter as BaseAdapter<Any>).run {
+    (recyclerView.adapter as BaseAdapter<T>).run {
         replaceItems(items)
         notifyDataSetChanged()
     }

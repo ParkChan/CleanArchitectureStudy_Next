@@ -2,7 +2,7 @@ package com.chan.moviesearcher.ui.viewmodel
 
 import com.chan.moviesearcher.domain.dto.ItemDto
 import com.chan.moviesearcher.domain.usecase.MovieSearchUseCaseImpl
-import com.chan.moviesearcher.ui.MovieSearchViewModel
+import com.chan.moviesearcher.ui.main.MovieSearchViewModel
 import com.chan.moviesearcher.util.InstantExecutorExtension
 import com.chan.moviesearcher.util.getOrAwaitValue
 import io.mockk.coEvery

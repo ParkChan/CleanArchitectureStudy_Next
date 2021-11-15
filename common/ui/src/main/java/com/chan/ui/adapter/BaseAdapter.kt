@@ -5,13 +5,13 @@ import androidx.annotation.LayoutRes
 import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.RecyclerView
 
-class BaseAdapter<ITEM : Any>(
+class BaseAdapter<T>(
         @LayoutRes private val layoutResourceId: Int,
         private val viewHolderBindingId: Int,
         private val viewModel: Map<Int, ViewModel>
 ) : RecyclerView.Adapter<BaseViewHolder>() {
 
-    private val itemList = mutableListOf<ITEM>()
+    private val itemList = mutableListOf<T>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder =
             BaseViewHolder(parent, layoutResourceId, viewHolderBindingId, viewModel)
@@ -22,7 +22,7 @@ class BaseAdapter<ITEM : Any>(
         holder.bind(item = itemList[position])
     }
 
-    fun replaceItems(item: List<ITEM>) {
+    fun replaceItems(item: List<T>) {
         itemList.run {
             clear()
             addAll(item)

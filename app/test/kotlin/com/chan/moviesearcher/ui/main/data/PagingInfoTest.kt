@@ -1,4 +1,4 @@
-package com.chan.moviesearcher.ui.data
+package com.chan.moviesearcher.ui.main.data
 
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
@@ -24,10 +24,10 @@ class PagingInfoTest {
 
             pageInfo.pageInfo(
                 start = if (expectPage == 1) firstPage else nextPage,
-                total = 1000
+                total = 1_000
             )
 
-            if (expectPage < 11) {
+            if (expectPage < 10) {
                 assertEquals(true, pageInfo.isPaging())
             } else {
                 assertEquals(false, pageInfo.isPaging())

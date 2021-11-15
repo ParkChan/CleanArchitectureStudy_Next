@@ -1,4 +1,4 @@
-package com.chan.moviesearcher.ui.data
+package com.chan.moviesearcher.ui.main.data
 
 class PageInfo(private val pageData: PageData) {
 

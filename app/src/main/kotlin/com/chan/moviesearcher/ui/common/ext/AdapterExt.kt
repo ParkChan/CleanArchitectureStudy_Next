@@ -5,7 +5,6 @@ import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.chan.moviesearcher.R
 
-
 @BindingAdapter("setGlideThumb")
 fun bindingGlideThumb(imageView: ImageView, uri: String?) {
     Glide.with(imageView)

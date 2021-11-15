@@ -1,46 +1,30 @@
-package com.chan.moviesearcher.ui
+package com.chan.moviesearcher.ui.main.fragment
 
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
-import androidx.activity.viewModels
+import android.view.View
+import androidx.core.widget.doAfterTextChanged
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.chan.moviesearcher.BR
 import com.chan.moviesearcher.R
-import com.chan.moviesearcher.databinding.ActivityMainBinding
+import com.chan.moviesearcher.databinding.FragmentSearchListBinding
 import com.chan.moviesearcher.domain.dto.ItemDto
-import com.chan.ui.BaseActivity
+import com.chan.moviesearcher.ui.main.MovieSearchViewModel
+import com.chan.ui.BaseFragment
 import com.chan.ui.adapter.BaseAdapter
-import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-@AndroidEntryPoint
-class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::inflate) {
-
-    private val viewModel by viewModels<MovieSearchViewModel>()
+class SearchListFragment : BaseFragment<FragmentSearchListBinding>(
+    FragmentSearchListBinding::inflate
+) {
+    private val viewModel by activityViewModels<MovieSearchViewModel>()
     private var job: Job? = null
-    private val watcher: TextWatcher = object : TextWatcher {
-        override fun afterTextChanged(s: Editable?) {}
-        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            job?.cancel()
-            job = lifecycleScope.launch {
-                val inputText = s.toString()
-                if (inputText.isNotEmpty()) {
-                    delay(INTERVAL_KEYWORD_SEARCH)
-                    viewModel.getMovieList(query = inputText)
-                }else{
-                    viewModel.clearData()
-                }
-            }
-        }
-    }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         initViewModel()
@@ -48,8 +32,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
         initPagingListener()
     }
 
-    override fun onPostResume() {
-        super.onPostResume()
+    override fun onResume() {
+        super.onResume()
         initTextChangedListener()
     }
 
@@ -58,12 +42,23 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
     }
 
     private fun initTextChangedListener() {
-        binding.etInput.addTextChangedListener(watcher)
+        binding.etInput.doAfterTextChanged { text ->
+            job?.cancel()
+            job = lifecycleScope.launch {
+                val inputText = text.toString()
+                if (inputText.isNotBlank()) {
+                    delay(INTERVAL_KEYWORD_SEARCH)
+                    viewModel.getMovieList(query = inputText)
+                } else {
+                    viewModel.clearData()
+                }
+            }
+        }
     }
 
     private fun initRecyclerView() {
         binding.rvContent.adapter = BaseAdapter<ItemDto>(
-            layoutResourceId = R.layout.rv_main_item,
+            layoutResourceId = R.layout.rv_search_item,
             viewHolderBindingId = BR.item,
             viewModel = mapOf(BR.viewModel to viewModel)
         )
@@ -89,5 +84,4 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
     companion object {
         private const val INTERVAL_KEYWORD_SEARCH = 500L
     }
-
 }
