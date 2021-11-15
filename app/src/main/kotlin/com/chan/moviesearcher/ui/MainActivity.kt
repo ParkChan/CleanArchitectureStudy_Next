@@ -1,9 +1,8 @@
 package com.chan.moviesearcher.ui
 
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import androidx.activity.viewModels
+import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -23,22 +22,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
 
     private val viewModel by viewModels<MovieSearchViewModel>()
     private var job: Job? = null
-    private val watcher: TextWatcher = object : TextWatcher {
-        override fun afterTextChanged(s: Editable?) {}
-        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            job?.cancel()
-            job = lifecycleScope.launch {
-                val inputText = s.toString()
-                if (inputText.isNotEmpty()) {
-                    delay(INTERVAL_KEYWORD_SEARCH)
-                    viewModel.getMovieList(query = inputText)
-                }else{
-                    viewModel.clearData()
-                }
-            }
-        }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,7 +41,18 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
     }
 
     private fun initTextChangedListener() {
-        binding.etInput.addTextChangedListener(watcher)
+        binding.etInput.doAfterTextChanged{ text ->
+            job?.cancel()
+            job = lifecycleScope.launch {
+                val inputText = text.toString()
+                if (inputText.isNotEmpty()) {
+                    delay(INTERVAL_KEYWORD_SEARCH)
+                    viewModel.getMovieList(query = inputText)
+                }else{
+                    viewModel.clearData()
+                }
+            }
+        }
     }
 
     private fun initRecyclerView() {

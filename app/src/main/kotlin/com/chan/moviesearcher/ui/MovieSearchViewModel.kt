@@ -25,7 +25,7 @@ class MovieSearchViewModel @Inject constructor(
     private val movieList = mutableListOf<ItemDto>()
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, exception ->
-        Timber.e(exception.message)
+        Timber.e(">>>> ${exception.message}")
     }
 
     private val pagingInfo = PageInfo(PageData())
