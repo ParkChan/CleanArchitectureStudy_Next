@@ -45,11 +45,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
             job?.cancel()
             job = lifecycleScope.launch {
                 val inputText = text.toString()
-                if (inputText.isNotEmpty()) {
+                if (inputText.isBlank()) {
+                    viewModel.clearData()
+                }else{
                     delay(INTERVAL_KEYWORD_SEARCH)
                     viewModel.getMovieList(query = inputText)
-                }else{
-                    viewModel.clearData()
                 }
             }
         }
