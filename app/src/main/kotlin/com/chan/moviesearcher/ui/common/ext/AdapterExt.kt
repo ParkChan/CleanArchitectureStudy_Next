@@ -1,4 +1,4 @@
-package com.chan.moviesearcher.ui.ext
+package com.chan.moviesearcher.ui.common.ext
 
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
