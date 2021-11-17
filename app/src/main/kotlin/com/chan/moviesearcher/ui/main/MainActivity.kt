@@ -6,8 +6,6 @@ import com.chan.moviesearcher.R
 import com.chan.moviesearcher.databinding.ActivityMainBinding
 import com.chan.moviesearcher.ui.common.adapter.ViewPagerAdapter
 import com.chan.moviesearcher.ui.main.data.ClickEventMessage.*
-import com.chan.moviesearcher.ui.main.fragment.SaveListFragment
-import com.chan.moviesearcher.ui.main.fragment.SearchListFragment
 import com.chan.ui.BaseActivity
 import com.chan.ui.livedata.observeEvent
 import com.google.android.material.snackbar.Snackbar
@@ -28,9 +26,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
 
     private fun initViewPager() {
         pagerAdapter = ViewPagerAdapter(this)
-        pagerAdapter.addFragment(SearchListFragment())
-        pagerAdapter.addFragment(SaveListFragment())
         binding.viewPager.adapter = pagerAdapter
+        binding.viewPager.offscreenPageLimit = 1
         val tabLayout = binding.tabs
         val tabTitleList =
             listOf(

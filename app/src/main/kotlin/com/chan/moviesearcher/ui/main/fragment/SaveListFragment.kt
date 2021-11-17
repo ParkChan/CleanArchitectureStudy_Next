@@ -33,4 +33,8 @@ class SaveListFragment : BaseFragment<FragmentSaveListBinding>(
             viewModel = mapOf(BR.viewModel to viewModel)
         )
     }
+
+    companion object {
+        fun newInstance(): SaveListFragment = SaveListFragment()
+    }
 }

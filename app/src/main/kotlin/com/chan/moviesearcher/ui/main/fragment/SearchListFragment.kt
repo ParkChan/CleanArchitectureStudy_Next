@@ -83,5 +83,6 @@ class SearchListFragment : BaseFragment<FragmentSearchListBinding>(
 
     companion object {
         private const val INTERVAL_KEYWORD_SEARCH = 500L
+        fun newInstance(): SearchListFragment = SearchListFragment()
     }
 }
