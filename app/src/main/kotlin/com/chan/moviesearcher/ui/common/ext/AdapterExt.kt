@@ -1,10 +1,9 @@
-package com.chan.moviesearcher.ui.ext
+package com.chan.moviesearcher.ui.common.ext
 
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.chan.moviesearcher.R
-
 
 @BindingAdapter("setGlideThumb")
 fun bindingGlideThumb(imageView: ImageView, uri: String?) {

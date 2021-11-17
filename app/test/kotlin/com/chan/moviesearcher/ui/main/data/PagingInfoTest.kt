@@ -1,4 +1,4 @@
-package com.chan.moviesearcher.ui.data
+package com.chan.moviesearcher.ui.main.data
 
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
