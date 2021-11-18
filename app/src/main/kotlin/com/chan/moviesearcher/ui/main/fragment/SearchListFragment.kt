@@ -83,7 +83,7 @@ class SearchListFragment : BaseFragment<FragmentSearchListBinding>(
                 super.onScrolled(recyclerView, dx, dy)
 
                 val lastVisiblePosition: Int = layoutManager.findLastVisibleItemPosition()
-                val totalCount: Int = baseAdapter!!.itemCount - 1
+                val totalCount: Int = baseAdapter.itemCount - 1
                 val isScrollEnd = !recyclerView.canScrollVertically(1)
 
                 if (isScrollEnd && lastVisiblePosition >= totalCount) {
