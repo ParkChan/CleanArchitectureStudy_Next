@@ -67,7 +67,7 @@ dependencies {
     implementation AndroidXConfig.lifecycleRuntime
     implementation AndroidXConfig.lifecycleLivedata
     implementation AndroidXConfig.viewpager2
-
+    implementation AndroidXConfig.recyclerView
 
     testImplementation TestConfig.junitJupiterApi
     testRuntimeOnly TestConfig.junitJupiterEngine
