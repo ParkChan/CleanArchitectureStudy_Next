@@ -1,10 +1,12 @@
 package com.chan.moviesearcher.ui.main.fragment
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.chan.moviesearcher.BR
@@ -12,6 +14,7 @@ import com.chan.moviesearcher.R
 import com.chan.moviesearcher.databinding.FragmentSearchListBinding
 import com.chan.moviesearcher.domain.dto.ItemDto
 import com.chan.moviesearcher.ui.main.MovieSearchViewModel
+import com.chan.moviesearcher.ui.main.data.HeaderData
 import com.chan.ui.BaseFragment
 import com.chan.ui.adapter.BaseAdapter
 import kotlinx.coroutines.Job
@@ -23,6 +26,8 @@ class SearchListFragment : BaseFragment<FragmentSearchListBinding>(
 ) {
     private val viewModel by activityViewModels<MovieSearchViewModel>()
     private var job: Job? = null
+    private lateinit var headerAdapter: BaseAdapter<HeaderData>
+    private lateinit var baseAdapter: BaseAdapter<ItemDto>
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,6 +35,7 @@ class SearchListFragment : BaseFragment<FragmentSearchListBinding>(
         initViewModel()
         initRecyclerView()
         initPagingListener()
+        initViewModelObserve()
     }
 
     override fun onResume() {
@@ -57,11 +63,17 @@ class SearchListFragment : BaseFragment<FragmentSearchListBinding>(
     }
 
     private fun initRecyclerView() {
-        binding.rvContent.adapter = BaseAdapter<ItemDto>(
+        headerAdapter = BaseAdapter(
+            layoutResourceId = R.layout.rv_header_item,
+            viewHolderBindingId = BR.headerItem,
+            mapOf()
+        )
+        baseAdapter = BaseAdapter(
             layoutResourceId = R.layout.rv_search_item,
             viewHolderBindingId = BR.item,
             viewModel = mapOf(BR.viewModel to viewModel)
         )
+        binding.rvContent.adapter = ConcatAdapter(headerAdapter, baseAdapter)
     }
 
     private fun initPagingListener() {
@@ -71,13 +83,25 @@ class SearchListFragment : BaseFragment<FragmentSearchListBinding>(
                 super.onScrolled(recyclerView, dx, dy)
 
                 val lastVisiblePosition: Int = layoutManager.findLastVisibleItemPosition()
-                val totalCount: Int = binding.rvContent.adapter!!.itemCount - 1
+                val totalCount: Int = baseAdapter!!.itemCount - 1
                 val isScrollEnd = !recyclerView.canScrollVertically(1)
 
                 if (isScrollEnd && lastVisiblePosition >= totalCount) {
                     viewModel.moreMovieList(binding.etInput.text.toString())
                 }
             }
+        })
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    private fun initViewModelObserve() {
+        viewModel.headers.observe(viewLifecycleOwner, {
+            headerAdapter.replaceItems(it)
+            headerAdapter.notifyDataSetChanged()
+        })
+        viewModel.movies.observe(viewLifecycleOwner, {
+            baseAdapter.replaceItems(it)
+            baseAdapter.notifyDataSetChanged()
         })
     }
 

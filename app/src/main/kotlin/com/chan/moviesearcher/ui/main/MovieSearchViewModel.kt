@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.chan.moviesearcher.domain.dto.ItemDto
 import com.chan.moviesearcher.domain.usecase.MovieSearchUseCase
 import com.chan.moviesearcher.ui.main.data.ClickEventMessage
+import com.chan.moviesearcher.ui.main.data.HeaderData
 import com.chan.moviesearcher.ui.main.data.PageData
 import com.chan.moviesearcher.ui.main.data.PageInfo
 import com.chan.ui.livedata.Event
@@ -24,6 +25,9 @@ class MovieSearchViewModel @Inject constructor(
     private val _movies = MutableLiveData<List<ItemDto>>()
     val movies: LiveData<List<ItemDto>> = _movies
 
+    private val _headers = MutableLiveData<List<HeaderData>>()
+    val headers: LiveData<List<HeaderData>> = _headers
+
     private val _saveMovies = MutableLiveData<List<ItemDto>>()
     val saveMovies: LiveData<List<ItemDto>> = _saveMovies
 
@@ -38,6 +42,10 @@ class MovieSearchViewModel @Inject constructor(
     private val saveList = mutableListOf<ItemDto>()
 
     private val pagingInfo = PageInfo(PageData())
+
+    init {
+        _headers.value = listOf(HeaderData("헤더1"),HeaderData("헤더2"))
+    }
 
     private fun fetchMovieList(page: Int, query: String, isFirst: Boolean) =
         viewModelScope.launch(coroutineExceptionHandler) {
