@@ -17,15 +17,14 @@ import com.chan.moviesearcher.ui.main.MovieSearchViewModel
 import com.chan.moviesearcher.ui.main.data.HeaderData
 import com.chan.ui.BaseFragment
 import com.chan.ui.adapter.BaseAdapter
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
 
+@ExperimentalCoroutinesApi
 class SearchListFragment : BaseFragment<FragmentSearchListBinding>(
     FragmentSearchListBinding::inflate
 ) {
     private val viewModel by activityViewModels<MovieSearchViewModel>()
-    private var job: Job? = null
     private lateinit var headerAdapter: BaseAdapter<HeaderData>
     private lateinit var baseAdapter: BaseAdapter<ItemDto>
 
@@ -49,12 +48,10 @@ class SearchListFragment : BaseFragment<FragmentSearchListBinding>(
 
     private fun initTextChangedListener() {
         binding.etInput.doAfterTextChanged { text ->
-            job?.cancel()
-            job = lifecycleScope.launch {
+            lifecycleScope.launch {
                 val inputText = text.toString()
                 if (inputText.isNotBlank()) {
-                    delay(INTERVAL_KEYWORD_SEARCH)
-                    viewModel.getMovieList(query = inputText)
+                    viewModel.setSearchQuery(inputText)
                 } else {
                     viewModel.clearData()
                 }
@@ -106,7 +103,6 @@ class SearchListFragment : BaseFragment<FragmentSearchListBinding>(
     }
 
     companion object {
-        private const val INTERVAL_KEYWORD_SEARCH = 500L
         fun newInstance(): SearchListFragment = SearchListFragment()
     }
 }
