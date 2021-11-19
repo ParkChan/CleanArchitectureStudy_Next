@@ -39,7 +39,7 @@ class MovieSearchViewModelTest {
             ).getOrNull()?.items
         } returns mockRes
 
-        viewModel.getMovieList(
+        viewModel.searchMovies(
             query
         )
 

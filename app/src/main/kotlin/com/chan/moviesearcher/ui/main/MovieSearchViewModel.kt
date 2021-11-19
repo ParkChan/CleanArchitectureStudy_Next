@@ -13,11 +13,7 @@ import com.chan.moviesearcher.ui.main.data.PageInfo
 import com.chan.moviesearcher.ui.main.test.testHeaderData
 import com.chan.ui.livedata.Event
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.FlowPreview
-import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -39,15 +35,6 @@ class MovieSearchViewModel @Inject constructor(
     private val _message = MutableLiveData<Event<ClickEventMessage>>()
     val message: LiveData<Event<ClickEventMessage>> = _message
 
-    private val _searchQuery = MutableStateFlow("")
-    private val searchQuery = _searchQuery.asStateFlow()
-        .debounce(INTERVAL_KEYWORD_SEARCH)
-        .mapLatest { query ->
-            getMovieList(query)
-        }.catch { error: Throwable ->
-            Timber.e(error)
-        }
-
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, exception ->
         Timber.e(">>>> ${exception.message}")
     }
@@ -56,6 +43,7 @@ class MovieSearchViewModel @Inject constructor(
     private val saveList = mutableListOf<ItemDto>()
 
     private val pagingInfo = PageInfo(PageData())
+    private var job: Job? = null
 
     init {
         _headers.value = testHeaderData
@@ -65,7 +53,7 @@ class MovieSearchViewModel @Inject constructor(
         viewModelScope.launch(coroutineExceptionHandler) {
             if (isFirst) {
                 initPaging()
-                clearData()
+                clearMovies()
             }
             useCase.request(page, query)
                 .onSuccess {
@@ -81,14 +69,16 @@ class MovieSearchViewModel @Inject constructor(
                 }
         }
 
-    @FlowPreview
-    suspend fun setSearchQuery(query: String) {
-        _searchQuery.value = query
-        searchQuery.collect()
-    }
-
-    fun getMovieList(query: String) {
-        fetchMovieList(pagingInfo.startPage(), query, true)
+    fun searchMovies(query: String) {
+        job?.cancel()
+        job = viewModelScope.launch {
+            if (query.isNotBlank()) {
+                delay(INTERVAL_KEYWORD_SEARCH)
+                fetchMovieList(pagingInfo.startPage(), query.trim(), true)
+            } else {
+                clearMovies()
+            }
+        }
     }
 
     fun moreMovieList(query: String) {
@@ -103,7 +93,7 @@ class MovieSearchViewModel @Inject constructor(
         pagingInfo.init()
     }
 
-    fun clearData() {
+    private fun clearMovies() {
         _movies.value = movieList.apply {
             clear()
         }
@@ -130,6 +120,6 @@ class MovieSearchViewModel @Inject constructor(
     }
 
     companion object {
-        private const val INTERVAL_KEYWORD_SEARCH = 500L
+        private const val INTERVAL_KEYWORD_SEARCH = 1500L
     }
 }

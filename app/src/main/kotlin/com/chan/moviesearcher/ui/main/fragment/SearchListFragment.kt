@@ -35,11 +35,9 @@ class SearchListFragment : BaseFragment<FragmentSearchListBinding>(
         initRecyclerView()
         initPagingListener()
         initViewModelObserve()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        initTextChangedListener()
+        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+            initTextChangedListener()
+        }
     }
 
     private fun initViewModel() {
@@ -50,11 +48,7 @@ class SearchListFragment : BaseFragment<FragmentSearchListBinding>(
         binding.etInput.doAfterTextChanged { text ->
             lifecycleScope.launch {
                 val inputText = text.toString()
-                if (inputText.isNotBlank()) {
-                    viewModel.setSearchQuery(inputText)
-                } else {
-                    viewModel.clearData()
-                }
+                viewModel.searchMovies(inputText)
             }
         }
     }
@@ -80,7 +74,7 @@ class SearchListFragment : BaseFragment<FragmentSearchListBinding>(
                 super.onScrolled(recyclerView, dx, dy)
 
                 val lastVisiblePosition: Int = layoutManager.findLastVisibleItemPosition()
-                val totalCount: Int = baseAdapter.itemCount - 1
+                val totalCount: Int = binding.rvContent.adapter!!.itemCount - 1
                 val isScrollEnd = !recyclerView.canScrollVertically(1)
 
                 if (isScrollEnd && lastVisiblePosition >= totalCount) {
