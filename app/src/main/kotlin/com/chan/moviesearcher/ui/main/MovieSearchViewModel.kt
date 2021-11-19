@@ -49,7 +49,7 @@ class MovieSearchViewModel @Inject constructor(
         _headers.value = testHeaderData
     }
 
-    private fun fetchMovieList(page: Int, query: String, isFirst: Boolean) =
+    private fun fetchMovies(page: Int, query: String, isFirst: Boolean) =
         viewModelScope.launch(coroutineExceptionHandler) {
             if (isFirst) {
                 initPaging()
@@ -74,16 +74,16 @@ class MovieSearchViewModel @Inject constructor(
         job = viewModelScope.launch {
             if (query.isNotBlank()) {
                 delay(INTERVAL_KEYWORD_SEARCH)
-                fetchMovieList(pagingInfo.startPage(), query.trim(), true)
+                fetchMovies(pagingInfo.startPage(), query.trim(), true)
             } else {
                 clearMovies()
             }
         }
     }
 
-    fun moreMovieList(query: String) {
+    fun moreMovies(query: String) {
         if (pagingInfo.isPaging()) {
-            fetchMovieList(pagingInfo.nextPage(), query, false)
+            fetchMovies(pagingInfo.nextPage(), query, false)
         } else {
             Timber.d("Paging is End")
         }

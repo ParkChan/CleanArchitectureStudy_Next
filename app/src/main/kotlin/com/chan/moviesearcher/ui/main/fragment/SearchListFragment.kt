@@ -78,7 +78,7 @@ class SearchListFragment : BaseFragment<FragmentSearchListBinding>(
                 val isScrollEnd = !recyclerView.canScrollVertically(1)
 
                 if (isScrollEnd && lastVisiblePosition >= totalCount) {
-                    viewModel.moreMovieList(binding.etInput.text.toString())
+                    viewModel.moreMovies(binding.etInput.text.toString())
                 }
             }
         })
