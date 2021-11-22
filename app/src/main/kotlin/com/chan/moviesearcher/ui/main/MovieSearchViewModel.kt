@@ -26,8 +26,8 @@ class MovieSearchViewModel @Inject constructor(
     private val _movies = MutableLiveData<List<ItemDto>>()
     val movies: LiveData<List<ItemDto>> = _movies
 
-    private val _progresssData = MutableLiveData<List<ProgressItem>>()
-    val progresssData: LiveData<List<ProgressItem>> = _progresssData
+    private val _progressData = MutableLiveData<List<ProgressItem>>()
+    val progressData: LiveData<List<ProgressItem>> = _progressData
 
     private val _saveMovies = MutableLiveData<List<ItemDto>>()
     val saveMovies: LiveData<List<ItemDto>> = _saveMovies
@@ -35,14 +35,9 @@ class MovieSearchViewModel @Inject constructor(
     private val _message = MutableLiveData<Event<ClickEventMessage>>()
     val message: LiveData<Event<ClickEventMessage>> = _message
 
-    private val _progressBar = MutableLiveData<Event<Boolean>>()
-    val progressBar: LiveData<Event<Boolean>> = _progressBar
-
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, exception ->
         Timber.e(">>>> ${exception.message}")
     }
-
-    private var isLoading = false
 
     private val movieList = mutableListOf<ItemDto>()
     private val saveList = mutableListOf<ItemDto>()
@@ -50,39 +45,29 @@ class MovieSearchViewModel @Inject constructor(
     private val pagingInfo = PageInfo(PageData())
     private var job: Job? = null
 
-    init {
-        _progresssData.value = testHeaderData
-    }
-
     private fun fetchMovies(page: Int, query: String, isFirst: Boolean) {
-        if (isLoading)
-            return
-
         viewModelScope.launch(coroutineExceptionHandler) {
-            if (isFirst) {
-                initPaging()
-                clearMovies()
-            }
-            isLoading = true
             useCase.request(page, query)
                 .onSuccess {
                     pagingInfo.pageInfo(
                         start = it.start,
                         total = it.total
                     )
-                    if (pagingInfo.isPaging()) {
-                        _progressBar.value = Event(true)
+                    if (isFirst) {
+                        _movies.value = movieList.apply {
+                            addAll(it.items)
+                        }
+                        bottomProgessBarVisibility(pagingInfo.isPaging())
                     } else {
-                        _progressBar.value = Event(false)
-                    }
-                    delay(INTERVAL_PROGRESS_TIME)
-                    _movies.value = movieList.apply {
-                        addAll(it.items)
+                        bottomProgessBarVisibility(pagingInfo.isPaging())
+                        delay(INTERVAL_PROGRESS_VISIBLE_TIME)
+                        _movies.value = movieList.apply {
+                            addAll(it.items)
+                        }
                     }
                 }.onFailure {
                     Timber.e(it.message)
                 }
-            isLoading = false
         }
     }
 
@@ -91,6 +76,7 @@ class MovieSearchViewModel @Inject constructor(
         job = viewModelScope.launch {
             initPaging()
             clearMovies()
+            bottomProgessBarVisibility(false)
             if (query.isNotBlank()) {
                 delay(INTERVAL_KEYWORD_SEARCH)
                 fetchMovies(pagingInfo.startPage(), query.trim(), true)
@@ -99,11 +85,8 @@ class MovieSearchViewModel @Inject constructor(
     }
 
     fun moreMovies(query: String) {
-        Timber.d("viewModel moreMovies")
         if (pagingInfo.isPaging()) {
             fetchMovies(pagingInfo.nextPage(), query, false)
-        } else {
-            Timber.d("Paging is End")
         }
     }
 
@@ -114,6 +97,14 @@ class MovieSearchViewModel @Inject constructor(
     private fun clearMovies() {
         _movies.value = movieList.apply {
             clear()
+        }
+    }
+
+    private fun bottomProgessBarVisibility(isVisible: Boolean) {
+        if (isVisible) {
+            _progressData.value = testHeaderData
+        } else {
+            _progressData.value = emptyList()
         }
     }
 
@@ -139,6 +130,6 @@ class MovieSearchViewModel @Inject constructor(
 
     companion object {
         private const val INTERVAL_KEYWORD_SEARCH = 1500L
-        private const val INTERVAL_PROGRESS_TIME = 800L
+        private const val INTERVAL_PROGRESS_VISIBLE_TIME = 250L
     }
 }

@@ -17,7 +17,6 @@ import com.chan.moviesearcher.ui.main.MovieSearchViewModel
 import com.chan.moviesearcher.ui.main.data.ProgressItem
 import com.chan.ui.BaseFragment
 import com.chan.ui.adapter.BaseAdapter
-import com.chan.ui.livedata.observeEvent
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -67,7 +66,7 @@ class SearchListFragment : BaseFragment<FragmentSearchListBinding>(
             viewHolderBindingId = BR.item,
             viewModel = mapOf(BR.viewModel to viewModel)
         )
-        concatAdapter = ConcatAdapter(baseAdapter)
+        concatAdapter = ConcatAdapter(baseAdapter, progressAdapter)
         binding.rvContent.adapter = concatAdapter
     }
 
@@ -91,26 +90,21 @@ class SearchListFragment : BaseFragment<FragmentSearchListBinding>(
 
     @SuppressLint("NotifyDataSetChanged")
     private fun initViewModelObserve() {
-        viewModel.progresssData.observe(viewLifecycleOwner, {
-            progressAdapter.replaceItems(it)
-            progressAdapter.notifyDataSetChanged()
+        viewModel.progressData.observe(viewLifecycleOwner, {
+            if (progressAdapter.itemCount == BOTTOM_PROGRESSBAR_COUNT || it.isEmpty()) {
+                progressAdapter.replaceItems(it)
+                progressAdapter.notifyDataSetChanged()
+            }
         })
 
         viewModel.movies.observe(viewLifecycleOwner, {
             baseAdapter.replaceItems(it)
             baseAdapter.notifyDataSetChanged()
         })
-
-        viewModel.progressBar.observeEvent(viewLifecycleOwner, observer = { isProgress ->
-            if (isProgress) {
-                concatAdapter.addAdapter(progressAdapter)
-            } else {
-                concatAdapter.removeAdapter(progressAdapter)
-            }
-        })
     }
 
     companion object {
+        private const val BOTTOM_PROGRESSBAR_COUNT = 0
         fun newInstance(): SearchListFragment = SearchListFragment()
     }
 }
