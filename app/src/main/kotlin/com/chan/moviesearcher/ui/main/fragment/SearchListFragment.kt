@@ -7,26 +7,29 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.ConcatAdapter
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.chan.moviesearcher.BR
 import com.chan.moviesearcher.R
 import com.chan.moviesearcher.databinding.FragmentSearchListBinding
 import com.chan.moviesearcher.domain.dto.ItemDto
 import com.chan.moviesearcher.ui.main.MovieSearchViewModel
-import com.chan.moviesearcher.ui.main.data.HeaderData
+import com.chan.moviesearcher.ui.main.data.ProgressItem
 import com.chan.ui.BaseFragment
 import com.chan.ui.adapter.BaseAdapter
+import com.chan.ui.livedata.observeEvent
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 @ExperimentalCoroutinesApi
 class SearchListFragment : BaseFragment<FragmentSearchListBinding>(
     FragmentSearchListBinding::inflate
 ) {
     private val viewModel by activityViewModels<MovieSearchViewModel>()
-    private lateinit var headerAdapter: BaseAdapter<HeaderData>
+    private lateinit var progressAdapter: BaseAdapter<ProgressItem>
     private lateinit var baseAdapter: BaseAdapter<ItemDto>
+    private lateinit var concatAdapter: ConcatAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,9 +57,9 @@ class SearchListFragment : BaseFragment<FragmentSearchListBinding>(
     }
 
     private fun initRecyclerView() {
-        headerAdapter = BaseAdapter(
-            layoutResourceId = R.layout.rv_header_item,
-            viewHolderBindingId = BR.headerItem,
+        progressAdapter = BaseAdapter(
+            layoutResourceId = R.layout.rv_progress_item,
+            viewHolderBindingId = BR.progressItem,
             mapOf()
         )
         baseAdapter = BaseAdapter(
@@ -64,11 +67,12 @@ class SearchListFragment : BaseFragment<FragmentSearchListBinding>(
             viewHolderBindingId = BR.item,
             viewModel = mapOf(BR.viewModel to viewModel)
         )
-        binding.rvContent.adapter = ConcatAdapter(headerAdapter, baseAdapter)
+        concatAdapter = ConcatAdapter(baseAdapter)
+        binding.rvContent.adapter = concatAdapter
     }
 
     private fun initPagingListener() {
-        val layoutManager = binding.rvContent.layoutManager as GridLayoutManager
+        val layoutManager = binding.rvContent.layoutManager as LinearLayoutManager
         binding.rvContent.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
@@ -77,6 +81,7 @@ class SearchListFragment : BaseFragment<FragmentSearchListBinding>(
                 val totalCount: Int = binding.rvContent.adapter!!.itemCount - 1
                 val isScrollEnd = !recyclerView.canScrollVertically(1)
 
+                Timber.d("lastVisiblePosition >> $lastVisiblePosition item count >> ${binding.rvContent.adapter!!.itemCount}")
                 if (isScrollEnd && lastVisiblePosition >= totalCount) {
                     viewModel.moreMovies(binding.etInput.text.toString())
                 }
@@ -86,13 +91,22 @@ class SearchListFragment : BaseFragment<FragmentSearchListBinding>(
 
     @SuppressLint("NotifyDataSetChanged")
     private fun initViewModelObserve() {
-        viewModel.headers.observe(viewLifecycleOwner, {
-            headerAdapter.replaceItems(it)
-            headerAdapter.notifyDataSetChanged()
+        viewModel.progresssData.observe(viewLifecycleOwner, {
+            progressAdapter.replaceItems(it)
+            progressAdapter.notifyDataSetChanged()
         })
+
         viewModel.movies.observe(viewLifecycleOwner, {
             baseAdapter.replaceItems(it)
             baseAdapter.notifyDataSetChanged()
+        })
+
+        viewModel.progressBar.observeEvent(viewLifecycleOwner, observer = { isProgress ->
+            if (isProgress) {
+                concatAdapter.addAdapter(progressAdapter)
+            } else {
+                concatAdapter.removeAdapter(progressAdapter)
+            }
         })
     }
 

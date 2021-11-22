@@ -1,5 +1,5 @@
 package com.chan.moviesearcher.ui
 
-import com.chan.moviesearcher.ui.main.data.HeaderData
+import com.chan.moviesearcher.ui.main.data.ProgressItem
 
-val testHeaders = listOf(HeaderData("헤더1"), HeaderData("헤더2"))
+val testHeaders = listOf(ProgressItem("헤더1"), ProgressItem("헤더2"))
