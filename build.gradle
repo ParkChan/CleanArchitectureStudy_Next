@@ -9,6 +9,7 @@ buildscript {
         classpath ProjectConfig.kotlinGradlePlugin
         classpath ProjectConfig.androidJunit5
         classpath ProjectConfig.hiltAndroidGradlePlugin
+        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.0'
     }
 }
 

@@ -8,3 +8,4 @@ dependencyResolutionManagement {
 rootProject.name = "CleanArchitectureStudy_module_integration"
 include ':app'
 include ':common:ui'
+include ':feature:movie'
