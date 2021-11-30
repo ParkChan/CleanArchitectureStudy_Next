@@ -1,6 +1,6 @@
 object Version {
-    const val gradle = "7.0.2"
-    const val kotlin = "1.5.31"
+    const val gradle = "7.0.3"
+    const val kotlin = "1.5.32"
     const val hilt = "2.39.1"
     const val junit5 = "1.8.0.0"
 
@@ -46,12 +46,12 @@ object ProjectConfig {
 
 object AndroidConfig {
     const val compileSdk = 30
-    const val minSdk = 21
+    const val minSdk = 26
     const val targetSdk = 30
     const val versionCode = 1
     const val versionName = "1.0.0"
-    const val androidJunitRunner = "androidx.test.runner.AndroidJUnitRunner"
     const val runnerBuilder = "runnerBuilder"
+    const val androidJunitRunner = "androidx.test.runner.AndroidJUnitRunner"
     const val androidJunit5Builder = "de.mannodermaus.junit5.AndroidJUnit5Builder"
 
 }
@@ -140,8 +140,4 @@ object Glide {
 
 object Gson {
     const val gson = "com.google.code.gson:gson:${Version.gson}"
-}
-
-object Desugar {
-    const val jdkLibs = "com.android.tools:desugar_jdk_libs:${Version.desugarJdkLibs}"
 }

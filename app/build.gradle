@@ -42,7 +42,7 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = JavaVersion.VERSION_1_8
     }
     buildFeatures {
         dataBinding true
@@ -60,46 +60,15 @@ dependencies {
     implementation AndroidXConfig.coreKtx
     implementation AndroidXConfig.appcompat
     implementation GoogleConfig.material
-    implementation AndroidXConfig.constraintLayout
-    implementation AndroidXConfig.activityKtx
-    implementation AndroidXConfig.fragmentKtx
 
-    implementation AndroidXConfig.lifecycleViewModel
-    implementation AndroidXConfig.lifecycleRuntime
-    implementation AndroidXConfig.lifecycleLivedata
-    implementation AndroidXConfig.viewpager2
-    implementation AndroidXConfig.recyclerView
-
-    testImplementation TestConfig.junitJupiterApi
-    testRuntimeOnly TestConfig.junitJupiterEngine
-    testImplementation TestConfig.junitJupiterParams
-    testImplementation TestConfig.assertjCore
-    testImplementation TestConfig.mockk
-
-    androidTestImplementation TestConfig.testCore
-    androidTestImplementation TestConfig.coreTesting
-    androidTestImplementation TestConfig.junitJupiterApi
-    androidTestImplementation TestConfig.assertjCore
+    implementation TestConfig.junitJupiterApi
+    implementation TestConfig.junitJupiterEngine
     androidTestImplementation TestConfig.androidTestCore
     androidTestRuntimeOnly TestConfig.androidTestRunner
 
     implementation DaggerHiltConfig.android
     kapt DaggerHiltConfig.compiler
 
-    implementation CoroutineConfig.core
-    implementation CoroutineConfig.android
-    testImplementation CoroutineConfig.test
-
-    implementation NetworkConfig.retrofit
-    implementation NetworkConfig.loggingInterceptor
-    implementation NetworkConfig.converterMoshi
-
-    implementation NetworkConfig.moshiKotlin
-    kapt NetworkConfig.moshiKotlinCodegen
-    implementation NetworkConfig.moshiAdapters
-
     implementation LogConfig.timber
 
-    implementation Glide.glide
-    kapt Glide.compiler
 }

@@ -7,6 +7,9 @@
 - 화면 단위별 Feature Module 단위로 분리 합니다.
 - Flow를 학습 합니다.
 
+## 소기능
+- ConcatAdapter를 이용하여 Footer Progress Bar 보여주기
+
 ### 기타
 - 네이버 OPEN API 검색 > 영화
   [링크주소]
