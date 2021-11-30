@@ -1,8 +1,9 @@
 package com.chan.movie.data.di
 
-import com.chan.movie.data.DateJsonAdapter
-import com.squareup.moshi.Moshi
-import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import com.chan.movie.BuildConfig
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
+import com.google.gson.internal.bind.DateTypeAdapter
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -10,7 +11,8 @@ import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
-import retrofit2.converter.moshi.MoshiConverterFactory
+import retrofit2.converter.gson.GsonConverterFactory
+import java.util.*
 import javax.inject.Singleton
 
 @Module
@@ -21,32 +23,23 @@ class NetworkModule {
     @Singleton
     fun providesHttpLoggingInterceptor() = HttpLoggingInterceptor()
         .apply {
-            level = HttpLoggingInterceptor.Level.BODY
+            level = if (BuildConfig.DEBUG) {
+                HttpLoggingInterceptor.Level.BODY
+            } else {
+                HttpLoggingInterceptor.Level.NONE
+            }
         }
 
     @Provides
     @Singleton
-    fun providesKotlinJsonAdapterFactory() = KotlinJsonAdapterFactory()
+    fun providesGson(): Gson =
+        GsonBuilder().registerTypeAdapter(Date::class.java, DateTypeAdapter()).create()
+
 
     @Provides
     @Singleton
-    fun providesDateJsonAdapter() = DateJsonAdapter()
-
-    @Provides
-    @Singleton
-    fun providesMoshi(
-        jsonAdapterFactory: KotlinJsonAdapterFactory,
-        dateJsonAdapter: DateJsonAdapter
-    ): Moshi =
-        Moshi.Builder()
-            .add(dateJsonAdapter)
-            .add(jsonAdapterFactory)
-            .build()
-
-    @Provides
-    @Singleton
-    fun providesMoshiConverter(moshi: Moshi): MoshiConverterFactory =
-        MoshiConverterFactory.create(moshi)
+    fun providesGsonConverterFactory(gson: Gson): GsonConverterFactory =
+        GsonConverterFactory.create(gson)
 
     @Provides
     @Singleton
@@ -60,7 +53,7 @@ class NetworkModule {
     @Provides
     @Singleton
     fun providesRetrofitBuild(
-        converterFactory: MoshiConverterFactory,
+        converterFactory: GsonConverterFactory,
         client: OkHttpClient
     ): Retrofit =
         Retrofit.Builder()

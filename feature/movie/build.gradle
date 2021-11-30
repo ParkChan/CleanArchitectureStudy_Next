@@ -63,11 +63,7 @@ dependencies {
 
     api NetworkConfig.retrofit
     api NetworkConfig.loggingInterceptor
-    api NetworkConfig.converterMoshi
-
-    api NetworkConfig.moshiKotlin
-    kapt NetworkConfig.moshiKotlinCodegen
-    api NetworkConfig.moshiAdapters
+    api NetworkConfig.gsonConverter
 
     implementation LogConfig.timber
 

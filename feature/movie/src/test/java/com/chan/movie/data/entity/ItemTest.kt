@@ -1,27 +1,24 @@
 package com.chan.movie.data.entity
 
-import com.squareup.moshi.JsonAdapter
-import com.squareup.moshi.Moshi
-import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 class ItemTest {
 
-    private val moshi = Moshi.Builder()
-        .add(KotlinJsonAdapterFactory())
-        .build()
-    private lateinit var jsonAdapter: JsonAdapter<Item>
+    private lateinit var gson: Gson
 
     @BeforeEach
     fun setup() {
-        jsonAdapter = moshi.adapter(Item::class.java)
+        val gsonBuilder = GsonBuilder()
+        gson = gsonBuilder.create()
     }
 
     @Test
-    fun `영화 Item 관련 Json을 엔티티로 변환합니다`() {
-        val response = jsonAdapter.fromJson(ITEM_JSON) ?: Item()
+    fun `영화 Item Json을 엔티티로 변환합니다`() {
+        val response = gson.fromJson(ITEM_JSON, Item::class.java) ?: Item()
 
         assertEquals("보이나로비치", response.title)
         assertEquals("https://movie.naver.com/movie/bi/mi/basic.nhn?code=193591", response.link)
@@ -30,7 +27,7 @@ class ItemTest {
 
     @Test
     fun `Json 엔티티를 Dto로 변환합니다`() {
-        val dto = (jsonAdapter.fromJson(ITEM_JSON) ?: Item()).mapToDto()
+        val dto = (gson.fromJson(ITEM_JSON, Item::class.java) ?: Item()).mapToDto()
 
         assertEquals("보이나로비치", dto.title)
         assertEquals("https://movie.naver.com/movie/bi/mi/basic.nhn?code=193591", dto.link)

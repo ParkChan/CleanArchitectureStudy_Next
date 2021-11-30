@@ -1,6 +1,6 @@
 object Version {
     const val gradle = "7.0.3"
-    const val kotlin = "1.5.32"
+    const val kotlin = "1.6.0"
     const val hilt = "2.39.1"
     const val junit5 = "1.8.0.0"
 
@@ -11,7 +11,6 @@ object Version {
     const val constraintLayout = "1.1.3"
     const val viewpager2 = "1.0.0"
     const val recyclerView = "1.2.1"
-    const val pagingVersion = "1.1.0-beta01"
 
     const val coroutine = "1.5.1"
 
@@ -28,11 +27,9 @@ object Version {
     const val loggingInterceptor = "4.8.0"
     const val lifecycleVersion = "2.3.1"
 
-    const val gson = "2.8.8"
+    const val gson = "2.8.9"
     const val timber = "5.0.1"
     const val glide = "4.12.0"
-
-    const val desugarJdkLibs = "1.1.5"
 
 }
 
@@ -103,7 +100,6 @@ object AndroidXConfig {
     const val viewpager2 = "androidx.viewpager2:viewpager2:${Version.viewpager2}"
     const val recyclerView = "androidx.recyclerview:recyclerview:${Version.recyclerView}"
 
-    const val paging = "androidx.paging:paging-runtime:${Version.pagingVersion}"
 }
 
 object GoogleConfig {

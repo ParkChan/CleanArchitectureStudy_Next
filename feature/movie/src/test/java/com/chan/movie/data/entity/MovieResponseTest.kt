@@ -1,34 +1,27 @@
 package com.chan.movie.data.entity
 
-import com.chan.movie.data.DateJsonAdapter
-import com.squareup.moshi.JsonAdapter
-import com.squareup.moshi.Moshi
-import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import java.io.File
-import java.util.*
 
 
 class MovieResponseTest {
 
-    private val moshi = Moshi.Builder()
-        .add(Date::class.java, DateJsonAdapter().nullSafe())
-        .add(KotlinJsonAdapterFactory())
-        .build()
-
-    private lateinit var jsonAdapter: JsonAdapter<MovieResponse>
+    private lateinit var gson: Gson
 
     @BeforeEach
     fun setup() {
-        jsonAdapter = moshi.adapter(MovieResponse::class.java)
+        val gsonBuilder = GsonBuilder()
+        gson = gsonBuilder.create()
     }
 
     @Test
     fun `json 파일을 읽어와서 엔티티로 변환합니다`() {
         val json = File("test/resources/api-response/1.json").readText()
-        val response = jsonAdapter.fromJson(json) ?: MovieResponse()
+        val response = gson.fromJson(json, MovieResponse::class.java) ?: MovieResponse()
 
         assertEquals(88, response.total)
         assertEquals(2, response.start)
@@ -38,7 +31,7 @@ class MovieResponseTest {
     @Test
     fun `Json 엔티티를 Dto로 변환합니다`() {
         val json = File("test/resources/api-response/1.json").readText()
-        val dto = (jsonAdapter.fromJson(json) ?: MovieResponse()).mapToDto()
+        val dto = (gson.fromJson(json, MovieResponse::class.java) ?: MovieResponse()).mapToDto()
 
         assertEquals(88, dto.total)
         assertEquals(2, dto.start)

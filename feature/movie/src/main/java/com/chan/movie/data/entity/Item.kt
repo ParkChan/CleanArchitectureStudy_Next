@@ -1,26 +1,24 @@
 package com.chan.movie.data.entity
 
 import com.chan.movie.domain.dto.ItemDto
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+import com.google.gson.annotations.SerializedName
 
-@JsonClass(generateAdapter = true)
 data class Item(
-    @Json(name = "actor")
+    @SerializedName("actor")
     val actor: String = "",
-    @Json(name = "director")
+    @SerializedName("director")
     val director: String = "",
-    @Json(name = "image")
+    @SerializedName("image")
     val image: String = "",
-    @Json(name = "link")
+    @SerializedName("link")
     val link: String = "",
-    @Json(name = "pubDate")
+    @SerializedName("pubDate")
     val pubDate: String = "",
-    @Json(name = "subtitle")
+    @SerializedName("subtitle")
     val subtitle: String = "",
-    @Json(name = "title")
+    @SerializedName("title")
     val title: String = "",
-    @Json(name = "userRating")
+    @SerializedName("userRating")
     val userRating: Double = 0.0
 ) : DataToDomainMapper<ItemDto> {
 
