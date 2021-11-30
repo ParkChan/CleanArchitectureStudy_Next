@@ -55,6 +55,7 @@ android {
 dependencies {
 
     implementation project(path: ':common:ui')
+    implementation project(path: ':feature:movie')
 
     implementation AndroidXConfig.coreKtx
     implementation AndroidXConfig.appcompat
