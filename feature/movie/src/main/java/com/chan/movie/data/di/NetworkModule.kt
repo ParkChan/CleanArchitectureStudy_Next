@@ -3,7 +3,6 @@ package com.chan.movie.data.di
 import com.chan.movie.BuildConfig
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import com.google.gson.internal.bind.DateTypeAdapter
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -12,7 +11,6 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.util.*
 import javax.inject.Singleton
 
 @Module
