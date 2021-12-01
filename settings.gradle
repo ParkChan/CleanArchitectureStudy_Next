@@ -1,11 +1,6 @@
-dependencyResolutionManagement {
-    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
-    repositories {
-        google()
-        mavenCentral()
-    }
-}
-rootProject.name = "CleanArchitectureStudy_module_integration"
-include ':app'
+include ':common:util'
 include ':common:ui'
 include ':feature:movie'
+include ':feature:splash'
+include ':app'
+rootProject.name = "CleanArchitectureStudy_module_integration"

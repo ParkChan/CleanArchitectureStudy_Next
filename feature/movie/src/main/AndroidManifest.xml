@@ -6,10 +6,6 @@
         <activity
             android:name=".ui.main.MainActivity"
             android:theme="@style/Theme.CleanArchitectureStudy.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
 

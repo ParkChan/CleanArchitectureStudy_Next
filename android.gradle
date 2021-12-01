@@ -36,12 +36,14 @@ android {
 
 dependencies {
     implementation AndroidXConfig.appcompat
+    implementation AndroidXConfig.constraintLayout
     implementation GoogleConfig.material
     implementation AndroidXConfig.coreKtx
 
-    implementation CoroutineConfig.android
     implementation AndroidXConfig.activityKtx
     implementation AndroidXConfig.fragmentKtx
+
+    implementation CoroutineConfig.android
 
     testImplementation TestConfig.junitJupiterApi
     testRuntimeOnly TestConfig.junitJupiterEngine

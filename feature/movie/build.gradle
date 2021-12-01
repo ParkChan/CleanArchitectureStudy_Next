@@ -6,55 +6,12 @@ plugins {
     id 'dagger.hilt.android.plugin'
 }
 
-android {
-    compileSdk AndroidConfig.compileSdk
-
-    defaultConfig {
-        minSdk AndroidConfig.minSdk
-        targetSdk AndroidConfig.targetSdk
-        versionCode AndroidConfig.versionCode
-        versionName AndroidConfig.versionName
-
-        testInstrumentationRunner AndroidConfig.androidJunitRunner
-        testInstrumentationRunnerArgument AndroidConfig.runnerBuilder, AndroidConfig.androidJunit5Builder
-
-    }
-
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8
-    }
-    buildFeatures {
-        dataBinding true
-    }
-    testOptions {
-        unitTests.returnDefaultValues = true
-    }
-}
+apply from: "../feature.gradle"
 
 dependencies {
 
-    implementation project(path: ':common:ui')
-
-    implementation AndroidXConfig.appcompat
-    implementation AndroidXConfig.coreKtx
-    implementation GoogleConfig.material
-    implementation AndroidXConfig.constraintLayout
-    implementation AndroidXConfig.activityKtx
-    implementation AndroidXConfig.fragmentKtx
-
     implementation AndroidXConfig.viewpager2
     implementation AndroidXConfig.recyclerView
-
-    implementation TestConfig.junitJupiterApi
-    implementation TestConfig.junitJupiterEngine
-    androidTestImplementation TestConfig.androidTestCore
-    androidTestRuntimeOnly TestConfig.androidTestRunner
-    implementation TestConfig.mockk
 
     implementation DaggerHiltConfig.android
     kapt DaggerHiltConfig.compiler
