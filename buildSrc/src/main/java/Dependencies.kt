@@ -5,6 +5,7 @@ object Version {
     const val junit5 = "1.8.0.0"
 
     const val appcompat = "1.3.1"
+    const val coreKtx = "1.6.0"
     const val activityKtx = "1.3.1"
     const val fragmentKtx = "1.3.6"
     const val material = "1.1.0"
@@ -12,10 +13,8 @@ object Version {
     const val viewpager2 = "1.0.0"
     const val recyclerView = "1.2.1"
 
-    const val coroutine = "1.5.1"
+    const val coroutine = "1.5.2"
 
-    const val testCore = "1.3.0"
-    const val coreTesting = "2.1.0"
     const val jupiter = "5.8.1"
     const val assertjCore = "3.21.0"
     const val mockk = "1.10.6"
@@ -25,7 +24,6 @@ object Version {
     const val retrofit = "2.9.0"
     const val moshi = "1.12.0"
     const val loggingInterceptor = "4.8.0"
-    const val lifecycleVersion = "2.3.1"
 
     const val gson = "2.8.9"
     const val timber = "5.0.1"
@@ -36,9 +34,9 @@ object Version {
 object ProjectConfig {
     const val gradle = "com.android.tools.build:gradle:${Version.gradle}"
     const val kotlinGradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Version.kotlin}"
+    const val androidJunit5 = "de.mannodermaus.gradle.plugins:android-junit5:${Version.junit5}"
     const val hiltAndroidGradlePlugin =
         "com.google.dagger:hilt-android-gradle-plugin:${Version.hilt}"
-    const val androidJunit5 = "de.mannodermaus.gradle.plugins:android-junit5:${Version.junit5}"
 }
 
 object AndroidConfig {
@@ -59,17 +57,13 @@ object JetBrain {
 
 object CoroutineConfig {
     const val core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Version.coroutine}"
-    const val android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Version.coroutine}"
-    const val test = "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Version.coroutine}"
 }
 
 object TestConfig {
-    const val testCore = "androidx.test:core:${Version.testCore}"
-    const val coreTesting = "androidx.arch.core:core-testing:${Version.coreTesting}"
     const val junitJupiterApi = "org.junit.jupiter:junit-jupiter-api:${Version.jupiter}"
     const val junitJupiterEngine = "org.junit.jupiter:junit-jupiter-engine:${Version.jupiter}"
-    const val junitJupiterParams = "org.junit.jupiter:junit-jupiter-params:${Version.jupiter}"
     const val assertjCore = "org.assertj:assertj-core:${Version.assertjCore}"
+
     const val androidTestCore =
         "de.mannodermaus.junit5:android-test-core:${Version.androidTestCore}"
     const val androidTestRunner =
@@ -82,15 +76,8 @@ object TestConfig {
 object AndroidXConfig {
 
     const val appcompat = "androidx.appcompat:appcompat:${Version.appcompat}"
-
-    const val coreKtx = "androidx.core:core-ktx:1.6.0"
-    const val lifecycleViewModel =
-        "androidx.lifecycle:lifecycle-viewmodel-ktx:${Version.lifecycleVersion}"
-    const val lifecycleRuntime =
-        "androidx.lifecycle:lifecycle-runtime-ktx:${Version.lifecycleVersion}"
-    const val lifecycleLivedata =
-        "androidx.lifecycle:lifecycle-livedata-ktx:${Version.lifecycleVersion}"
-
+    const val coreKtx = "androidx.core:core-ktx:${Version.coreKtx}"
+    const val material = "com.google.android.material:material:${Version.material}"
     const val constraintLayout =
         "androidx.constraintlayout:constraintlayout:${Version.constraintLayout}"
 

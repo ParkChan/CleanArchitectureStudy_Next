@@ -16,8 +16,6 @@ dependencies {
     implementation DaggerHiltConfig.android
     kapt DaggerHiltConfig.compiler
 
-    implementation CoroutineConfig.core
-
     api NetworkConfig.retrofit
     api NetworkConfig.loggingInterceptor
     api NetworkConfig.gsonConverter

@@ -11,11 +11,13 @@ import com.chan.movie.ui.main.data.PageData
 import com.chan.movie.ui.main.data.PageInfo
 import com.chan.ui.livedata.Event
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 
-@ExperimentalCoroutinesApi
 @HiltViewModel
 class MovieSearchViewModel @Inject constructor(
     private val useCase: MovieSearchUseCase
