@@ -9,8 +9,6 @@ import com.chan.movie.domain.usecase.MovieSearchUseCase
 import com.chan.movie.ui.main.data.ClickEventMessage
 import com.chan.movie.ui.main.data.PageData
 import com.chan.movie.ui.main.data.PageInfo
-import com.chan.movie.ui.main.data.ProgressItem
-import com.chan.movie.ui.main.test.testHeaderData
 import com.chan.ui.livedata.Event
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
@@ -26,8 +24,8 @@ class MovieSearchViewModel @Inject constructor(
     private val _movies = MutableLiveData<List<ItemDto>>()
     val movies: LiveData<List<ItemDto>> = _movies
 
-    private val _progressData = MutableLiveData<List<ProgressItem>>()
-    val progressData: LiveData<List<ProgressItem>> = _progressData
+    private val _bottomProgress = MutableLiveData<Boolean>()
+    val bottomProgress: LiveData<Boolean> = _bottomProgress
 
     private val _saveMovies = MutableLiveData<List<ItemDto>>()
     val saveMovies: LiveData<List<ItemDto>> = _saveMovies
@@ -37,6 +35,7 @@ class MovieSearchViewModel @Inject constructor(
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, exception ->
         Timber.e(">>>> ${exception.message}")
+        bottomProgessBar(false)
     }
 
     private val movieList = mutableListOf<ItemDto>()
@@ -44,6 +43,10 @@ class MovieSearchViewModel @Inject constructor(
 
     private val pagingInfo = PageInfo(PageData())
     private var job: Job? = null
+
+    init {
+        bottomProgessBar(false)
+    }
 
     private fun fetchMovies(page: Int, query: String, isFirst: Boolean) {
         viewModelScope.launch(coroutineExceptionHandler) {
@@ -57,16 +60,18 @@ class MovieSearchViewModel @Inject constructor(
                         _movies.value = movieList.apply {
                             addAll(it.items)
                         }
-                        bottomProgessBarVisibility(pagingInfo.isPaging())
+                        bottomProgessBar(pagingInfo.isPaging())
                     } else {
-                        bottomProgessBarVisibility(pagingInfo.isPaging())
+                        bottomProgessBar(pagingInfo.isPaging())
                         delay(INTERVAL_PROGRESS_VISIBLE_TIME)
                         _movies.value = movieList.apply {
                             addAll(it.items)
                         }
                     }
+
                 }.onFailure {
                     Timber.e(it.message)
+                    bottomProgessBar(false)
                 }
         }
     }
@@ -76,7 +81,7 @@ class MovieSearchViewModel @Inject constructor(
         job = viewModelScope.launch {
             initPaging()
             clearMovies()
-            bottomProgessBarVisibility(false)
+
             if (query.isNotBlank()) {
                 delay(INTERVAL_KEYWORD_SEARCH)
                 fetchMovies(pagingInfo.startPage(), query.trim(), true)
@@ -100,12 +105,8 @@ class MovieSearchViewModel @Inject constructor(
         }
     }
 
-    private fun bottomProgessBarVisibility(isVisible: Boolean) {
-        if (isVisible) {
-            _progressData.value = testHeaderData
-        } else {
-            _progressData.value = emptyList()
-        }
+    private fun bottomProgessBar(isVisible: Boolean) {
+        _bottomProgress.value = isVisible
     }
 
     fun onClickSaveItem(contentData: ItemDto) {

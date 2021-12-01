@@ -90,9 +90,15 @@ class SearchListFragment : BaseFragment<FragmentSearchListBinding>(
 
     @SuppressLint("NotifyDataSetChanged")
     private fun initViewModelObserve() {
-        viewModel.progressData.observe(viewLifecycleOwner, {
-            if (progressAdapter.itemCount == BOTTOM_PROGRESSBAR_COUNT || it.isEmpty()) {
-                progressAdapter.replaceItems(it)
+        viewModel.bottomProgress.observe(viewLifecycleOwner, { isShow ->
+            if (isShow) {
+                if (progressAdapter.itemCount == BOTTOM_PROGRESSBAR_COUNT) {
+                    progressAdapter.replaceItems(listOf(ProgressItem()))
+                }
+            } else {
+                if (progressAdapter.itemCount > BOTTOM_PROGRESSBAR_COUNT) {
+                    progressAdapter.replaceItems(emptyList())
+                }
             }
         })
 

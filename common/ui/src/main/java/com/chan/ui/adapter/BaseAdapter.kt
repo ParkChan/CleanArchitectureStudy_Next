@@ -1,5 +1,6 @@
 package com.chan.ui.adapter
 
+import android.annotation.SuppressLint
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.lifecycle.ViewModel
@@ -22,6 +23,7 @@ class BaseAdapter<T>(
         holder.bind(item = itemList[position])
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun replaceItems(item: List<T>) {
         itemList.run {
             clear()
