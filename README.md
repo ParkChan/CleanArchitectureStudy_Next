@@ -9,7 +9,7 @@
 - ui 모듈 : feature에서 사용하는 공통 테마 설정 및 BaseActivity, BaseFragment 등이 있습니다.
 - util 모듈 : startActivity, registerForActivityResult 
 
-[참조그림]
+## [변경된 구조]
 ![그림2](https://user-images.githubusercontent.com/7857824/144234029-0fd17651-bc5d-483b-862f-9381778ef0bd.png)
 
 ## 학습목표
