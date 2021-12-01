@@ -3,4 +3,4 @@ include ':common:ui'
 include ':feature:movie'
 include ':feature:splash'
 include ':app'
-rootProject.name = "CleanArchitectureStudy_module_integration"
+rootProject.name = "CleanArchitectureStudy_Next"
