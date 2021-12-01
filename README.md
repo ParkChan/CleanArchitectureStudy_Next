@@ -10,7 +10,7 @@
 - util 모듈 : startActivity, registerForActivityResult 
 
 ## [변경된 구조]
-![그림2](https://user-images.githubusercontent.com/7857824/144234029-0fd17651-bc5d-483b-862f-9381778ef0bd.png)
+![그림1](https://user-images.githubusercontent.com/7857824/144235054-444c9824-5b66-4c02-9122-a56777621a7b.png)
 
 ## 학습목표
 - Flow를 학습 합니다.[진행중]
