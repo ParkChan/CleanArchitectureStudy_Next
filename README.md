@@ -12,6 +12,8 @@
 ## [그림설명]
 ![그림1](https://user-images.githubusercontent.com/7857824/144235054-444c9824-5b66-4c02-9122-a56777621a7b.png)
 
+---
+
 ## 학습목표
 - Flow를 학습 합니다.[진행중]
 - 멀티모듈을 패키지 구분으로 변경 합니다.[완료]
@@ -47,5 +49,4 @@
 
 ## 예제화면
 ![device-2021-11-09-020632 (1)](https://user-images.githubusercontent.com/7857824/140786792-f2b9fa4b-5538-4312-9abd-d0ff23886c63.png)
-)
 
