@@ -13,6 +13,5 @@ fun <T> replaceItem(recyclerView: RecyclerView, items: List<T>?) {
     @Suppress("UNCHECKED_CAST")
     (recyclerView.adapter as BaseAdapter<T>).run {
         replaceItems(items)
-        notifyDataSetChanged()
     }
 }

@@ -93,13 +93,11 @@ class SearchListFragment : BaseFragment<FragmentSearchListBinding>(
         viewModel.progressData.observe(viewLifecycleOwner, {
             if (progressAdapter.itemCount == BOTTOM_PROGRESSBAR_COUNT || it.isEmpty()) {
                 progressAdapter.replaceItems(it)
-                progressAdapter.notifyDataSetChanged()
             }
         })
 
         viewModel.movies.observe(viewLifecycleOwner, {
             baseAdapter.replaceItems(it)
-            baseAdapter.notifyDataSetChanged()
         })
     }
 

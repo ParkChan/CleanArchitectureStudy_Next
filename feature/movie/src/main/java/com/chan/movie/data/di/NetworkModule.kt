@@ -33,7 +33,7 @@ class NetworkModule {
     @Provides
     @Singleton
     fun providesGson(): Gson =
-        GsonBuilder().registerTypeAdapter(Date::class.java, DateTypeAdapter()).create()
+        GsonBuilder().setDateFormat(NAVER_DATE_FORMAT).create()
 
 
     @Provides
@@ -64,6 +64,7 @@ class NetworkModule {
 
     companion object {
         private const val BASE_URL = "https://openapi.naver.com/"
+        private const val NAVER_DATE_FORMAT = "EEE, dd MMM yyyy HH:mm:ss Z"
     }
 
 }

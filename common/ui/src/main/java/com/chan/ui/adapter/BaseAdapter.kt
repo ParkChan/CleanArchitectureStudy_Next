@@ -26,6 +26,7 @@ class BaseAdapter<T>(
         itemList.run {
             clear()
             addAll(item)
+            notifyDataSetChanged()
         }
     }
 }
