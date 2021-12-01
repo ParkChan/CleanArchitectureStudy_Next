@@ -18,7 +18,7 @@
 - Flow를 학습 합니다.[진행중]
 - 멀티모듈을 패키지 구분으로 변경 합니다.[완료]
 - 화면 단위별 Feature Module 단위로 분리 합니다.[완료]
-- CI/CD 적용[완료]
+- CI/CD [완료]
 
 ## PlayStore와 같은 하단 Footer 프로그래스바 만들어보기
 - ConcatAdapter를 이용하여 Footer Progress Bar 보여주기
