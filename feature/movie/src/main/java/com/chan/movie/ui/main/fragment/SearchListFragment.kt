@@ -26,9 +26,23 @@ class SearchListFragment : BaseFragment<FragmentSearchListBinding>(
     FragmentSearchListBinding::inflate
 ) {
     private val viewModel by activityViewModels<MovieSearchViewModel>()
-    private lateinit var progressAdapter: BaseAdapter<ProgressItem>
-    private lateinit var baseAdapter: BaseAdapter<ItemDto>
-    private lateinit var concatAdapter: ConcatAdapter
+    private val progressAdapter: BaseAdapter<ProgressItem> by lazy {
+        BaseAdapter(
+            layoutResourceId = R.layout.rv_progress_item,
+            viewHolderBindingId = BR.progressItem,
+            mapOf()
+        )
+    }
+    private val baseAdapter: BaseAdapter<ItemDto> by lazy {
+        BaseAdapter(
+            layoutResourceId = R.layout.rv_search_item,
+            viewHolderBindingId = BR.item,
+            viewModel = mapOf(BR.viewModel to viewModel)
+        )
+    }
+    private val concatAdapter: ConcatAdapter by lazy {
+        ConcatAdapter(baseAdapter, progressAdapter)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,17 +70,6 @@ class SearchListFragment : BaseFragment<FragmentSearchListBinding>(
     }
 
     private fun initRecyclerView() {
-        progressAdapter = BaseAdapter(
-            layoutResourceId = R.layout.rv_progress_item,
-            viewHolderBindingId = BR.progressItem,
-            mapOf()
-        )
-        baseAdapter = BaseAdapter(
-            layoutResourceId = R.layout.rv_search_item,
-            viewHolderBindingId = BR.item,
-            viewModel = mapOf(BR.viewModel to viewModel)
-        )
-        concatAdapter = ConcatAdapter(baseAdapter, progressAdapter)
         binding.rvContent.adapter = concatAdapter
     }
 

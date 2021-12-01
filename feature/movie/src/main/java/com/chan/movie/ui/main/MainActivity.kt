@@ -15,7 +15,9 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::inflate) {
 
-    private lateinit var pagerAdapter: ViewPagerAdapter
+    private val pagerAdapter: ViewPagerAdapter by lazy{
+        ViewPagerAdapter(this)
+    }
     private val viewModel by viewModels<MovieSearchViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,7 +27,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
     }
 
     private fun initViewPager() {
-        pagerAdapter = ViewPagerAdapter(this)
         binding.viewPager.adapter = pagerAdapter
         binding.viewPager.offscreenPageLimit = 1
         val tabLayout = binding.tabs
