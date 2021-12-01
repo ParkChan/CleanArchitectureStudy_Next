@@ -10,9 +10,13 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(ActivitySplashBinding
 
     init {
         lifecycleScope.launchWhenCreated {
-            delay(2000L)
+            delay(SPLASH_DELAY_TIME)
             startActivity("com.chan.movie.ui.main.MainActivity")
             finish()
         }
+    }
+
+    companion object{
+        private const val SPLASH_DELAY_TIME = 2_000L
     }
 }

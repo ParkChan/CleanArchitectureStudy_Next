@@ -4,8 +4,6 @@ android {
     defaultConfig {
         minSdk AndroidConfig.minSdk
         targetSdk AndroidConfig.targetSdk
-        versionCode 1
-        versionName "1.0"
 
         testInstrumentationRunner AndroidConfig.androidJunitRunner
         testInstrumentationRunnerArgument AndroidConfig.runnerBuilder, AndroidConfig.androidJunit5Builder
