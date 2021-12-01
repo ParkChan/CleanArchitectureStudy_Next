@@ -9,6 +9,9 @@
 - ui 모듈 : feature에서 사용하는 공통 테마 설정 및 BaseActivity, BaseFragment 등이 있습니다.
 - util 모듈 : startActivity, registerForActivityResult 
 
+[참조그림]
+![그림2](https://user-images.githubusercontent.com/7857824/144234029-0fd17651-bc5d-483b-862f-9381778ef0bd.png)
+
 ## 학습목표
 - Flow를 학습 합니다.[진행중]
 - 멀티모듈을 패키지 구분으로 변경 합니다.[완료]
