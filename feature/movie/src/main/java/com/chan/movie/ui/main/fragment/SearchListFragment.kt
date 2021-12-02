@@ -1,6 +1,5 @@
 package com.chan.movie.ui.main.fragment
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import androidx.core.widget.doAfterTextChanged
@@ -18,7 +17,6 @@ import com.chan.movie.ui.main.data.ProgressItem
 import com.chan.ui.BaseFragment
 import com.chan.ui.adapter.BaseAdapter
 import kotlinx.coroutines.launch
-import timber.log.Timber
 
 class SearchListFragment : BaseFragment<FragmentSearchListBinding>(
     FragmentSearchListBinding::inflate
@@ -61,7 +59,7 @@ class SearchListFragment : BaseFragment<FragmentSearchListBinding>(
     private fun initTextChangedListener() {
         binding.etInput.doAfterTextChanged { text ->
             lifecycleScope.launch {
-                viewModel.searchMovies(text.toString())
+                viewModel.setSearchQuery(text.toString())
             }
         }
     }
@@ -80,7 +78,6 @@ class SearchListFragment : BaseFragment<FragmentSearchListBinding>(
                 val totalCount: Int = binding.rvContent.adapter!!.itemCount - 1
                 val isScrollEnd = !recyclerView.canScrollVertically(1)
 
-                Timber.d("lastVisiblePosition >> $lastVisiblePosition item count >> ${binding.rvContent.adapter!!.itemCount}")
                 if (isScrollEnd && lastVisiblePosition >= totalCount) {
                     lifecycleScope.launchWhenStarted {
                         viewModel.moreMovies(binding.etInput.text.toString())
@@ -90,7 +87,6 @@ class SearchListFragment : BaseFragment<FragmentSearchListBinding>(
         })
     }
 
-    @SuppressLint("NotifyDataSetChanged")
     private fun initViewModelObserve() {
         viewModel.bottomProgress.observe(viewLifecycleOwner, { isShow ->
             if (isShow) {
