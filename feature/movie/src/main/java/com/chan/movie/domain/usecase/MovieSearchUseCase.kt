@@ -1,7 +1,8 @@
 package com.chan.movie.domain.usecase
 
 import com.chan.movie.domain.dto.MovieDto
+import kotlinx.coroutines.flow.Flow
 
 interface MovieSearchUseCase {
-    suspend fun request(start: Int, query: String): Result<MovieDto>
+    suspend fun fetchMovies(start: Int, query: String): Flow<MovieDto>
 }

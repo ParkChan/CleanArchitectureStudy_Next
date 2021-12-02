@@ -14,13 +14,15 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
 class MovieSearchViewModel @Inject constructor(
-    private val useCase: MovieSearchUseCase
+    private val movieSearchUseCase: MovieSearchUseCase
 ) : ViewModel() {
 
     private val _movies = MutableLiveData<List<ItemDto>>()
@@ -50,10 +52,13 @@ class MovieSearchViewModel @Inject constructor(
         bottomProgessBar(false)
     }
 
-    private fun fetchMovies(page: Int, query: String, isFirst: Boolean) {
+    private suspend fun fetchMovies(page: Int, query: String, isFirst: Boolean) =
         viewModelScope.launch(coroutineExceptionHandler) {
-            useCase.request(page, query)
-                .onSuccess {
+            movieSearchUseCase.fetchMovies(page, query)
+                .catch { cause ->
+                    Timber.e(cause.message)
+                    bottomProgessBar(false)
+                }.collect {
                     pagingInfo.pageInfo(
                         start = it.start,
                         total = it.total
@@ -70,13 +75,8 @@ class MovieSearchViewModel @Inject constructor(
                             addAll(it.items)
                         }
                     }
-
-                }.onFailure {
-                    Timber.e(it.message)
-                    bottomProgessBar(false)
                 }
         }
-    }
 
     fun searchMovies(query: String) {
         job?.cancel()
@@ -91,7 +91,7 @@ class MovieSearchViewModel @Inject constructor(
         }
     }
 
-    fun moreMovies(query: String) {
+    suspend fun moreMovies(query: String) {
         if (pagingInfo.isPaging()) {
             fetchMovies(pagingInfo.nextPage(), query, false)
         }

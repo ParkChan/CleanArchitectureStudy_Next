@@ -61,8 +61,7 @@ class SearchListFragment : BaseFragment<FragmentSearchListBinding>(
     private fun initTextChangedListener() {
         binding.etInput.doAfterTextChanged { text ->
             lifecycleScope.launch {
-                val inputText = text.toString()
-                viewModel.searchMovies(inputText)
+                viewModel.searchMovies(text.toString())
             }
         }
     }
@@ -83,7 +82,9 @@ class SearchListFragment : BaseFragment<FragmentSearchListBinding>(
 
                 Timber.d("lastVisiblePosition >> $lastVisiblePosition item count >> ${binding.rvContent.adapter!!.itemCount}")
                 if (isScrollEnd && lastVisiblePosition >= totalCount) {
-                    viewModel.moreMovies(binding.etInput.text.toString())
+                    lifecycleScope.launchWhenStarted {
+                        viewModel.moreMovies(binding.etInput.text.toString())
+                    }
                 }
             }
         })
