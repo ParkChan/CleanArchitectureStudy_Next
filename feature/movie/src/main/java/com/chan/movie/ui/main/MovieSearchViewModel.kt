@@ -142,7 +142,7 @@ class MovieSearchViewModel @Inject constructor(
     }
 
     companion object {
-        private const val INTERVAL_KEYWORD_SEARCH = 1000L
+        private const val INTERVAL_KEYWORD_SEARCH = 1_000L
         private const val INTERVAL_PROGRESS_VISIBLE_TIME = 250L
     }
 }
