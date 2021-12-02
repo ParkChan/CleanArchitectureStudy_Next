@@ -16,7 +16,7 @@ import com.chan.movie.ui.main.MovieSearchViewModel
 import com.chan.movie.ui.main.data.ProgressItem
 import com.chan.ui.BaseFragment
 import com.chan.ui.adapter.BaseAdapter
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.collect
 
 class SearchListFragment : BaseFragment<FragmentSearchListBinding>(
     FragmentSearchListBinding::inflate
@@ -49,6 +49,7 @@ class SearchListFragment : BaseFragment<FragmentSearchListBinding>(
         initViewModelObserve()
         viewLifecycleOwner.lifecycleScope.launchWhenResumed {
             initTextChangedListener()
+            viewModel.searchQuery.collect()
         }
     }
 
@@ -58,9 +59,7 @@ class SearchListFragment : BaseFragment<FragmentSearchListBinding>(
 
     private fun initTextChangedListener() {
         binding.etInput.doAfterTextChanged { text ->
-            lifecycleScope.launch {
-                viewModel.setSearchQuery(text.toString())
-            }
+            viewModel._searchQuery.value = text.toString()
         }
     }
 

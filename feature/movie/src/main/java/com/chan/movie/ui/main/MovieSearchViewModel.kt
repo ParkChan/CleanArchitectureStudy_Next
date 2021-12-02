@@ -45,25 +45,19 @@ class MovieSearchViewModel @Inject constructor(
 
     private val pagingInfo = PageInfo(PageData())
 
-    private val _searchQuery = MutableStateFlow("")
-    fun setSearchQuery(query: String) {
-        _searchQuery.value = query
-    }
-    private val querySearch: Flow<Unit> = _searchQuery
-        .debounce(INTERVAL_KEYWORD_SEARCH)
-        .flatMapLatest { query ->
-            flow<Unit> {
-                searchMovies(query)
-            }
-        }.catch { e: Throwable ->
-            Timber.e(">>>> ${e.message}")
-        }
+    val _searchQuery get() = MutableStateFlow("")
 
-    init {
-        viewModelScope.launch {
-            querySearch.collect()
-        }
-    }
+    val searchQuery
+        get(): Flow<Unit> = _searchQuery
+            .asStateFlow()
+            .debounce(INTERVAL_KEYWORD_SEARCH)
+            .flatMapLatest { query ->
+                flow<Unit> {
+                    searchMovies(query)
+                }
+            }.catch { e: Throwable ->
+                Timber.e(">>>> ${e.message}")
+            }
 
     fun fetchMovies(page: Int, query: String, isFirst: Boolean) =
         viewModelScope.launch(coroutineExceptionHandler) {
