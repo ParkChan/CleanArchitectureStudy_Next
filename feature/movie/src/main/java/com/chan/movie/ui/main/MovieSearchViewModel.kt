@@ -101,9 +101,11 @@ class MovieSearchViewModel @Inject constructor(
         }
     }
 
-    suspend fun moreMovies(query: String) {
-        if (pagingInfo.isPaging()) {
-            fetchMovies(pagingInfo.nextPage(), query, false)
+    fun moreMovies(query: String) {
+        viewModelScope.launch(coroutineExceptionHandler) {
+            if (pagingInfo.isPaging()) {
+                fetchMovies(pagingInfo.nextPage(), query, false)
+            }
         }
     }
 
