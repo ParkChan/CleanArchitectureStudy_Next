@@ -49,9 +49,12 @@ class SearchListFragment : BaseFragment<FragmentSearchListBinding>(
         initRecyclerView()
         initPagingListener()
         initViewModelObserve()
-        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
-            initTextChangedListener()
-        }
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+        initTextChangedListener()
     }
 
     private fun initViewModel() {
