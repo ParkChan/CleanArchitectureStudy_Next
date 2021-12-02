@@ -13,7 +13,8 @@ import com.chan.ui.livedata.Event
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
@@ -45,20 +46,6 @@ class MovieSearchViewModel @Inject constructor(
 
     private val pagingInfo = PageInfo(PageData())
 
-    val _searchQuery get() = MutableStateFlow("")
-
-    val searchQuery
-        get(): Flow<Unit> = _searchQuery
-            .asStateFlow()
-            .debounce(INTERVAL_KEYWORD_SEARCH)
-            .flatMapLatest { query ->
-                flow<Unit> {
-                    searchMovies(query)
-                }
-            }.catch { e: Throwable ->
-                Timber.e(">>>> ${e.message}")
-            }
-
     fun fetchMovies(page: Int, query: String, isFirst: Boolean) =
         viewModelScope.launch(coroutineExceptionHandler) {
             movieSearchUseCase.fetchMovies(page, query)
@@ -85,7 +72,7 @@ class MovieSearchViewModel @Inject constructor(
                 }
         }
 
-    private fun searchMovies(query: String) {
+    fun searchMovies(query: String) {
         viewModelScope.launch {
             initPaging()
             clearMovies()
@@ -138,7 +125,6 @@ class MovieSearchViewModel @Inject constructor(
     }
 
     companion object {
-        private const val INTERVAL_KEYWORD_SEARCH = 1_000L
         private const val INTERVAL_PROGRESS_VISIBLE_TIME = 250L
     }
 }

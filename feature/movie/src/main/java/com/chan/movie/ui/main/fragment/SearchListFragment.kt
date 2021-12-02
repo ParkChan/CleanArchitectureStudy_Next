@@ -2,7 +2,6 @@ package com.chan.movie.ui.main.fragment
 
 import android.os.Bundle
 import android.view.View
-import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.ConcatAdapter
@@ -12,11 +11,14 @@ import com.chan.movie.BR
 import com.chan.movie.R
 import com.chan.movie.databinding.FragmentSearchListBinding
 import com.chan.movie.domain.dto.ItemDto
+import com.chan.movie.ui.common.ext.textInputAsFlow
 import com.chan.movie.ui.main.MovieSearchViewModel
 import com.chan.movie.ui.main.data.ProgressItem
 import com.chan.ui.BaseFragment
 import com.chan.ui.adapter.BaseAdapter
-import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 
 class SearchListFragment : BaseFragment<FragmentSearchListBinding>(
     FragmentSearchListBinding::inflate
@@ -49,7 +51,6 @@ class SearchListFragment : BaseFragment<FragmentSearchListBinding>(
         initViewModelObserve()
         viewLifecycleOwner.lifecycleScope.launchWhenResumed {
             initTextChangedListener()
-            viewModel.searchQuery.collect()
         }
     }
 
@@ -58,9 +59,10 @@ class SearchListFragment : BaseFragment<FragmentSearchListBinding>(
     }
 
     private fun initTextChangedListener() {
-        binding.etInput.doAfterTextChanged { text ->
-            viewModel._searchQuery.value = text.toString()
-        }
+        binding.etInput.textInputAsFlow()
+            .debounce(INTERVAL_KEYWORD_SEARCH).onEach {
+                viewModel.searchMovies(it.toString())
+            }.launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
     private fun initRecyclerView() {
@@ -104,6 +106,7 @@ class SearchListFragment : BaseFragment<FragmentSearchListBinding>(
 
     companion object {
         private const val BOTTOM_PROGRESSBAR_COUNT = 0
+        private const val INTERVAL_KEYWORD_SEARCH = 800L
         fun newInstance(): SearchListFragment = SearchListFragment()
     }
 }
