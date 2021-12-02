@@ -10,7 +10,7 @@ import javax.inject.Inject
 class MovieDataSourceImpl @Inject constructor(
     private val movieApi: MovieApi
 ) : MovieDataSource {
-    override suspend fun fetchMovies(start: Int, query: String): Flow<MovieResponse> =
+    override fun fetchMovies(start: Int, query: String): Flow<MovieResponse> =
         flow {
             emit(
                 movieApi.fetchMovies(

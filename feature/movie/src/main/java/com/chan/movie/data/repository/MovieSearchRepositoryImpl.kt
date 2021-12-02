@@ -11,6 +11,6 @@ import javax.inject.Inject
 class MovieSearchRepositoryImpl @Inject constructor(
     private val source: MovieDataSource,
 ) : MovieSearchRepository {
-    override suspend fun fetchMovies(start: Int, query: String): Flow<MovieDto> =
+    override fun fetchMovies(start: Int, query: String): Flow<MovieDto> =
         source.fetchMovies(start = start, query = query).map(MovieResponse::mapToDto)
 }

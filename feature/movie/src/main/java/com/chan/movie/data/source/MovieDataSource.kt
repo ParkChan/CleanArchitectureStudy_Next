@@ -4,5 +4,5 @@ import com.chan.movie.data.entity.MovieResponse
 import kotlinx.coroutines.flow.Flow
 
 interface MovieDataSource {
-    suspend fun fetchMovies(start: Int, query: String): Flow<MovieResponse>
+    fun fetchMovies(start: Int, query: String): Flow<MovieResponse>
 }
