@@ -65,7 +65,7 @@ class MovieSearchViewModel @Inject constructor(
         }
     }
 
-    suspend fun fetchMovies(page: Int, query: String, isFirst: Boolean) =
+    fun fetchMovies(page: Int, query: String, isFirst: Boolean) =
         viewModelScope.launch(coroutineExceptionHandler) {
             movieSearchUseCase.fetchMovies(page, query)
                 .catch { e: Throwable ->
