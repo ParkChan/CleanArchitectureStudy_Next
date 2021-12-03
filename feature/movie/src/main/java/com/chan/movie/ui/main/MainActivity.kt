@@ -56,7 +56,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
     }
 
     companion object {
-        const val VIEWPAGER_OFFSCREEN_PAGE_LIMIT = 1
+        private const val VIEWPAGER_OFFSCREEN_PAGE_LIMIT = 1
     }
 
 }
