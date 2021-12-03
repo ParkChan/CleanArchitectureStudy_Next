@@ -16,6 +16,8 @@ dependencies {
     implementation DaggerHiltConfig.android
     kapt DaggerHiltConfig.compiler
 
+    testImplementation TestConfig.turbine
+
     api NetworkConfig.retrofit
     api NetworkConfig.loggingInterceptor
     api NetworkConfig.gsonConverter
