@@ -49,11 +49,10 @@ class SearchListFragment : BaseFragment<FragmentSearchListBinding>(
         initRecyclerView()
         initPagingListener()
         initViewModelObserve()
-
     }
 
-    override fun onResume() {
-        super.onResume()
+    override fun onStart() {
+        super.onStart()
         initTextChangedListener()
     }
 
