@@ -45,6 +45,7 @@ class MovieSearchViewModel @Inject constructor(
     private val saveList = mutableListOf<ItemDto>()
 
     private val pagingInfo = PageInfo(PageData())
+    private var beforeText = ""
 
     fun fetchMovies(page: Int, query: String, isFirst: Boolean) =
         viewModelScope.launch(coroutineExceptionHandler) {
@@ -73,6 +74,12 @@ class MovieSearchViewModel @Inject constructor(
         }
 
     fun searchMovies(query: String) {
+        if(beforeText == query){
+            return
+        }
+
+        beforeText = query
+
         viewModelScope.launch {
             initPaging()
             clearMovies()
@@ -82,10 +89,10 @@ class MovieSearchViewModel @Inject constructor(
         }
     }
 
-    fun moreMovies(query: String) {
+    fun moreMovies() {
         viewModelScope.launch(coroutineExceptionHandler) {
             if (pagingInfo.isPaging()) {
-                fetchMovies(pagingInfo.nextPage(), query, false)
+                fetchMovies(pagingInfo.nextPage(), beforeText, false)
             }
         }
     }

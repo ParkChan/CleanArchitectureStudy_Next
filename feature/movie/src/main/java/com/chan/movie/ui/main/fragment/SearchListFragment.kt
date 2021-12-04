@@ -43,16 +43,12 @@ class SearchListFragment : BaseFragment<FragmentSearchListBinding>(
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+        super.onViewCreated(view, savedInstanceState)
 
         initViewModel()
         initRecyclerView()
         initPagingListener()
         initViewModelObserve()
-    }
-
-    override fun onStart() {
-        super.onStart()
         initTextChangedListener()
     }
 
@@ -82,7 +78,7 @@ class SearchListFragment : BaseFragment<FragmentSearchListBinding>(
                 val isScrollEnd = !recyclerView.canScrollVertically(1)
 
                 if (isScrollEnd && lastVisiblePosition >= totalCount) {
-                    viewModel.moreMovies(binding.etInput.text.toString())
+                    viewModel.moreMovies()
                 }
             }
         })
