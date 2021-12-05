@@ -12,15 +12,16 @@ import com.chan.movie.ui.main.data.PageInfo
 import com.chan.ui.livedata.Event
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
 class MovieSearchViewModel @Inject constructor(
-    private val useCase: MovieSearchUseCase
+    private val movieSearchUseCase: MovieSearchUseCase
 ) : ViewModel() {
 
     private val _movies = MutableLiveData<List<ItemDto>>()
@@ -44,16 +45,15 @@ class MovieSearchViewModel @Inject constructor(
     private val saveList = mutableListOf<ItemDto>()
 
     private val pagingInfo = PageInfo(PageData())
-    private var job: Job? = null
+    private var beforeText = ""
 
-    init {
-        bottomProgessBar(false)
-    }
-
-    private fun fetchMovies(page: Int, query: String, isFirst: Boolean) {
+    fun fetchMovies(page: Int, query: String, isFirst: Boolean) =
         viewModelScope.launch(coroutineExceptionHandler) {
-            useCase.request(page, query)
-                .onSuccess {
+            movieSearchUseCase.fetchMovies(page, query)
+                .catch { e: Throwable ->
+                    Timber.e(e.message)
+                    bottomProgessBar(false)
+                }.collect {
                     pagingInfo.pageInfo(
                         start = it.start,
                         total = it.total
@@ -70,30 +70,30 @@ class MovieSearchViewModel @Inject constructor(
                             addAll(it.items)
                         }
                     }
-
-                }.onFailure {
-                    Timber.e(it.message)
-                    bottomProgessBar(false)
                 }
         }
-    }
 
     fun searchMovies(query: String) {
-        job?.cancel()
-        job = viewModelScope.launch {
+        if(beforeText == query){
+            return
+        }
+
+        beforeText = query
+
+        viewModelScope.launch {
             initPaging()
             clearMovies()
-
             if (query.isNotBlank()) {
-                delay(INTERVAL_KEYWORD_SEARCH)
                 fetchMovies(pagingInfo.startPage(), query.trim(), true)
             }
         }
     }
 
-    fun moreMovies(query: String) {
-        if (pagingInfo.isPaging()) {
-            fetchMovies(pagingInfo.nextPage(), query, false)
+    fun moreMovies() {
+        viewModelScope.launch(coroutineExceptionHandler) {
+            if (pagingInfo.isPaging()) {
+                fetchMovies(pagingInfo.nextPage(), beforeText, false)
+            }
         }
     }
 
@@ -132,7 +132,6 @@ class MovieSearchViewModel @Inject constructor(
     }
 
     companion object {
-        private const val INTERVAL_KEYWORD_SEARCH = 1500L
         private const val INTERVAL_PROGRESS_VISIBLE_TIME = 250L
     }
 }

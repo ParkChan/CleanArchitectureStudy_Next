@@ -18,6 +18,11 @@ object Version {
     const val jupiter = "5.8.1"
     const val assertjCore = "3.21.0"
     const val mockk = "1.10.6"
+    const val turbine = "0.7.0"
+    const val junit = "4.13.2"
+    const val extJunit = "1.1.3"
+    const val espresso = "3.4.0"
+
     const val androidTestCore = "1.3.0"
     const val androidTestRunner = "1.3.0"
 
@@ -70,6 +75,12 @@ object TestConfig {
         "de.mannodermaus.junit5:android-test-runner:${Version.androidTestRunner}"
 
     const val mockk = "io.mockk:mockk:${Version.mockk}"
+
+    const val turbine = "app.cash.turbine:turbine:${Version.turbine}"
+
+    const val junit = "junit:junit:${Version.junit}"
+    const val extJunit = "androidx.test.ext:junit:${Version.extJunit}"
+    const val espresso = "androidx.test.espresso:espresso-core:${Version.espresso}"
 
 }
 

@@ -1,5 +1,6 @@
 package com.chan.movie.ui.main
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.viewModels
 import com.chan.movie.R
@@ -26,9 +27,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
         initViewModelObserve()
     }
 
+    @SuppressLint("WrongConstant")
     private fun initViewPager() {
         binding.viewPager.adapter = pagerAdapter
-        binding.viewPager.offscreenPageLimit = 1
+        binding.viewPager.offscreenPageLimit = VIEWPAGER_OFFSCREEN_PAGE_LIMIT
         val tabLayout = binding.tabs
         val tabTitleList =
             listOf(
@@ -51,6 +53,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
                 Snackbar.make(binding.root, resource, Snackbar.LENGTH_SHORT).show()
             }
         })
+    }
+
+    companion object {
+        private const val VIEWPAGER_OFFSCREEN_PAGE_LIMIT = 1
     }
 
 }

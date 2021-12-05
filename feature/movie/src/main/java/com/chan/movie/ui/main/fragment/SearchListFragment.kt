@@ -1,9 +1,7 @@
 package com.chan.movie.ui.main.fragment
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
-import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.ConcatAdapter
@@ -13,12 +11,14 @@ import com.chan.movie.BR
 import com.chan.movie.R
 import com.chan.movie.databinding.FragmentSearchListBinding
 import com.chan.movie.domain.dto.ItemDto
+import com.chan.movie.ui.common.ext.textInputAsFlow
 import com.chan.movie.ui.main.MovieSearchViewModel
 import com.chan.movie.ui.main.data.ProgressItem
 import com.chan.ui.BaseFragment
 import com.chan.ui.adapter.BaseAdapter
-import kotlinx.coroutines.launch
-import timber.log.Timber
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 
 class SearchListFragment : BaseFragment<FragmentSearchListBinding>(
     FragmentSearchListBinding::inflate
@@ -43,15 +43,13 @@ class SearchListFragment : BaseFragment<FragmentSearchListBinding>(
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+        super.onViewCreated(view, savedInstanceState)
 
         initViewModel()
         initRecyclerView()
         initPagingListener()
         initViewModelObserve()
-        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
-            initTextChangedListener()
-        }
+        initTextChangedListener()
     }
 
     private fun initViewModel() {
@@ -59,12 +57,10 @@ class SearchListFragment : BaseFragment<FragmentSearchListBinding>(
     }
 
     private fun initTextChangedListener() {
-        binding.etInput.doAfterTextChanged { text ->
-            lifecycleScope.launch {
-                val inputText = text.toString()
-                viewModel.searchMovies(inputText)
-            }
-        }
+        binding.etInput.textInputAsFlow()
+            .debounce(INTERVAL_KEYWORD_SEARCH).onEach {
+                viewModel.searchMovies(it.toString())
+            }.launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
     private fun initRecyclerView() {
@@ -81,15 +77,13 @@ class SearchListFragment : BaseFragment<FragmentSearchListBinding>(
                 val totalCount: Int = binding.rvContent.adapter!!.itemCount - 1
                 val isScrollEnd = !recyclerView.canScrollVertically(1)
 
-                Timber.d("lastVisiblePosition >> $lastVisiblePosition item count >> ${binding.rvContent.adapter!!.itemCount}")
                 if (isScrollEnd && lastVisiblePosition >= totalCount) {
-                    viewModel.moreMovies(binding.etInput.text.toString())
+                    viewModel.moreMovies()
                 }
             }
         })
     }
 
-    @SuppressLint("NotifyDataSetChanged")
     private fun initViewModelObserve() {
         viewModel.bottomProgress.observe(viewLifecycleOwner, { isShow ->
             if (isShow) {
@@ -110,6 +104,7 @@ class SearchListFragment : BaseFragment<FragmentSearchListBinding>(
 
     companion object {
         private const val BOTTOM_PROGRESSBAR_COUNT = 0
+        private const val INTERVAL_KEYWORD_SEARCH = 800L
         fun newInstance(): SearchListFragment = SearchListFragment()
     }
 }

@@ -1,8 +1,7 @@
 package com.chan.movie.data.source
 
+import app.cash.turbine.test
 import com.chan.movie.data.entity.MovieResponse
-import io.mockk.coEvery
-import io.mockk.mockk
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
@@ -10,8 +9,13 @@ import org.junit.jupiter.api.Test
 
 class MovieDataSourceImplTest {
 
-    private val movieApi: MovieApi = mockk(relaxed = true)
+    private val movieApi: MovieApi = FakeMovieApi()
     private lateinit var movieDataSourceImpl: MovieDataSourceImpl
+
+    private class FakeMovieApi : MovieApi {
+        override suspend fun fetchMovies(start: Int, query: String, display: Int): MovieResponse =
+            MovieResponse()
+    }
 
     @BeforeEach
     fun setup() {
@@ -20,16 +24,11 @@ class MovieDataSourceImplTest {
 
     @Test
     fun `영화 리스트 가져오기 기능 테스트`() = runBlocking {
-        val mockResponse: MovieResponse = mockk()
+        val mockResponse = MovieResponse()
 
-        coEvery {
-            movieApi.fetchMovies(start = 1, query = "a")
-        } returns mockResponse
-
-        val result = movieDataSourceImpl
-            .fetchMovies(start = 1, query = "a")
-
-        assertEquals(mockResponse, result)
+        movieDataSourceImpl.fetchMovies(1, "a").test {
+            assertEquals(mockResponse, awaitItem())
+            awaitComplete()
+        }
     }
-
 }
