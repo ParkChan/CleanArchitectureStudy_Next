@@ -56,10 +56,6 @@ object AndroidConfig {
 
 }
 
-object JetBrain {
-    private const val kotlinStdlib = "org.jetbrains.kotlin:kotlin-stdlib:${Version.kotlin}"
-}
-
 object CoroutineConfig {
     const val core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Version.coroutine}"
 }
