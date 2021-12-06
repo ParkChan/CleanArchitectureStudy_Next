@@ -4,6 +4,7 @@ plugins {
     id 'kotlin-kapt'
     id 'de.mannodermaus.android-junit5'
     id 'dagger.hilt.android.plugin'
+    id 'kotlin-parcelize'
 }
 
 apply from: "../feature.gradle"
@@ -12,6 +13,7 @@ dependencies {
 
     implementation AndroidXConfig.viewpager2
     implementation AndroidXConfig.recyclerView
+    implementation AndroidXConfig.viewmodelSavedstate
 
     implementation DaggerHiltConfig.android
     kapt DaggerHiltConfig.compiler

@@ -12,6 +12,8 @@ object Version {
     const val constraintLayout = "1.1.3"
     const val viewpager2 = "1.0.0"
     const val recyclerView = "1.2.1"
+    const val viewmodelSavedstate = "2.2.0"
+
 
     const val coroutine = "1.5.2"
 
@@ -96,6 +98,9 @@ object AndroidXConfig {
 
     const val viewpager2 = "androidx.viewpager2:viewpager2:${Version.viewpager2}"
     const val recyclerView = "androidx.recyclerview:recyclerview:${Version.recyclerView}"
+
+    const val viewmodelSavedstate = "androidx.lifecycle:lifecycle-viewmodel-savedstate:${Version.viewmodelSavedstate}"
+
 
 }
 

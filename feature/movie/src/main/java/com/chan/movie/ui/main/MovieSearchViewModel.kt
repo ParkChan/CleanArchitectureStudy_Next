@@ -1,9 +1,6 @@
 package com.chan.movie.ui.main
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.chan.movie.domain.dto.ItemDto
 import com.chan.movie.domain.usecase.MovieSearchUseCase
 import com.chan.movie.ui.main.data.ClickEventMessage
@@ -21,16 +18,23 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MovieSearchViewModel @Inject constructor(
+    private val savedStateHandle: SavedStateHandle,
     private val movieSearchUseCase: MovieSearchUseCase
 ) : ViewModel() {
 
-    private val _movies = MutableLiveData<List<ItemDto>>()
+    private val _movies =
+        MutableLiveData<List<ItemDto>>(
+            savedStateHandle.get(MOVIE_LIST_HANDLE_KEY) ?: emptyList()
+        )
     val movies: LiveData<List<ItemDto>> = _movies
 
     private val _bottomProgress = MutableLiveData<Boolean>()
     val bottomProgress: LiveData<Boolean> = _bottomProgress
 
-    private val _saveMovies = MutableLiveData<List<ItemDto>>()
+    private val _saveMovies =
+        MutableLiveData<List<ItemDto>>(
+            savedStateHandle.get(SAVE_LIST_HANDLE_KEY) ?: emptyList()
+        )
     val saveMovies: LiveData<List<ItemDto>> = _saveMovies
 
     private val _message = MutableLiveData<Event<ClickEventMessage>>()
@@ -41,11 +45,11 @@ class MovieSearchViewModel @Inject constructor(
         bottomProgessBar(false)
     }
 
-    private val movieList = mutableListOf<ItemDto>()
-    private val saveList = mutableListOf<ItemDto>()
+    private val movieList = savedStateHandle.get(MOVIE_LIST_HANDLE_KEY) ?: mutableListOf<ItemDto>()
+    private val saveList = savedStateHandle.get(SAVE_LIST_HANDLE_KEY) ?: mutableListOf<ItemDto>()
 
-    private val pagingInfo = PageInfo(PageData())
-    private var beforeText = ""
+    private val pagingInfo = savedStateHandle.get(PAGE_INFO_HANDLE_KEY) ?: PageInfo(PageData())
+    private var beforeText = savedStateHandle.get(BEFORE_TEXT_HANDLE_KEY) ?: ""
 
     fun fetchMovies(page: Int, query: String, isFirst: Boolean) =
         viewModelScope.launch(coroutineExceptionHandler) {
@@ -54,10 +58,13 @@ class MovieSearchViewModel @Inject constructor(
                     Timber.e(e.message)
                     bottomProgessBar(false)
                 }.collect {
+
                     pagingInfo.pageInfo(
                         start = it.start,
                         total = it.total
                     )
+                    savedStateHandle[PAGE_INFO_HANDLE_KEY] = pagingInfo
+
                     if (isFirst) {
                         _movies.value = movieList.apply {
                             addAll(it.items)
@@ -70,14 +77,15 @@ class MovieSearchViewModel @Inject constructor(
                             addAll(it.items)
                         }
                     }
+                    savedStateHandle[MOVIE_LIST_HANDLE_KEY] = movieList
                 }
         }
 
     fun searchMovies(query: String) {
-        if(beforeText == query){
+        if (beforeText == query) {
             return
         }
-
+        savedStateHandle[BEFORE_TEXT_HANDLE_KEY] = query
         beforeText = query
 
         viewModelScope.launch {
@@ -120,6 +128,7 @@ class MovieSearchViewModel @Inject constructor(
         } else {
             _message.value = Event(ClickEventMessage.ALREADY_EXIST)
         }
+        savedStateHandle[SAVE_LIST_HANDLE_KEY] = saveList
     }
 
     fun onClickDeleteItem(contentData: ItemDto) {
@@ -129,9 +138,15 @@ class MovieSearchViewModel @Inject constructor(
             }
             _message.value = Event(ClickEventMessage.DELETE_SUCCESS)
         }
+        savedStateHandle[SAVE_LIST_HANDLE_KEY] = saveList
     }
 
     companion object {
         private const val INTERVAL_PROGRESS_VISIBLE_TIME = 250L
+        private const val PAGE_INFO_HANDLE_KEY = "PAGE_INFO_HANDLE_KEY"
+        private const val BEFORE_TEXT_HANDLE_KEY = "BEFORE_TEXT_HANDLE_KEY"
+        private const val MOVIE_LIST_HANDLE_KEY = "MOVIE_LIST_HANDLE_KEY"
+        private const val SAVE_LIST_HANDLE_KEY = "SAVE_LIST_HANDLE_KEY"
     }
+
 }

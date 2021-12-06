@@ -16,10 +16,11 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::inflate) {
 
-    private val pagerAdapter: ViewPagerAdapter by lazy{
+    private val pagerAdapter: ViewPagerAdapter by lazy {
         ViewPagerAdapter(this)
     }
-    private val viewModel by viewModels<MovieSearchViewModel>()
+
+    private val viewModel: MovieSearchViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -1,6 +1,10 @@
 package com.chan.movie.ui.main.data
 
-class PageInfo(private val pageData: PageData) {
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
+class PageInfo(private val pageData: PageData) : Parcelable {
 
     fun init(): PageInfo {
         return PageInfo(
