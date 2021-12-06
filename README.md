@@ -27,7 +27,7 @@
 - 네이버 OPEN API 검색 > 영화
   [링크주소]
   (https://developers.naver.com/docs/search/movie/)
-- [How to check version updates when you are using buildSrc way of organizing Gradle dependencies?](https://medium.com/@kasem./how-to-check-version-updates-when-you-are-using-buildsrc-way-of-organizing-gradle-dependencies-5e659186c803)
+- [buildSrc 방식을 사용할 때 버전 업데이트를 확인하는 방법](https://medium.com/@kasem./how-to-check-version-updates-when-you-are-using-buildsrc-way-of-organizing-gradle-dependencies-5e659186c803)
   - 명령어 : 콘솔에서 gradle dependencyUpdates 입력 또는 Gradle 메뉴의 Task > help > dependencyUpdates
   
 ## 적용된 기술
