@@ -34,6 +34,8 @@ object Version {
     const val timber = "5.0.1"
     const val glide = "4.12.0"
 
+    const val gradleVersionsPlugin = "0.38.0"
+
 }
 
 object ProjectConfig {
@@ -42,6 +44,7 @@ object ProjectConfig {
     const val androidJunit5 = "de.mannodermaus.gradle.plugins:android-junit5:${Version.junit5}"
     const val hiltAndroidGradlePlugin =
         "com.google.dagger:hilt-android-gradle-plugin:${Version.hilt}"
+    const val gradleVersionPlugin = "com.github.ben-manes:gradle-versions-plugin:${Version.gradleVersionsPlugin}"
 }
 
 object AndroidConfig {
