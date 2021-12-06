@@ -15,19 +15,22 @@
 ---
 
 ## 학습목표
-- Flow를 학습 합니다.[진행중]
+- Flow를 학습 합니다.[완료]
+- Turbine 을 사용하여 Flow 테스트 코드를 작성합니다[완료]
 - 멀티모듈을 패키지 구분으로 변경 합니다.[완료]
 - 화면 단위별 Feature Module 단위로 분리 합니다.[완료]
 - CI/CD [완료]
 
-## PlayStore와 같은 하단 Footer 프로그래스바 보여주기
-- ConcatAdapter를 사용한 Footer Progress Bar 적용
+
+### 학습 목표 외
+- [buildSrc 방식을 사용할 때 버전 업데이트를 확인하는 방법](https://medium.com/@kasem./how-to-check-version-updates-when-you-are-using-buildsrc-way-of-organizing-gradle-dependencies-5e659186c803)
+  - 명령어 : 콘솔에서 gradle dependencyUpdates 입력 또는 Gradle 메뉴의 Task > help > dependencyUpdates
+- [SavedStateHandle 은 프로세스가 시스템에 의해 종료되더라도 유지됩니다](http://pluu.github.io/blog/android/2020/02/10/saved-state/)
+- PlayStore와 같은 하단 Footer 프로그래스바를 만들어 봅니다.(ConcatAdapter)
 
 ### 기타
 - [네이버 OPEN API 검색 > 영화](https://developers.naver.com/docs/search/movie/)
-- [buildSrc 방식을 사용할 때 버전 업데이트를 확인하는 방법](https://medium.com/@kasem./how-to-check-version-updates-when-you-are-using-buildsrc-way-of-organizing-gradle-dependencies-5e659186c803)
-  - 명령어 : 콘솔에서 gradle dependencyUpdates 입력 또는 Gradle 메뉴의 Task > help > dependencyUpdates
-  
+
 ## 적용된 기술
 
 ### Unit Test Code
