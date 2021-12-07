@@ -22,19 +22,35 @@ class MovieSearchViewModel @Inject constructor(
     private val movieSearchUseCase: MovieSearchUseCase
 ) : ViewModel() {
 
-    private val _movies =
-        MutableLiveData<List<ItemDto>>(
-            savedStateHandle.get(MOVIE_LIST_HANDLE_KEY) ?: emptyList()
-        )
+    private var movieList =
+        savedStateHandle.get(MOVIE_LIST_HANDLE_KEY) ?: mutableListOf<ItemDto>()
+        set(value) {
+            savedStateHandle.set(MOVIE_LIST_HANDLE_KEY, value)
+            field = value
+        }
+    private var saveList = savedStateHandle.get(SAVE_LIST_HANDLE_KEY) ?: mutableListOf<ItemDto>()
+        set(value) {
+            savedStateHandle.set(SAVE_LIST_HANDLE_KEY, value)
+            field = value
+        }
+    private var pagingInfo = savedStateHandle.get(PAGE_INFO_HANDLE_KEY) ?: PageInfo(PageData())
+        set(value) {
+            savedStateHandle.set(PAGE_INFO_HANDLE_KEY, value)
+            field = value
+        }
+    private var beforeText = savedStateHandle.get(BEFORE_TEXT_HANDLE_KEY) ?: ""
+        set(value) {
+            savedStateHandle.set(BEFORE_TEXT_HANDLE_KEY, value)
+            field = value
+        }
+
+    private val _movies = MutableLiveData<List<ItemDto>>(movieList)
     val movies: LiveData<List<ItemDto>> = _movies
 
     private val _bottomProgress = MutableLiveData<Boolean>()
     val bottomProgress: LiveData<Boolean> = _bottomProgress
 
-    private val _saveMovies =
-        MutableLiveData<List<ItemDto>>(
-            savedStateHandle.get(SAVE_LIST_HANDLE_KEY) ?: emptyList()
-        )
+    private val _saveMovies = MutableLiveData<List<ItemDto>>(saveList)
     val saveMovies: LiveData<List<ItemDto>> = _saveMovies
 
     private val _message = MutableLiveData<Event<ClickEventMessage>>()
@@ -44,12 +60,6 @@ class MovieSearchViewModel @Inject constructor(
         Timber.e(">>>> ${exception.message}")
         bottomProgessBar(false)
     }
-
-    private val movieList = savedStateHandle.get(MOVIE_LIST_HANDLE_KEY) ?: mutableListOf<ItemDto>()
-    private val saveList = savedStateHandle.get(SAVE_LIST_HANDLE_KEY) ?: mutableListOf<ItemDto>()
-
-    private val pagingInfo = savedStateHandle.get(PAGE_INFO_HANDLE_KEY) ?: PageInfo(PageData())
-    private var beforeText = savedStateHandle.get(BEFORE_TEXT_HANDLE_KEY) ?: ""
 
     fun fetchMovies(page: Int, query: String, isFirst: Boolean) =
         viewModelScope.launch(coroutineExceptionHandler) {
