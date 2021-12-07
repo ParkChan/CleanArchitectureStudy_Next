@@ -44,14 +44,11 @@ class MovieSearchViewModel @Inject constructor(
             field = value
         }
 
-    private val _movies = MutableLiveData(movieList)
-    val movies: LiveData<List<ItemData>> = _movies
+    val movies: LiveData<List<ItemData>> = savedStateHandle.getLiveData(MOVIE_LIST_HANDLE_KEY)
+    val saveMovies: LiveData<List<ItemData>> = savedStateHandle.getLiveData(SAVE_LIST_HANDLE_KEY)
 
     private val _bottomProgress = MutableLiveData<Boolean>()
     val bottomProgress: LiveData<Boolean> = _bottomProgress
-
-    private val _saveMovies = MutableLiveData(saveList)
-    val saveMovies: LiveData<List<ItemData>> = _saveMovies
 
     private val _message = MutableLiveData<Event<ClickEventMessage>>()
     val message: LiveData<Event<ClickEventMessage>> = _message
@@ -74,15 +71,14 @@ class MovieSearchViewModel @Inject constructor(
                         total = it.total
                     )
                     pagingInfo = pagingInfo
-                    movieList = movieList + it.items
 
                     if (isFirst) {
-                        _movies.value = movieList
+                        movieList = movieList + it.items
                         bottomProgessBar(pagingInfo.isPaging())
                     } else {
                         bottomProgessBar(pagingInfo.isPaging())
                         delay(INTERVAL_PROGRESS_VISIBLE_TIME)
-                        _movies.value = movieList
+                        movieList = movieList + it.items
                     }
                 }
         }
@@ -117,7 +113,6 @@ class MovieSearchViewModel @Inject constructor(
 
     private fun clearMovies() {
         movieList = emptyList()
-        _movies.value = movieList
     }
 
     private fun bottomProgessBar(isVisible: Boolean) {
@@ -127,7 +122,6 @@ class MovieSearchViewModel @Inject constructor(
     fun onClickSaveItem(contentData: ItemData) {
         if (!saveList.contains(contentData)) {
             saveList = saveList + contentData
-            _saveMovies.value = saveList
             _message.value = Event(ClickEventMessage.SAVE_SUCCESS)
         } else {
             _message.value = Event(ClickEventMessage.ALREADY_EXIST)
@@ -137,7 +131,6 @@ class MovieSearchViewModel @Inject constructor(
     fun onClickDeleteItem(contentData: ItemData) {
         if (saveList.contains(contentData)) {
             saveList = saveList - contentData
-            _saveMovies.value = saveList
             _message.value = Event(ClickEventMessage.DELETE_SUCCESS)
         }
     }
