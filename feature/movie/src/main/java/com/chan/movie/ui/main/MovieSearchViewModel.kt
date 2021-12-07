@@ -23,12 +23,12 @@ class MovieSearchViewModel @Inject constructor(
 ) : ViewModel() {
 
     private var movieList =
-        savedStateHandle.get(MOVIE_LIST_HANDLE_KEY) ?: mutableListOf<ItemData>()
+        savedStateHandle.get(MOVIE_LIST_HANDLE_KEY) ?: emptyList<ItemData>()
         set(value) {
             savedStateHandle.set(MOVIE_LIST_HANDLE_KEY, value)
             field = value
         }
-    private var saveList = savedStateHandle.get(SAVE_LIST_HANDLE_KEY) ?: mutableListOf<ItemData>()
+    private var saveList = savedStateHandle.get(SAVE_LIST_HANDLE_KEY) ?: emptyList<ItemData>()
         set(value) {
             savedStateHandle.set(SAVE_LIST_HANDLE_KEY, value)
             field = value
@@ -44,13 +44,13 @@ class MovieSearchViewModel @Inject constructor(
             field = value
         }
 
-    private val _movies = MutableLiveData<List<ItemData>>(movieList)
+    private val _movies = MutableLiveData(movieList)
     val movies: LiveData<List<ItemData>> = _movies
 
     private val _bottomProgress = MutableLiveData<Boolean>()
     val bottomProgress: LiveData<Boolean> = _bottomProgress
 
-    private val _saveMovies = MutableLiveData<List<ItemData>>(saveList)
+    private val _saveMovies = MutableLiveData(saveList)
     val saveMovies: LiveData<List<ItemData>> = _saveMovies
 
     private val _message = MutableLiveData<Event<ClickEventMessage>>()
@@ -73,21 +73,17 @@ class MovieSearchViewModel @Inject constructor(
                         start = it.start,
                         total = it.total
                     )
-                    savedStateHandle[PAGE_INFO_HANDLE_KEY] = pagingInfo
+                    pagingInfo = pagingInfo
+                    movieList = movieList + it.items
 
                     if (isFirst) {
-                        _movies.value = movieList.apply {
-                            addAll(it.items)
-                        }
+                        _movies.value = movieList
                         bottomProgessBar(pagingInfo.isPaging())
                     } else {
                         bottomProgessBar(pagingInfo.isPaging())
                         delay(INTERVAL_PROGRESS_VISIBLE_TIME)
-                        _movies.value = movieList.apply {
-                            addAll(it.items)
-                        }
+                        _movies.value = movieList
                     }
-                    savedStateHandle[MOVIE_LIST_HANDLE_KEY] = movieList
                 }
         }
 
@@ -101,6 +97,7 @@ class MovieSearchViewModel @Inject constructor(
         viewModelScope.launch {
             initPaging()
             clearMovies()
+            bottomProgessBar(false)
             if (query.isNotBlank()) {
                 fetchMovies(pagingInfo.startPage(), query.trim(), true)
             }
@@ -120,9 +117,8 @@ class MovieSearchViewModel @Inject constructor(
     }
 
     private fun clearMovies() {
-        _movies.value = movieList.apply {
-            clear()
-        }
+        movieList = emptyList()
+        _movies.value = movieList
     }
 
     private fun bottomProgessBar(isVisible: Boolean) {
@@ -131,24 +127,20 @@ class MovieSearchViewModel @Inject constructor(
 
     fun onClickSaveItem(contentData: ItemData) {
         if (!saveList.contains(contentData)) {
-            _saveMovies.value = saveList.apply {
-                add(contentData)
-            }
+            saveList = saveList + contentData
+            _saveMovies.value = saveList
             _message.value = Event(ClickEventMessage.SAVE_SUCCESS)
         } else {
             _message.value = Event(ClickEventMessage.ALREADY_EXIST)
         }
-        savedStateHandle[SAVE_LIST_HANDLE_KEY] = saveList
     }
 
     fun onClickDeleteItem(contentData: ItemData) {
         if (saveList.contains(contentData)) {
-            _saveMovies.value = saveList.apply {
-                remove(contentData)
-            }
+            saveList = saveList - contentData
+            _saveMovies.value = saveList
             _message.value = Event(ClickEventMessage.DELETE_SUCCESS)
         }
-        savedStateHandle[SAVE_LIST_HANDLE_KEY] = saveList
     }
 
     companion object {
