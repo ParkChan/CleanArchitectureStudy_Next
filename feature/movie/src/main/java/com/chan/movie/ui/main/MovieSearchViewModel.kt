@@ -91,7 +91,6 @@ class MovieSearchViewModel @Inject constructor(
         if (beforeText == query) {
             return
         }
-        savedStateHandle[BEFORE_TEXT_HANDLE_KEY] = query
         beforeText = query
 
         viewModelScope.launch {
