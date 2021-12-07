@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.chan.movie.BR
 import com.chan.movie.R
 import com.chan.movie.databinding.FragmentSearchListBinding
-import com.chan.movie.domain.dto.ItemDto
+import com.chan.movie.domain.data.ItemData
 import com.chan.movie.ui.common.ext.textInputAsFlow
 import com.chan.movie.ui.main.MovieSearchViewModel
 import com.chan.movie.ui.main.data.ProgressItem
@@ -31,7 +31,7 @@ class SearchListFragment : BaseFragment<FragmentSearchListBinding>(
             mapOf()
         )
     }
-    private val baseAdapter: BaseAdapter<ItemDto> by lazy {
+    private val baseAdapter: BaseAdapter<ItemData> by lazy {
         BaseAdapter(
             layoutResourceId = R.layout.rv_search_item,
             viewHolderBindingId = BR.item,

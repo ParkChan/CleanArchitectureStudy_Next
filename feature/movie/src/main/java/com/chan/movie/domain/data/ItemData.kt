@@ -1,10 +1,10 @@
-package com.chan.movie.domain.dto
+package com.chan.movie.domain.data
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class ItemDto(
+data class ItemData(
     val actor: String = "",
     val director: String = "",
     val image: String = "",

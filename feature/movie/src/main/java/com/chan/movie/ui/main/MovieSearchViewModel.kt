@@ -1,7 +1,7 @@
 package com.chan.movie.ui.main
 
 import androidx.lifecycle.*
-import com.chan.movie.domain.dto.ItemDto
+import com.chan.movie.domain.data.ItemData
 import com.chan.movie.domain.usecase.MovieSearchUseCase
 import com.chan.movie.ui.main.data.ClickEventMessage
 import com.chan.movie.ui.main.data.PageData
@@ -23,12 +23,12 @@ class MovieSearchViewModel @Inject constructor(
 ) : ViewModel() {
 
     private var movieList =
-        savedStateHandle.get(MOVIE_LIST_HANDLE_KEY) ?: mutableListOf<ItemDto>()
+        savedStateHandle.get(MOVIE_LIST_HANDLE_KEY) ?: mutableListOf<ItemData>()
         set(value) {
             savedStateHandle.set(MOVIE_LIST_HANDLE_KEY, value)
             field = value
         }
-    private var saveList = savedStateHandle.get(SAVE_LIST_HANDLE_KEY) ?: mutableListOf<ItemDto>()
+    private var saveList = savedStateHandle.get(SAVE_LIST_HANDLE_KEY) ?: mutableListOf<ItemData>()
         set(value) {
             savedStateHandle.set(SAVE_LIST_HANDLE_KEY, value)
             field = value
@@ -44,14 +44,14 @@ class MovieSearchViewModel @Inject constructor(
             field = value
         }
 
-    private val _movies = MutableLiveData<List<ItemDto>>(movieList)
-    val movies: LiveData<List<ItemDto>> = _movies
+    private val _movies = MutableLiveData<List<ItemData>>(movieList)
+    val movies: LiveData<List<ItemData>> = _movies
 
     private val _bottomProgress = MutableLiveData<Boolean>()
     val bottomProgress: LiveData<Boolean> = _bottomProgress
 
-    private val _saveMovies = MutableLiveData<List<ItemDto>>(saveList)
-    val saveMovies: LiveData<List<ItemDto>> = _saveMovies
+    private val _saveMovies = MutableLiveData<List<ItemData>>(saveList)
+    val saveMovies: LiveData<List<ItemData>> = _saveMovies
 
     private val _message = MutableLiveData<Event<ClickEventMessage>>()
     val message: LiveData<Event<ClickEventMessage>> = _message
@@ -129,7 +129,7 @@ class MovieSearchViewModel @Inject constructor(
         _bottomProgress.value = isVisible
     }
 
-    fun onClickSaveItem(contentData: ItemDto) {
+    fun onClickSaveItem(contentData: ItemData) {
         if (!saveList.contains(contentData)) {
             _saveMovies.value = saveList.apply {
                 add(contentData)
@@ -141,7 +141,7 @@ class MovieSearchViewModel @Inject constructor(
         savedStateHandle[SAVE_LIST_HANDLE_KEY] = saveList
     }
 
-    fun onClickDeleteItem(contentData: ItemDto) {
+    fun onClickDeleteItem(contentData: ItemData) {
         if (saveList.contains(contentData)) {
             _saveMovies.value = saveList.apply {
                 remove(contentData)

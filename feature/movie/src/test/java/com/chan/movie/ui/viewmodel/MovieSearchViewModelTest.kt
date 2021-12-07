@@ -1,6 +1,7 @@
 package com.chan.movie.ui.viewmodel
 
-import com.chan.movie.domain.dto.MovieDto
+import androidx.lifecycle.SavedStateHandle
+import com.chan.movie.domain.data.MovieData
 import com.chan.movie.domain.usecase.MovieSearchUseCase
 import com.chan.movie.ui.main.MovieSearchViewModel
 import com.chan.movie.util.InstantExecutorExtension
@@ -9,7 +10,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
@@ -17,23 +17,21 @@ import org.junit.jupiter.api.extension.ExtendWith
 class MovieSearchViewModelTest {
 
     private val useCase: MovieSearchUseCase = FakeMovieSearchUseCase()
-    private lateinit var viewModel: MovieSearchViewModel
-
-    private class FakeMovieSearchUseCase : MovieSearchUseCase {
-        override fun fetchMovies(start: Int, query: String): Flow<MovieDto> = flow {
-            emit(MovieDto())
-        }
+    private val savedStateHandle = SavedStateHandle()
+    private val viewModel: MovieSearchViewModel by lazy {
+        MovieSearchViewModel(savedStateHandle, useCase)
     }
 
-    @BeforeEach
-    fun setUp() {
-        viewModel = MovieSearchViewModel(useCase)
+    private class FakeMovieSearchUseCase : MovieSearchUseCase {
+        override fun fetchMovies(start: Int, query: String): Flow<MovieData> = flow {
+            emit(MovieData())
+        }
     }
 
     @Test
     fun `영화 리스트를 불러옵니다`() = runBlocking {
 
-        val mockMovieDto = MovieDto()
+        val mockMovieDto = MovieData()
         viewModel.searchMovies("a")
 
         assertEquals(mockMovieDto.items, viewModel.movies.getOrAwaitValue())
