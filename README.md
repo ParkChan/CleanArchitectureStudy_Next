@@ -24,7 +24,7 @@
 
 ### 학습 목표 외
 - [buildSrc 방식을 사용할 때 버전 업데이트를 확인하는 방법](https://medium.com/@kasem./how-to-check-version-updates-when-you-are-using-buildsrc-way-of-organizing-gradle-dependencies-5e659186c803)
-  - 명령어 : 콘솔에서 gradle dependencyUpdates 입력 또는 Gradle 메뉴의 Task > help > dependencyUpdates
+  - 명령어 : 콘솔에서 gradle dependencyUpdates 입력 또는 Gradle 메뉴의 Task > help > dependencyUpdates 선택
 - [SavedStateHandle 은 프로세스가 시스템에 의해 종료되더라도 유지됩니다](http://pluu.github.io/blog/android/2020/02/10/saved-state/)
 - PlayStore와 같은 하단 Footer 프로그래스바를 만들어 봅니다.(ConcatAdapter)
 
