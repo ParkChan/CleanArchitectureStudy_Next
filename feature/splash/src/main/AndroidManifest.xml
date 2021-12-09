@@ -3,8 +3,7 @@
     package="com.chan.splash">
 
     <application>
-        <activity android:name=".SplashActivity"
-            android:theme="@style/Theme.CleanArchitectureStudy.NoActionBar">
+        <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

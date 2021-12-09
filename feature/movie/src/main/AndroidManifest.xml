@@ -2,10 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.chan.movie">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application>
         <activity
-            android:name=".ui.main.MainActivity"
-            android:theme="@style/Theme.CleanArchitectureStudy.NoActionBar">
+            android:name=".ui.main.MainActivity">
         </activity>
     </application>
 
