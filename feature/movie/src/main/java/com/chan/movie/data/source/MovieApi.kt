@@ -2,15 +2,10 @@ package com.chan.movie.data.source
 
 import com.chan.movie.data.entity.MovieResponse
 import retrofit2.http.GET
-import retrofit2.http.Headers
 import retrofit2.http.Query
 
 interface MovieApi {
 
-    @Headers(
-        "X-Naver-Client-Id: xqdC6fLASTPbv8Wuq6Ht",
-        "X-Naver-Client-Secret: _RCz_dz2Ui",
-    )
     @GET("/v1/search/movie.json")
     suspend fun fetchMovies(
         @Query("start") start: Int,
