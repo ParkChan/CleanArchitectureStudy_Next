@@ -1,4 +1,4 @@
-package com.chan.movie.data.entity
+package com.chan.movie.data.data
 
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
-class ItemTest {
+class ItemResTest {
 
     private lateinit var gson: Gson
 
@@ -18,7 +18,7 @@ class ItemTest {
 
     @Test
     fun `영화 Item Json을 엔티티로 변환합니다`() {
-        val response = gson.fromJson(ITEM_JSON, Item::class.java) ?: Item()
+        val response = gson.fromJson(ITEM_JSON, ItemRes::class.java) ?: ItemRes()
 
         assertEquals("보이나로비치", response.title)
         assertEquals("https://movie.naver.com/movie/bi/mi/basic.nhn?code=193591", response.link)
@@ -27,7 +27,7 @@ class ItemTest {
 
     @Test
     fun `Json 엔티티를 Dto로 변환합니다`() {
-        val dto = (gson.fromJson(ITEM_JSON, Item::class.java) ?: Item()).mapToDto()
+        val dto = (gson.fromJson(ITEM_JSON, ItemRes::class.java) ?: ItemRes()).mapToDto()
 
         assertEquals("보이나로비치", dto.title)
         assertEquals("https://movie.naver.com/movie/bi/mi/basic.nhn?code=193591", dto.link)

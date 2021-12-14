@@ -1,6 +1,6 @@
-package com.chan.movie.data.entity
+package com.chan.movie.data.data
 
-import com.chan.movie.domain.data.MovieData
+import com.chan.movie.domain.data.MovieResult
 import com.google.gson.annotations.SerializedName
 import java.util.*
 
@@ -8,19 +8,19 @@ data class MovieResponse(
     @SerializedName("display")
     val display: Int = 0,
     @SerializedName("items")
-    val items: List<Item> = emptyList(),
+    val itemRes: List<ItemRes> = emptyList(),
     @SerializedName("lastBuildDate")
     val lastBuildDate: Date = Date(0),
     @SerializedName("start")
     val start: Int = 0,
     @SerializedName("total")
     val total: Int = 0
-) : DataToDomainMapper<MovieData> {
+) : DomainMapper<MovieResult> {
 
-    override fun mapToDto(): MovieData =
-        MovieData(
+    override fun mapToDto(): MovieResult =
+        MovieResult(
             display = display,
-            items = items.map {
+            items = itemRes.map {
                 it.mapToDto()
             },
             lastBuildDate = lastBuildDate,

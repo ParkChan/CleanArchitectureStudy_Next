@@ -4,7 +4,7 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class ItemData(
+data class Item(
     val actor: String = "",
     val director: String = "",
     val image: String = "",

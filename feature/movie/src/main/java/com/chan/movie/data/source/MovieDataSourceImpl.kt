@@ -1,6 +1,6 @@
 package com.chan.movie.data.source
 
-import com.chan.movie.data.entity.MovieResponse
+import com.chan.movie.data.data.MovieResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

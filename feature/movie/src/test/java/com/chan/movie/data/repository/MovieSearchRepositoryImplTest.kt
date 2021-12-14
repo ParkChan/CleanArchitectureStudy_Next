@@ -1,7 +1,7 @@
 package com.chan.movie.data.repository
 
 import app.cash.turbine.test
-import com.chan.movie.data.entity.MovieResponse
+import com.chan.movie.data.data.MovieResponse
 import com.chan.movie.data.source.MovieDataSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

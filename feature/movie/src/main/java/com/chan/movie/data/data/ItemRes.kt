@@ -1,9 +1,9 @@
-package com.chan.movie.data.entity
+package com.chan.movie.data.data
 
-import com.chan.movie.domain.data.ItemData
+import com.chan.movie.domain.data.Item
 import com.google.gson.annotations.SerializedName
 
-data class Item(
+data class ItemRes(
     @SerializedName("actor")
     val actor: String = "",
     @SerializedName("director")
@@ -20,10 +20,10 @@ data class Item(
     val title: String = "",
     @SerializedName("userRating")
     val userRating: Double = 0.0
-) : DataToDomainMapper<ItemData> {
+) : DomainMapper<Item> {
 
-    override fun mapToDto(): ItemData =
-        ItemData(
+    override fun mapToDto(): Item =
+        Item(
             actor = actor,
             director = director,
             image = image,

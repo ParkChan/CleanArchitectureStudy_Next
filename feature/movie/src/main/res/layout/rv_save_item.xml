@@ -6,7 +6,7 @@
 
         <variable
             name="item"
-            type="com.chan.movie.domain.data.ItemData" />
+            type="com.chan.movie.domain.data.Item" />
 
         <variable
             name="viewModel"

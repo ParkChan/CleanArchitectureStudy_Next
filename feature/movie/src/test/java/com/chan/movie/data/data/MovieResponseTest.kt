@@ -1,4 +1,4 @@
-package com.chan.movie.data.entity
+package com.chan.movie.data.data
 
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder

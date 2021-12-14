@@ -1,7 +1,7 @@
 package com.chan.movie.ui.viewmodel
 
 import androidx.lifecycle.SavedStateHandle
-import com.chan.movie.domain.data.MovieData
+import com.chan.movie.domain.data.MovieResult
 import com.chan.movie.domain.usecase.MovieSearchUseCase
 import com.chan.movie.ui.main.MovieSearchViewModel
 import com.chan.movie.util.InstantExecutorExtension
@@ -23,15 +23,15 @@ class MovieSearchViewModelTest {
     }
 
     private class FakeMovieSearchUseCase : MovieSearchUseCase {
-        override fun fetchMovies(start: Int, query: String): Flow<MovieData> = flow {
-            emit(MovieData())
+        override fun fetchMovies(start: Int, query: String): Flow<MovieResult> = flow {
+            emit(MovieResult())
         }
     }
 
     @Test
     fun `영화 리스트를 불러옵니다`() = runBlocking {
 
-        val mockMovieDto = MovieData()
+        val mockMovieDto = MovieResult()
         viewModel.searchMovies("a")
 
         assertEquals(mockMovieDto.items, viewModel.movies.getOrAwaitValue())

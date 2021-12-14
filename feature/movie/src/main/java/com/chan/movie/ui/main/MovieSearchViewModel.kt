@@ -1,7 +1,7 @@
 package com.chan.movie.ui.main
 
 import androidx.lifecycle.*
-import com.chan.movie.domain.data.ItemData
+import com.chan.movie.domain.data.Item
 import com.chan.movie.domain.usecase.MovieSearchUseCase
 import com.chan.movie.ui.main.data.ClickEventMessage
 import com.chan.movie.ui.main.data.PageData
@@ -23,12 +23,12 @@ class MovieSearchViewModel @Inject constructor(
 ) : ViewModel() {
 
     private var movieList =
-        savedStateHandle.get(MOVIE_LIST_HANDLE_KEY) ?: emptyList<ItemData>()
+        savedStateHandle.get(MOVIE_LIST_HANDLE_KEY) ?: emptyList<Item>()
         set(value) {
             savedStateHandle.set(MOVIE_LIST_HANDLE_KEY, value)
             field = value
         }
-    private var saveList = savedStateHandle.get(SAVE_LIST_HANDLE_KEY) ?: emptyList<ItemData>()
+    private var saveList = savedStateHandle.get(SAVE_LIST_HANDLE_KEY) ?: emptyList<Item>()
         set(value) {
             savedStateHandle.set(SAVE_LIST_HANDLE_KEY, value)
             field = value
@@ -44,8 +44,8 @@ class MovieSearchViewModel @Inject constructor(
             field = value
         }
 
-    val movies: LiveData<List<ItemData>> = savedStateHandle.getLiveData(MOVIE_LIST_HANDLE_KEY)
-    val saveMovies: LiveData<List<ItemData>> = savedStateHandle.getLiveData(SAVE_LIST_HANDLE_KEY)
+    val movies: LiveData<List<Item>> = savedStateHandle.getLiveData(MOVIE_LIST_HANDLE_KEY)
+    val saveMovies: LiveData<List<Item>> = savedStateHandle.getLiveData(SAVE_LIST_HANDLE_KEY)
 
     private val _bottomProgress = MutableLiveData<Boolean>()
     val bottomProgress: LiveData<Boolean> = _bottomProgress
@@ -119,18 +119,18 @@ class MovieSearchViewModel @Inject constructor(
         _bottomProgress.value = isVisible
     }
 
-    fun onClickSaveItem(contentData: ItemData) {
-        if (!saveList.contains(contentData)) {
-            saveList = saveList + contentData
+    fun onClickSaveItem(content: Item) {
+        if (!saveList.contains(content)) {
+            saveList = saveList + content
             _message.value = Event(ClickEventMessage.SAVE_SUCCESS)
         } else {
             _message.value = Event(ClickEventMessage.ALREADY_EXIST)
         }
     }
 
-    fun onClickDeleteItem(contentData: ItemData) {
-        if (saveList.contains(contentData)) {
-            saveList = saveList - contentData
+    fun onClickDeleteItem(content: Item) {
+        if (saveList.contains(content)) {
+            saveList = saveList - content
             _message.value = Event(ClickEventMessage.DELETE_SUCCESS)
         }
     }

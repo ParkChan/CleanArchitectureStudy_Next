@@ -1,13 +1,13 @@
 package com.chan.movie.data.source
 
 import app.cash.turbine.test
-import com.chan.movie.data.entity.MovieResponse
+import com.chan.movie.data.data.MovieResponse
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
-class MovieDataSourceImplTest {
+class MovieSourceImplTest {
 
     private val movieApi: MovieApi = FakeMovieApi()
     private lateinit var movieDataSourceImpl: MovieDataSourceImpl

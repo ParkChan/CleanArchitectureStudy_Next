@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.chan.movie.BR
 import com.chan.movie.R
 import com.chan.movie.databinding.FragmentSearchListBinding
-import com.chan.movie.domain.data.ItemData
+import com.chan.movie.domain.data.Item
 import com.chan.movie.ui.common.ext.textInputAsFlow
 import com.chan.movie.ui.main.MovieSearchViewModel
 import com.chan.movie.ui.main.data.ProgressItem
@@ -33,7 +33,7 @@ class SearchListFragment : BaseFragment<FragmentSearchListBinding>(
             mapOf(),
         )
     }
-    private val baseAdapter: BaseListAdapter<ItemData> by lazy {
+    private val baseAdapter: BaseListAdapter<Item> by lazy {
         BaseListAdapter(
             layoutResourceId = R.layout.rv_search_item,
             viewHolderBindingId = BR.item,
@@ -109,12 +109,12 @@ class SearchListFragment : BaseFragment<FragmentSearchListBinding>(
         private const val BOTTOM_PROGRESSBAR_COUNT = 0
         private const val INTERVAL_KEYWORD_SEARCH = 800L
         fun newInstance(): SearchListFragment = SearchListFragment()
-        private val DIFF_UTIL = object : DiffUtil.ItemCallback<ItemData>() {
-            override fun areItemsTheSame(oldItem: ItemData, newItem: ItemData): Boolean =
+        private val DIFF_UTIL = object : DiffUtil.ItemCallback<Item>() {
+            override fun areItemsTheSame(oldItem: Item, newItem: Item): Boolean =
                 oldItem.title == newItem.title
 
             override fun areContentsTheSame(
-                oldItem: ItemData, newItem: ItemData
+                oldItem: Item, newItem: Item
             ): Boolean = oldItem == newItem
         }
     }
