@@ -8,7 +8,7 @@ import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.RecyclerView
 
-open class BaseViewHolder<T>(
+open class BaseViewHolder(
     parent: ViewGroup,
     @LayoutRes private val layoutResourceId: Int,
     private val viewHolderBindingId: Int,
@@ -19,7 +19,7 @@ open class BaseViewHolder<T>(
 ) {
     private val binding: ViewDataBinding = DataBindingUtil.bind(itemView)!!
 
-    fun bind(item: T) {
+    fun bind(item: Any?) {
         if (item == null) return
         binding.setVariable(viewHolderBindingId, item)
 

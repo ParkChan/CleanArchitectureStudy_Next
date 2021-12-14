@@ -5,6 +5,7 @@ import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.ConcatAdapter
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.chan.movie.BR
@@ -16,6 +17,7 @@ import com.chan.movie.ui.main.MovieSearchViewModel
 import com.chan.movie.ui.main.data.ProgressItem
 import com.chan.ui.BaseFragment
 import com.chan.ui.adapter.BaseAdapter
+import com.chan.ui.adapter.BaseListAdapter
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -28,14 +30,15 @@ class SearchListFragment : BaseFragment<FragmentSearchListBinding>(
         BaseAdapter(
             layoutResourceId = R.layout.rv_progress_item,
             viewHolderBindingId = BR.progressItem,
-            mapOf()
+            mapOf(),
         )
     }
-    private val baseAdapter: BaseAdapter<ItemData> by lazy {
-        BaseAdapter(
+    private val baseAdapter: BaseListAdapter<ItemData> by lazy {
+        BaseListAdapter(
             layoutResourceId = R.layout.rv_search_item,
             viewHolderBindingId = BR.item,
-            viewModel = mapOf(BR.viewModel to viewModel)
+            viewModel = mapOf(BR.viewModel to viewModel),
+            DIFF_UTIL
         )
     }
     private val concatAdapter: ConcatAdapter by lazy {
@@ -98,7 +101,7 @@ class SearchListFragment : BaseFragment<FragmentSearchListBinding>(
         })
 
         viewModel.movies.observe(viewLifecycleOwner, {
-            baseAdapter.replaceItems(it)
+            baseAdapter.submitList(it)
         })
     }
 
@@ -106,5 +109,13 @@ class SearchListFragment : BaseFragment<FragmentSearchListBinding>(
         private const val BOTTOM_PROGRESSBAR_COUNT = 0
         private const val INTERVAL_KEYWORD_SEARCH = 800L
         fun newInstance(): SearchListFragment = SearchListFragment()
+        private val DIFF_UTIL = object : DiffUtil.ItemCallback<ItemData>() {
+            override fun areItemsTheSame(oldItem: ItemData, newItem: ItemData): Boolean =
+                oldItem.title == newItem.title
+
+            override fun areContentsTheSame(
+                oldItem: ItemData, newItem: ItemData
+            ): Boolean = oldItem == newItem
+        }
     }
 }
