@@ -2,7 +2,6 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-kapt'
-    id 'de.mannodermaus.android-junit5'
     id 'dagger.hilt.android.plugin'
     id 'com.github.ben-manes.versions'
 }
@@ -20,7 +19,6 @@ android {
         versionName AndroidConfig.versionName
 
         testInstrumentationRunner AndroidConfig.androidJunitRunner
-        testInstrumentationRunnerArgument AndroidConfig.runnerBuilder, AndroidConfig.androidJunit5Builder
 
     }
 
@@ -50,11 +48,6 @@ dependencies {
     implementation AndroidXConfig.coreKtx
     implementation AndroidXConfig.appcompat
     implementation GoogleConfig.material
-
-    implementation TestConfig.junitJupiterApi
-    implementation TestConfig.junitJupiterEngine
-    androidTestImplementation TestConfig.androidTestCore
-    androidTestRuntimeOnly TestConfig.androidTestRunner
 
     implementation DaggerHiltConfig.android
     kapt DaggerHiltConfig.compiler
