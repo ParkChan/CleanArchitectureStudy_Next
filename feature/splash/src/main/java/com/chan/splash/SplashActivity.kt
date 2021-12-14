@@ -11,7 +11,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(ActivitySplashBinding
     init {
         lifecycleScope.launchWhenCreated {
             delay(SPLASH_DELAY_TIME)
-            startActivity("com.chan.movie.ui.main.MainActivity")
+            startActivity(BuildConfig.MAIN_ACTIVITY)
             finish()
         }
     }

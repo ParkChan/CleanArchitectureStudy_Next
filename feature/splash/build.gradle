@@ -6,3 +6,9 @@ plugins {
 }
 
 apply from: "../feature.gradle"
+
+android {
+    defaultConfig {
+        buildConfigField "String", "MAIN_ACTIVITY", '"com.chan.movie.ui.main.MainActivity"'
+    }
+}
