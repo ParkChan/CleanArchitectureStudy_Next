@@ -25,7 +25,7 @@ dependencies {
     implementation AndroidXConfig.recyclerView
     implementation AndroidXConfig.viewmodelSavedstate
 
-    implementation DaggerHiltConfig.android
+    api DaggerHiltConfig.android
     kapt DaggerHiltConfig.compiler
 
     testImplementation TestConfig.turbine

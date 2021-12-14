@@ -1,6 +1,4 @@
 <resources>
-    <string name="app_name">CleanArchitectureStudy</string>
-
     <string name="activity_main_hint_input">영화 이름을 입력하세요.</string>
     <string name="tab_search_list">검색하기</string>
     <string name="tab_save_list">저장목록</string>
