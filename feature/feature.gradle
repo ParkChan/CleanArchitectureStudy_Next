@@ -3,4 +3,6 @@ apply from: "../../android.gradle"
 dependencies {
     implementation project(":common:ui")
     implementation project(":common:util")
+
+    implementation LogConfig.timber
 }
