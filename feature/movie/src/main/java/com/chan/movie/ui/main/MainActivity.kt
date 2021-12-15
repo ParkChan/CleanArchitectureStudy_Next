@@ -1,6 +1,5 @@
 package com.chan.movie.ui.main
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.viewModels
 import com.chan.movie.R
@@ -16,6 +15,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::inflate) {
 
+    private val offscreenPageLimit = 1
     private val pagerAdapter: ViewPagerAdapter by lazy {
         ViewPagerAdapter(this)
     }
@@ -28,10 +28,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
         initViewModelObserve()
     }
 
-    @SuppressLint("WrongConstant")
     private fun initViewPager() {
         binding.viewPager.adapter = pagerAdapter
-        binding.viewPager.offscreenPageLimit = VIEWPAGER_OFFSCREEN_PAGE_LIMIT
+        binding.viewPager.offscreenPageLimit = offscreenPageLimit
         val tabLayout = binding.tabs
         val tabTitleList =
             listOf(
@@ -55,9 +54,4 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
             }
         })
     }
-
-    companion object {
-        private const val VIEWPAGER_OFFSCREEN_PAGE_LIMIT = 1
-    }
-
 }
