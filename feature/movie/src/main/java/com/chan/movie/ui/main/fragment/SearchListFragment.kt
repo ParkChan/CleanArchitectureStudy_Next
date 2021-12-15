@@ -38,7 +38,14 @@ class SearchListFragment : BaseFragment<FragmentSearchListBinding>(
             layoutResourceId = R.layout.rv_search_item,
             viewHolderBindingId = BR.item,
             viewModel = mapOf(BR.viewModel to viewModel),
-            DIFF_UTIL
+            object : DiffUtil.ItemCallback<Item>() {
+                override fun areItemsTheSame(oldItem: Item, newItem: Item): Boolean =
+                    oldItem.title == newItem.title
+
+                override fun areContentsTheSame(
+                    oldItem: Item, newItem: Item
+                ): Boolean = oldItem == newItem
+            }
         )
     }
     private val concatAdapter: ConcatAdapter by lazy {
@@ -109,13 +116,5 @@ class SearchListFragment : BaseFragment<FragmentSearchListBinding>(
         private const val BOTTOM_PROGRESSBAR_COUNT = 0
         private const val INTERVAL_KEYWORD_SEARCH = 800L
         fun newInstance(): SearchListFragment = SearchListFragment()
-        private val DIFF_UTIL = object : DiffUtil.ItemCallback<Item>() {
-            override fun areItemsTheSame(oldItem: Item, newItem: Item): Boolean =
-                oldItem.title == newItem.title
-
-            override fun areContentsTheSame(
-                oldItem: Item, newItem: Item
-            ): Boolean = oldItem == newItem
-        }
     }
 }
