@@ -1,6 +1,6 @@
 package com.chan.movie.data.di
 
-import com.chan.movie.data.repository.MovieSearchRepositoryImpl
+import com.chan.movie.data.MovieSearchRepositoryImpl
 import com.chan.movie.data.source.MovieDataSource
 import com.chan.movie.data.source.MovieDataSourceImpl
 import com.chan.movie.domain.repository.MovieSearchRepository

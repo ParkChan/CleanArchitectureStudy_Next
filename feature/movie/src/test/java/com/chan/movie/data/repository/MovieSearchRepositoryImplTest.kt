@@ -1,7 +1,8 @@
 package com.chan.movie.data.repository
 
 import app.cash.turbine.test
-import com.chan.movie.data.data.MovieResponse
+import com.chan.movie.data.MovieResponse
+import com.chan.movie.data.MovieSearchRepositoryImpl
 import com.chan.movie.data.source.MovieDataSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -32,7 +33,7 @@ class MovieSearchRepositoryImplTest {
         val mockMovieResponse = MovieResponse()
 
         repositoryImpl.fetchMovies(start = 1, query = "a").test {
-            assertEquals(mockMovieResponse.mapToDto(), awaitItem())
+            assertEquals(mockMovieResponse.mapToDomain(), awaitItem())
             awaitComplete()
         }
     }

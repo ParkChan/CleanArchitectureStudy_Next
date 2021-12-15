@@ -12,15 +12,11 @@ import com.chan.movie.BR
 import com.chan.movie.R
 import com.chan.movie.databinding.FragmentSearchListBinding
 import com.chan.movie.domain.data.Item
-import com.chan.movie.ui.common.ext.textInputAsFlow
 import com.chan.movie.ui.main.MovieSearchViewModel
 import com.chan.movie.ui.main.data.ProgressItem
 import com.chan.ui.BaseFragment
 import com.chan.ui.adapter.BaseAdapter
 import com.chan.ui.adapter.BaseListAdapter
-import kotlinx.coroutines.flow.debounce
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
 
 class SearchListFragment : BaseFragment<FragmentSearchListBinding>(
     FragmentSearchListBinding::inflate

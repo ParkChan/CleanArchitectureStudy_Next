@@ -1,5 +1,6 @@
 package com.chan.movie.data.data
 
+import com.chan.movie.data.MovieResponse
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -39,7 +40,7 @@ class MovieResponseTest {
     @Test
     fun `Json 엔티티를 Dto로 변환합니다`() {
         val json = File("src/test/resources/api-response/1.json").readText()
-        val dto = (gson.fromJson(json, MovieResponse::class.java) ?: MovieResponse()).mapToDto()
+        val dto = (gson.fromJson(json, MovieResponse::class.java) ?: MovieResponse()).mapToDomain()
 
         assertEquals(88, dto.total)
         assertEquals(2, dto.start)
