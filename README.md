@@ -6,7 +6,7 @@
 ## 주요변경사항
 - 클린 아키텍처 스터디에서 사용된 data/domain/app 멀티 모듈 구조를 패키지 구분으로 변경합니다.
 - 앱 화면 단위를 feature module 단위로 분류합니다.
-- ui 모듈 : feature에서 사용하는 공통 테마 설정 및 BaseActivity, BaseFragment 등이 있습니다.
+- ui 모듈 : BaseActivity, BaseFragment, BaseViewHolder, BaseListAdapter 구성
 - util 모듈 : startActivity, registerForActivityResult 
 
 ## [그림설명]
