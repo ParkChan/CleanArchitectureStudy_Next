@@ -1,9 +1,9 @@
 # CleanArchitectureStudy
 
-## 키워드
-- 멀티모듈
-- 클린아키텍처
-- TDD 테스트 주도개발
+## 프로젝트 관심사
+- TDD 테스트 주도개발 
+- 클린아키텍처 도입
+- 멀티모듈 구성
 
 ## 적용기술
 - Android JetPack Architecture
@@ -30,7 +30,6 @@
 - Source Test
 - ViewModel Test
 
-
 ### CI(Bitrise)
 - Build Project
 - ![140909093-7a0c660d-7288-4991-84e7-c8098724fbdd](https://user-images.githubusercontent.com/7857824/140920679-0e5115c3-61db-48dd-9419-68534650e398.png)
@@ -41,7 +40,7 @@
 ## History
 - [이전 클린아키텍처 스터디](https://github.com/ParkChan/CleanArchitectureStudy/blob/master/README.md)
 
-## 주요변경사항
+## 주요사항
 - 클린 아키텍처 스터디에서 사용된 data/domain/app 멀티 모듈 구조를 패키지 구분으로 변경합니다.
 - 앱 화면 단위를 feature module 단위로 분류합니다.
 - ui 모듈 : BaseActivity, BaseFragment, BaseViewHolder, BaseListAdapter 구성
