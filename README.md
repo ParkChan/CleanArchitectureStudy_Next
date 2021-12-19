@@ -1,9 +1,9 @@
 # CleanArchitectureStudy
 
 ## 프로젝트 관심사
-- TDD 테스트 주도개발 
+- TDD( Test Driven Development)
 - 클린아키텍처 도입
-- 멀티모듈 구성
+- 멀티모듈
 
 ## 적용기술
 - Android JetPack Architecture
