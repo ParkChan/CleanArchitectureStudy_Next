@@ -1,8 +1,8 @@
-# CleanArchitectureStudy
+# CleanArchitectureStudyNext
 
 ## 프로젝트 관심사
 - TDD( Test Driven Development)
-- 클린아키텍처 도입
+- 클린아키텍처
 - 멀티모듈
 
 ## 적용기술
@@ -64,6 +64,7 @@
   - 명령어 : 콘솔에서 gradle dependencyUpdates 입력 또는 Gradle 메뉴의 Task > help > dependencyUpdates 선택
 - [SavedStateHandle 은 프로세스가 시스템에 의해 종료되더라도 유지됩니다](http://pluu.github.io/blog/android/2020/02/10/saved-state/)
 - PlayStore와 같은 하단 Footer 프로그래스바를 만들어 봅니다.(ConcatAdapter)
+- 그 외 적용하고 싶은 기술 항목들(ing...)
 
 ### 기타
 - [네이버 OPEN API 검색 > 영화](https://developers.naver.com/docs/search/movie/)
