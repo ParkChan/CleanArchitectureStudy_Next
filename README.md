@@ -1,5 +1,43 @@
 # CleanArchitectureStudy
 
+## 키워드
+- 멀티모듈
+- 클린아키텍처
+- TDD 테스트 주도개발
+
+## 적용기술
+- Android JetPack Architecture
+    - DataBinding
+    - LiveData
+    - ViewModel
+
+- Network
+    - Retrofit
+
+- Async
+    - Coroutine
+    
+- DI
+    - Hilt
+
+- Unit Test
+    - Junit5
+    - Turbine - flow Test
+
+### Unit Test Code 작성 항목
+- Entity Test
+- Repository Test
+- Source Test
+- ViewModel Test
+
+
+### CI(Bitrise)
+- Build Project
+- ![140909093-7a0c660d-7288-4991-84e7-c8098724fbdd](https://user-images.githubusercontent.com/7857824/140920679-0e5115c3-61db-48dd-9419-68534650e398.png)
+
+### CD
+- 슬랙을 통해 앱을 배포
+
 ## History
 - [이전 클린아키텍처 스터디](https://github.com/ParkChan/CleanArchitectureStudy/blob/master/README.md)
 
@@ -30,22 +68,6 @@
 
 ### 기타
 - [네이버 OPEN API 검색 > 영화](https://developers.naver.com/docs/search/movie/)
-
-## 적용된 기술
-
-### Unit Test Code
-- Entity Test
-- Repository Test
-- Source Test
-- ViewModel Test
-
-### CI(Bitrise)
-- Build Project
-- ![140909093-7a0c660d-7288-4991-84e7-c8098724fbdd](https://user-images.githubusercontent.com/7857824/140920679-0e5115c3-61db-48dd-9419-68534650e398.png)
-
-
-### CD
-- 슬랙을 통해 앱을 배포
 
 ---
 
