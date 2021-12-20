@@ -1,7 +1,7 @@
 object Version {
     const val gradle = "7.0.3"
     const val kotlin = "1.6.0"
-    const val hilt = "2.39.1"
+    const val hilt = "2.40.5"
     const val junit5 = "1.8.0.0"
 
     const val appcompat = "1.3.1"
@@ -9,7 +9,7 @@ object Version {
     const val activityKtx = "1.3.1"
     const val fragmentKtx = "1.3.6"
     const val material = "1.1.0"
-    const val constraintLayout = "1.1.3"
+    const val constraintLayout = "2.1.2"
     const val viewpager2 = "1.0.0"
     const val recyclerView = "1.2.1"
     const val viewmodelSavedstate = "2.2.0"
@@ -17,7 +17,7 @@ object Version {
 
     const val coroutine = "1.5.2"
 
-    const val jupiter = "5.8.1"
+    const val jupiter = "5.8.2"
     const val assertjCore = "3.21.0"
     const val mockk = "1.10.6"
     const val turbine = "0.7.0"
