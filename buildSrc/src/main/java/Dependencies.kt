@@ -4,7 +4,7 @@ object Version {
     const val hilt = "2.40.5"
     const val junit5 = "1.8.0.0"
 
-    const val appcompat = "1.3.1"
+    const val appcompat = "1.4.0"
     const val coreKtx = "1.6.0"
     const val activityKtx = "1.3.1"
     const val fragmentKtx = "1.3.6"
@@ -12,7 +12,7 @@ object Version {
     const val constraintLayout = "2.1.2"
     const val viewpager2 = "1.0.0"
     const val recyclerView = "1.2.1"
-    const val viewmodelSavedstate = "2.2.0"
+    const val viewModelSavedState = "2.2.0"
 
 
     const val coroutine = "1.5.2"
@@ -50,9 +50,9 @@ object ProjectConfig {
 }
 
 object AndroidConfig {
-    const val compileSdk = 30
+    const val compileSdk = 31
     const val minSdk = 26
-    const val targetSdk = 30
+    const val targetSdk = 31
     const val versionCode = 1
     const val versionName = "1.0.0"
     const val runnerBuilder = "runnerBuilder"
@@ -99,8 +99,12 @@ object AndroidXConfig {
     const val viewpager2 = "androidx.viewpager2:viewpager2:${Version.viewpager2}"
     const val recyclerView = "androidx.recyclerview:recyclerview:${Version.recyclerView}"
 
-    const val viewmodelSavedstate = "androidx.lifecycle:lifecycle-viewmodel-savedstate:${Version.viewmodelSavedstate}"
+    const val viewModelSavedState = "androidx.lifecycle:lifecycle-viewmodel-savedstate:${Version.viewModelSavedState}"
 
+}
+
+object ViewBindingConfig{
+    const val  viewBindingPropertyDelegateNoReflection = "com.github.kirich1409:viewbindingpropertydelegate-noreflection:1.5.3"
 
 }
 

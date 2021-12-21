@@ -4,5 +4,6 @@ dependencies {
     implementation project(":common:ui")
     implementation project(":common:util")
 
+    implementation ViewBindingConfig.viewBindingPropertyDelegateNoReflection
     implementation LogConfig.timber
 }

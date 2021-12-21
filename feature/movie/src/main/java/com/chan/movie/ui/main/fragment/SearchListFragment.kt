@@ -2,12 +2,14 @@ package com.chan.movie.ui.main.fragment
 
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import by.kirich1409.viewbindingdelegate.viewBinding
 import com.chan.movie.BR
 import com.chan.movie.R
 import com.chan.movie.databinding.FragmentSearchListBinding
@@ -15,16 +17,15 @@ import com.chan.movie.domain.data.Item
 import com.chan.movie.ui.common.ext.textInputAsFlow
 import com.chan.movie.ui.main.MovieSearchViewModel
 import com.chan.movie.ui.main.data.ProgressItem
-import com.chan.ui.BaseFragment
 import com.chan.ui.adapter.BaseAdapter
 import com.chan.ui.adapter.BaseListAdapter
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
-class SearchListFragment : BaseFragment<FragmentSearchListBinding>(
-    FragmentSearchListBinding::inflate
-) {
+class SearchListFragment : Fragment(R.layout.fragment_search_list) {
+
+    private val binding by viewBinding(FragmentSearchListBinding::bind)
     private val viewModel by activityViewModels<MovieSearchViewModel>()
     private val progressAdapter: BaseAdapter<ProgressItem> by lazy {
         BaseAdapter(
