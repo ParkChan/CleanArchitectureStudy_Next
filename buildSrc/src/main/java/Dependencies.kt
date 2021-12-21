@@ -13,6 +13,7 @@ object Version {
     const val viewpager2 = "1.0.0"
     const val recyclerView = "1.2.1"
     const val viewModelSavedState = "2.2.0"
+    const val viewBindingPropertyDelegateNoReflection = "1.5.3"
 
 
     const val coroutine = "1.5.2"
@@ -104,7 +105,7 @@ object AndroidXConfig {
 }
 
 object ViewBindingConfig{
-    const val  viewBindingPropertyDelegateNoReflection = "com.github.kirich1409:viewbindingpropertydelegate-noreflection:1.5.3"
+    const val  viewBindingPropertyDelegateNoReflection = "com.github.kirich1409:viewbindingpropertydelegate-noreflection:${Version.viewBindingPropertyDelegateNoReflection}"
 
 }
 
