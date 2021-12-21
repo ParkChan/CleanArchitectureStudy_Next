@@ -64,7 +64,6 @@
   - 명령어 : 콘솔에서 gradle dependencyUpdates 입력 또는 Gradle 메뉴의 Task > help > dependencyUpdates 선택
 - [SavedStateHandle 은 프로세스가 시스템에 의해 종료되더라도 유지됩니다](http://pluu.github.io/blog/android/2020/02/10/saved-state/)
 - PlayStore와 같은 하단 Footer 프로그래스바를 만들어 봅니다.(ConcatAdapter)
-- [프레그먼트에서 DataBinding 또는 ViewBinding 사용시 메모리 누수와 해결방법](https://github.com/androidbroadcast/ViewBindingPropertyDelegate)  
 - 그 외 적용하고 싶은 기술 항목들(ing...)
 
 ### 기타
