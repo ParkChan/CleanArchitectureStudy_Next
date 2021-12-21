@@ -20,7 +20,7 @@ abstract class BaseFragment<VDB : ViewDataBinding>(
         savedInstanceState: Bundle?
     ): View? {
         binding = inflater(layoutInflater).apply {
-            lifecycleOwner = this@BaseFragment
+            lifecycleOwner = viewLifecycleOwner
         }
         return binding.root
     }
