@@ -1,5 +1,5 @@
 package com.chan.movie.data
 
-interface MapToDomain<T> {
+internal interface MapToDomain<T> {
     fun mapToDomain(): T
 }

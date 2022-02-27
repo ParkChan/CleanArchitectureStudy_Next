@@ -4,7 +4,7 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class PageData(
+internal data class PageData(
     var start: Int = DEFAULT_START,
     var display: Int = DEFAULT_DISPLAY,
     var total: Int = DEFAULT_TOTAL

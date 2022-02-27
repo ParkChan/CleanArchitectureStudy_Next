@@ -5,7 +5,7 @@ import com.chan.movie.domain.repository.MovieSearchRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class MovieSearchUseCaseImpl @Inject constructor(
+internal class MovieSearchUseCaseImpl @Inject constructor(
     private val repository: MovieSearchRepository
 ) : MovieSearchUseCase {
     override fun fetchMovies(start: Int, query: String): Flow<MovieResult> =

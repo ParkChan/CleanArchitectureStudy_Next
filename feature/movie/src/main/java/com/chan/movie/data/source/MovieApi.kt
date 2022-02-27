@@ -4,7 +4,7 @@ import com.chan.movie.data.MovieResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-interface MovieApi {
+internal interface MovieApi {
 
     @GET("/v1/search/movie.json")
     suspend fun fetchMovies(

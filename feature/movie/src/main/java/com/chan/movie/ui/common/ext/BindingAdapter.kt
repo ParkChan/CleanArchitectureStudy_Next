@@ -6,7 +6,7 @@ import com.bumptech.glide.Glide
 import com.chan.movie.R
 
 @BindingAdapter("setGlideThumb")
-fun bindingGlideThumb(imageView: ImageView, uri: String?) {
+internal fun bindingGlideThumb(imageView: ImageView, uri: String?) {
     Glide.with(imageView)
         .load(uri)
         .error(R.drawable.ic_bg_error)

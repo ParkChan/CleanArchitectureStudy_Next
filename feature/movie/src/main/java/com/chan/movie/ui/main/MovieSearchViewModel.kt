@@ -17,7 +17,7 @@ import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
-class MovieSearchViewModel @Inject constructor(
+internal class MovieSearchViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
     private val movieSearchUseCase: MovieSearchUseCase
 ) : ViewModel() {

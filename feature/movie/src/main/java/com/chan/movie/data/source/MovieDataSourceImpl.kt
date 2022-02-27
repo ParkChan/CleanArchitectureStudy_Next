@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
-class MovieDataSourceImpl @Inject constructor(
+internal class MovieDataSourceImpl @Inject constructor(
     private val movieApi: MovieApi
 ) : MovieDataSource {
     override fun fetchMovies(start: Int, query: String): Flow<MovieResponse> =

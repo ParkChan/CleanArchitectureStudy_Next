@@ -10,7 +10,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-class RetrofitService {
+internal class RetrofitService {
 
     @Provides
     @Singleton

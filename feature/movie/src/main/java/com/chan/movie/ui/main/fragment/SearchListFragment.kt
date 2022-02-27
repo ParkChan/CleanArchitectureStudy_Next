@@ -22,7 +22,7 @@ import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
-class SearchListFragment : BaseFragment<FragmentSearchListBinding>(
+internal class SearchListFragment : BaseFragment<FragmentSearchListBinding>(
     FragmentSearchListBinding::inflate
 ) {
     private val viewModel by activityViewModels<MovieSearchViewModel>()

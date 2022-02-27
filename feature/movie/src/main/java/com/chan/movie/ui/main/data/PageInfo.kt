@@ -4,7 +4,7 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-class PageInfo(private val pageData: PageData) : Parcelable {
+internal class PageInfo(private val pageData: PageData) : Parcelable {
 
     fun init(): PageInfo {
         return PageInfo(

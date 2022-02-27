@@ -11,7 +11,7 @@ import com.chan.movie.ui.main.MovieSearchViewModel
 import com.chan.ui.BaseFragment
 import com.chan.ui.adapter.BaseAdapter
 
-class SaveListFragment : BaseFragment<FragmentSaveListBinding>(
+internal class SaveListFragment : BaseFragment<FragmentSaveListBinding>(
     FragmentSaveListBinding::inflate
 ) {
     private val viewModel by activityViewModels<MovieSearchViewModel>()

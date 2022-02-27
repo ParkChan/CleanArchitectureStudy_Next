@@ -2,7 +2,7 @@ package com.chan.movie.domain.data
 
 import java.util.*
 
-data class MovieResult(
+internal data class MovieResult(
     val display: Int = 0,
     val items: List<Item> = emptyList(),
     val lastBuildDate: Date = Date(0),

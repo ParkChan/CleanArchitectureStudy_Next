@@ -6,7 +6,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.chan.movie.ui.main.fragment.SaveListFragment
 import com.chan.movie.ui.main.fragment.SearchListFragment
 
-class ViewPagerAdapter(
+internal class ViewPagerAdapter(
     activity: AppCompatActivity
 ) : FragmentStateAdapter(activity) {
 

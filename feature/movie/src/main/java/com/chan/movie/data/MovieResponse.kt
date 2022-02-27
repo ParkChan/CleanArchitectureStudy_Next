@@ -5,7 +5,7 @@ import com.chan.movie.domain.data.MovieResult
 import com.google.gson.annotations.SerializedName
 import java.util.*
 
-data class MovieResponse(
+internal data class MovieResponse(
     @SerializedName("display")
     val display: Int = 0,
     @SerializedName("items")
@@ -30,7 +30,7 @@ data class MovieResponse(
         )
 }
 
-data class ItemResponse(
+internal data class ItemResponse(
     @SerializedName("actor")
     val actor: String = "",
     @SerializedName("director")
