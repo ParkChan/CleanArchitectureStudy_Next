@@ -5,4 +5,10 @@
     <string name="already_exist">이미 저장된 항목입니다.</string>
     <string name="save_success">저장되었습니다.</string>
     <string name="delete_success">삭제되었습니다.</string>
+
+
+    <string name="dialog_save_content">저장하시겠습니까?</string>
+
+    <string name="dialog_common_btn_text_negative">아니오</string>
+    <string name="dialog_common_btn_text_positive">네</string>
 </resources>
