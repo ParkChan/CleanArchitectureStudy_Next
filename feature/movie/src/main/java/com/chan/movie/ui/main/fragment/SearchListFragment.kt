@@ -95,7 +95,7 @@ internal class SearchListFragment : BaseFragment<FragmentSearchListBinding>(
     }
 
     private fun initViewModelObserve() {
-        viewModel.bottomProgress.observe(viewLifecycleOwner, { isShow ->
+        viewModel.bottomProgress.observe(viewLifecycleOwner) { isShow ->
             if (isShow) {
                 if (progressAdapter.itemCount == BOTTOM_PROGRESSBAR_COUNT) {
                     progressAdapter.replaceItems(listOf(ProgressItem()))
@@ -105,11 +105,11 @@ internal class SearchListFragment : BaseFragment<FragmentSearchListBinding>(
                     progressAdapter.replaceItems(emptyList())
                 }
             }
-        })
+        }
 
-        viewModel.movies.observe(viewLifecycleOwner, {
+        viewModel.movies.observe(viewLifecycleOwner) {
             baseAdapter.submitList(it)
-        })
+        }
     }
 
     companion object {
