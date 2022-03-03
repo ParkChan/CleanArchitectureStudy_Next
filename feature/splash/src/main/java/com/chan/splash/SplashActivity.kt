@@ -20,6 +20,6 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(ActivitySplashBinding
     }
 
     companion object {
-        private const val SPLASH_DELAY_TIME = 2_000L
+        private const val SPLASH_DELAY_TIME = 1_000L
     }
 }

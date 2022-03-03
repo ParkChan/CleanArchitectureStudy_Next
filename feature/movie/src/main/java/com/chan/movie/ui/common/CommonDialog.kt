@@ -6,10 +6,11 @@ import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.DialogFragment
 import com.chan.movie.databinding.DialogCommonBinding
+import timber.log.Timber
 
 class CommonDialog(
     private val message: String,
-    private val topPosition: Float
+    private val itemViewDisplayInfo: ItemViewDisplayInfo
 ) : DialogFragment() {
 
     private lateinit var positiveListener: View.OnClickListener
@@ -33,16 +34,8 @@ class CommonDialog(
 
     override fun onResume() {
         super.onResume()
-        val window = dialog?.window
-        val params: WindowManager.LayoutParams? = window?.attributes
-        params?.apply {
-            gravity = Gravity.TOP
-            width = ViewGroup.LayoutParams.MATCH_PARENT
-            height = ViewGroup.LayoutParams.WRAP_CONTENT
-            y = topPosition.toInt()
-        }
-        dialog?.window?.attributes = params
-        window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        initDialogWindow()
+        noneDefaultDialogPadding()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -59,5 +52,24 @@ class CommonDialog(
 
     fun negativeListener(listener: View.OnClickListener) {
         negativeListener = listener
+    }
+
+    private fun initDialogWindow(){
+        val window = dialog?.window
+        val params: WindowManager.LayoutParams? = window?.attributes
+        params?.apply {
+            gravity = Gravity.TOP
+            width = ViewGroup.LayoutParams.MATCH_PARENT
+            height = ViewGroup.LayoutParams.WRAP_CONTENT
+            Timber.d(">>>> width is $width height is $height")
+            y = itemViewDisplayInfo.itemViewBottomY()
+        }
+        dialog?.window?.attributes = params
+
+    }
+
+    private fun noneDefaultDialogPadding() {
+        val window = dialog?.window
+        window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
     }
 }

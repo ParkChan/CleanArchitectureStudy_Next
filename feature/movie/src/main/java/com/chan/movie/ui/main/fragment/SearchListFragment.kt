@@ -1,8 +1,6 @@
 package com.chan.movie.ui.main.fragment
 
 import android.os.Bundle
-import android.view.GestureDetector
-import android.view.MotionEvent
 import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
@@ -15,6 +13,7 @@ import com.chan.movie.R
 import com.chan.movie.databinding.FragmentSearchListBinding
 import com.chan.movie.domain.data.Item
 import com.chan.movie.ui.common.CommonDialog
+import com.chan.movie.ui.common.RecyclerViewItemTouchEvent
 import com.chan.movie.ui.common.ext.textInputAsFlow
 import com.chan.movie.ui.main.MovieSearchViewModel
 import com.chan.movie.ui.main.data.ProgressItem
@@ -24,7 +23,6 @@ import com.chan.ui.adapter.BaseListAdapter
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import timber.log.Timber
 
 
 internal class SearchListFragment : BaseFragment<FragmentSearchListBinding>(
@@ -56,13 +54,8 @@ internal class SearchListFragment : BaseFragment<FragmentSearchListBinding>(
     private val concatAdapter: ConcatAdapter by lazy {
         ConcatAdapter(baseAdapter, progressAdapter)
     }
-    private val gestureDetector by lazy {
-        GestureDetector(requireContext(), object : GestureDetector.SimpleOnGestureListener() {
-            override fun onSingleTapUp(e: MotionEvent?): Boolean {
-                return true
-            }
-        })
-    }
+
+    private lateinit var recyclerViewItemTouchEvent: RecyclerViewItemTouchEvent
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -73,23 +66,9 @@ internal class SearchListFragment : BaseFragment<FragmentSearchListBinding>(
         initViewModelObserve()
         initTextChangedListener()
 
-        binding.rvContent.addOnItemTouchListener(object : RecyclerView.OnItemTouchListener {
-            override fun onInterceptTouchEvent(rv: RecyclerView, e: MotionEvent): Boolean {
-                //TODO : 포지션만 가져오는 로직 구성
-                val child: View? = rv.findChildViewUnder(e.x, e.y)
-                if (child != null && gestureDetector.onTouchEvent(e)) {
-                    Timber.d(">>> addOnItemTouchListener y >> ${e.y}")
-                    Timber.d(">>> child  $child")
-                    val bottomDisplayPosition = child.y + child.height
-                    showDialog(bottomDisplayPosition)
-                }
-                return false
-            }
+        recyclerViewItemTouchEvent =
+            RecyclerViewItemTouchEvent(binding.rvContent)
 
-            override fun onTouchEvent(rv: RecyclerView, e: MotionEvent) {}
-
-            override fun onRequestDisallowInterceptTouchEvent(disallowIntercept: Boolean) {}
-        })
     }
 
     private fun initViewModel() {
@@ -142,20 +121,14 @@ internal class SearchListFragment : BaseFragment<FragmentSearchListBinding>(
         }
 
         viewModel.showDialog.observe(viewLifecycleOwner) {
-            //TODO : 다이얼로그 노출시점
-//            showDialog()
-//            val params: WindowManager.LayoutParams? = dialog.window?.attributes
-//            params?.gravity = Gravity.TOP
-//            params?.y = 0
-//            dialog.window?.attributes = params
-//            dialog.show()
+            showDialog()
         }
     }
 
-    private fun showDialog(position: Float) {
+    private fun showDialog() {
         val dialog = CommonDialog(
             getString(R.string.dialog_save_content),
-            position
+            recyclerViewItemTouchEvent.itemViewPositionInfo
         )
         dialog.positiveListener {
             if (dialog.isAdded) {
