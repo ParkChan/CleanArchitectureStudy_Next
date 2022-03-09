@@ -7,6 +7,7 @@ import android.view.*
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.DialogFragment
 import com.chan.movie.databinding.DialogCommonBinding
+import com.chan.ui.util.convertDpToPx
 import timber.log.Timber
 
 class CommonDialog(
@@ -30,7 +31,7 @@ class CommonDialog(
         savedInstanceState: Bundle?
     ): View {
         binding = DialogCommonBinding.inflate(inflater, container, false)
-        if(itemViewDisplayInfo.itemPosition() == RECYCLER_VIEW_FIRST_ITEM){
+        if (itemViewDisplayInfo.itemPosition() == RECYCLER_VIEW_FIRST_ITEM) {
             viewLocationChangeOfTopAndBottomUI()
         }
         return binding.root
@@ -59,6 +60,13 @@ class CommonDialog(
     }
 
     private fun initDialogWindow() {
+        testInitDialogLocation2()
+    }
+
+    /**
+     * 다이얼로그 높이를 정확히 알수 없을시 viewTreeObserver를 통한 측정
+     */
+    private fun testInitDialogLocation1() {
         var diff: Int
         binding.clRoot.viewTreeObserver.addOnGlobalLayoutListener(
             object : ViewTreeObserver.OnGlobalLayoutListener {
@@ -88,11 +96,25 @@ class CommonDialog(
             })
     }
 
+    private fun testInitDialogLocation2() {
+        val listItemHeight = itemViewDisplayInfo.itemViewHeight()
+        val window = dialog?.window
+        val params: WindowManager.LayoutParams? = window?.attributes
+        params?.apply {
+            gravity = Gravity.TOP
+            width = ViewGroup.LayoutParams.MATCH_PARENT
+            height = ViewGroup.LayoutParams.WRAP_CONTENT
+            y = itemViewDisplayInfo.itemViewBottomY() - listItemHeight
+        }
+        dialog?.window?.attributes = params
+    }
+
     private fun viewLocationChangeOfTopAndBottomUI() {
         val buttonGroupLayoutParams: ConstraintLayout.LayoutParams =
             ConstraintLayout.LayoutParams(
                 ConstraintLayout.LayoutParams.MATCH_PARENT,
-                ConstraintLayout.LayoutParams.WRAP_CONTENT).apply {
+                convertDpToPx(requireContext(), DIALOG_BUTTON_GROUP_VIEW_HEIGHT)
+            ).apply {
                 startToStart = ConstraintLayout.LayoutParams.PARENT_ID
                 endToEnd = ConstraintLayout.LayoutParams.PARENT_ID
                 topToTop = ConstraintLayout.LayoutParams.PARENT_ID
@@ -103,7 +125,8 @@ class CommonDialog(
         val titleLayoutParams: ConstraintLayout.LayoutParams =
             ConstraintLayout.LayoutParams(
                 ConstraintLayout.LayoutParams.MATCH_PARENT,
-                ConstraintLayout.LayoutParams.WRAP_CONTENT).apply {
+                convertDpToPx(requireContext(), DIALOG_TITLE_VIEW_HEIGHT)
+            ).apply {
                 topToBottom = binding.clButtonGroup.id
             }
         binding.tvTitle.layoutParams = titleLayoutParams
@@ -119,5 +142,7 @@ class CommonDialog(
     companion object {
         private const val RECYCLER_VIEW_FIRST_ITEM = 0
         private const val DELAY = 1L
+        private const val DIALOG_TITLE_VIEW_HEIGHT = 250
+        private const val DIALOG_BUTTON_GROUP_VIEW_HEIGHT = 50
     }
 }
