@@ -20,7 +20,7 @@ class RecyclerViewItemTouchEvent(
     }
 
     val itemViewPositionInfo by lazy {
-        ItemViewDisplayInfo()
+        ViewHolderItemInfo()
     }
 
     private val onItemTouchListener = object : RecyclerView.OnItemTouchListener {

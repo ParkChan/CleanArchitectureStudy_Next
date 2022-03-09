@@ -12,7 +12,7 @@ import timber.log.Timber
 
 class CommonDialog(
     private val message: String,
-    private val itemViewDisplayInfo: ItemViewDisplayInfo
+    private val itemViewDisplayInfo: ViewHolderItemInfo
 ) : DialogFragment() {
 
     private lateinit var positiveListener: View.OnClickListener
@@ -123,7 +123,7 @@ class CommonDialog(
                 gravity = Gravity.TOP
                 width = ViewGroup.LayoutParams.MATCH_PARENT
                 height = ViewGroup.LayoutParams.WRAP_CONTENT
-                y = itemViewDisplayInfo.itemPositionY().minus(listItemHeight)
+                y = itemViewDisplayInfo.itemPositionY() - listItemHeight
             }
             dialog?.window?.attributes = params
         } else {
@@ -131,7 +131,7 @@ class CommonDialog(
                 gravity = Gravity.TOP
                 width = ViewGroup.LayoutParams.MATCH_PARENT
                 height = ViewGroup.LayoutParams.WRAP_CONTENT
-                y = itemViewDisplayInfo.itemPositionY()
+                y = itemViewDisplayInfo.itemPositionY() - listItemHeight
             }
             dialog?.window?.attributes = params
         }
