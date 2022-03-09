@@ -8,7 +8,6 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.DialogFragment
 import com.chan.movie.databinding.DialogCommonBinding
 import com.chan.ui.util.convertDpToPx
-import timber.log.Timber
 
 class CommonDialog(
     private val message: String,
@@ -71,39 +70,32 @@ class CommonDialog(
         binding.clRoot.viewTreeObserver.addOnGlobalLayoutListener(
             object : ViewTreeObserver.OnGlobalLayoutListener {
                 override fun onGlobalLayout() {
-                    //[Start] 리스트 높이와 다이얼로그 높이가 고정으로 같으면 해당 코드 불필요
                     val dialogHeight = binding.clRoot.height
                     val listItemHeight = itemViewDisplayInfo.itemViewHeight()
-                    //리스트 아이템보다 다이얼로그가 큰 경우
-                    //다이얼로그 - 리스트 여분 만큼 Y축을 이동 시켜 주어야함
                     diff = dialogHeight - listItemHeight
-                    Timber.d(">>>> diff $diff")
-                    //[End] 리스트 높이와 다이얼로그 높이가 고정으로 같으면 해당 코드 불필요
-                    val window = dialog?.window
-                    val params: WindowManager.LayoutParams? = window?.attributes
+                    val params: WindowManager.LayoutParams? = dialog?.window?.attributes
 
-                    if (itemViewDisplayInfo.itemPosition() == RECYCLER_VIEW_FIRST_ITEM) {
-                        params?.apply {
-                            gravity = Gravity.TOP
-                            width = ViewGroup.LayoutParams.MATCH_PARENT
-                            height = ViewGroup.LayoutParams.WRAP_CONTENT
-                            y = itemViewDisplayInfo
-                                .itemPositionY()
-                                .plus(itemViewDisplayInfo.itemViewHeight())
+                    dialog?.window?.attributes =
+                        if (itemViewDisplayInfo.itemPosition() == RECYCLER_VIEW_FIRST_ITEM) {
+                            params?.apply {
+                                gravity = Gravity.TOP
+                                width = ViewGroup.LayoutParams.MATCH_PARENT
+                                height = ViewGroup.LayoutParams.WRAP_CONTENT
+                                y = itemViewDisplayInfo
+                                    .itemPositionY()
+                                    .plus(itemViewDisplayInfo.itemViewHeight())
+                            }
+                        } else {
+                            params?.apply {
+                                gravity = Gravity.TOP
+                                width = ViewGroup.LayoutParams.MATCH_PARENT
+                                height = ViewGroup.LayoutParams.WRAP_CONTENT
+                                y = itemViewDisplayInfo
+                                    .itemPositionY()
+                                    .plus(itemViewDisplayInfo.itemViewHeight())
+                                    .minus(diff)
+                            }
                         }
-                    } else {
-                        params?.apply {
-                            gravity = Gravity.TOP
-                            width = ViewGroup.LayoutParams.MATCH_PARENT
-                            height = ViewGroup.LayoutParams.WRAP_CONTENT
-                            y = itemViewDisplayInfo
-                                .itemPositionY()
-                                .plus(itemViewDisplayInfo.itemViewHeight())
-                                .minus(diff)
-                        }
-                    }
-
-                    dialog?.window?.attributes = params
                     binding.clRoot.postDelayed({
                         binding.clRoot.viewTreeObserver.removeOnGlobalLayoutListener(this)
                     }, DELAY)
@@ -116,25 +108,24 @@ class CommonDialog(
      */
     private fun testInitDialogLocation2() {
         val listItemHeight = itemViewDisplayInfo.itemViewHeight()
-        val window = dialog?.window
-        val params: WindowManager.LayoutParams? = window?.attributes
-        if (itemViewDisplayInfo.itemPosition() == RECYCLER_VIEW_FIRST_ITEM) {
-            params?.apply {
-                gravity = Gravity.TOP
-                width = ViewGroup.LayoutParams.MATCH_PARENT
-                height = ViewGroup.LayoutParams.WRAP_CONTENT
-                y = itemViewDisplayInfo.itemPositionY() - listItemHeight
+        val params: WindowManager.LayoutParams? = dialog?.window?.attributes
+
+        dialog?.window?.attributes =
+            if (itemViewDisplayInfo.itemPosition() == RECYCLER_VIEW_FIRST_ITEM) {
+                params?.apply {
+                    gravity = Gravity.TOP
+                    width = ViewGroup.LayoutParams.MATCH_PARENT
+                    height = ViewGroup.LayoutParams.WRAP_CONTENT
+                    y = itemViewDisplayInfo.itemPositionY().plus(listItemHeight)
+                }
+            } else {
+                params?.apply {
+                    gravity = Gravity.TOP
+                    width = ViewGroup.LayoutParams.MATCH_PARENT
+                    height = ViewGroup.LayoutParams.WRAP_CONTENT
+                    y = itemViewDisplayInfo.itemPositionY()
+                }
             }
-            dialog?.window?.attributes = params
-        } else {
-            params?.apply {
-                gravity = Gravity.TOP
-                width = ViewGroup.LayoutParams.MATCH_PARENT
-                height = ViewGroup.LayoutParams.WRAP_CONTENT
-                y = itemViewDisplayInfo.itemPositionY() - listItemHeight
-            }
-            dialog?.window?.attributes = params
-        }
     }
 
     private fun viewLocationChangeOfTopAndBottomUI() {
