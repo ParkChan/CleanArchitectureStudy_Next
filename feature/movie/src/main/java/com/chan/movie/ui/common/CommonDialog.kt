@@ -81,13 +81,28 @@ class CommonDialog(
                     //[End] 리스트 높이와 다이얼로그 높이가 고정으로 같으면 해당 코드 불필요
                     val window = dialog?.window
                     val params: WindowManager.LayoutParams? = window?.attributes
-                    params?.apply {
-                        gravity = Gravity.TOP
-                        width = ViewGroup.LayoutParams.MATCH_PARENT
-                        height = ViewGroup.LayoutParams.WRAP_CONTENT
-                        Timber.d(">>>> width is $width height is $height")
-                        y = itemViewDisplayInfo.itemViewBottomY() - diff
+
+                    if (itemViewDisplayInfo.itemPosition() == RECYCLER_VIEW_FIRST_ITEM) {
+                        params?.apply {
+                            gravity = Gravity.TOP
+                            width = ViewGroup.LayoutParams.MATCH_PARENT
+                            height = ViewGroup.LayoutParams.WRAP_CONTENT
+                            y = itemViewDisplayInfo
+                                .itemPositionY()
+                                .plus(itemViewDisplayInfo.itemViewHeight())
+                        }
+                    } else {
+                        params?.apply {
+                            gravity = Gravity.TOP
+                            width = ViewGroup.LayoutParams.MATCH_PARENT
+                            height = ViewGroup.LayoutParams.WRAP_CONTENT
+                            y = itemViewDisplayInfo
+                                .itemPositionY()
+                                .plus(itemViewDisplayInfo.itemViewHeight())
+                                .minus(diff)
+                        }
                     }
+
                     dialog?.window?.attributes = params
                     binding.clRoot.postDelayed({
                         binding.clRoot.viewTreeObserver.removeOnGlobalLayoutListener(this)
@@ -96,21 +111,19 @@ class CommonDialog(
             })
     }
 
+    /**
+     * 리스트 아이템과 다이얼로그의 높이가 고정일시 사용
+     */
     private fun testInitDialogLocation2() {
-        val dialogHeight = binding.clRoot.height
         val listItemHeight = itemViewDisplayInfo.itemViewHeight()
-        val diff = dialogHeight - listItemHeight
         val window = dialog?.window
         val params: WindowManager.LayoutParams? = window?.attributes
-        Timber.d("testInitDialogLocation2 itemPosition() >>>> ${itemViewDisplayInfo.itemPosition()}")
-        Timber.d("testInitDialogLocation2 itemPositionY() >>>> ${itemViewDisplayInfo.itemPositionY()}")
-        Timber.d("testInitDialogLocation2 itemViewBottomY() >>>> ${itemViewDisplayInfo.itemViewBottomY()}")
         if (itemViewDisplayInfo.itemPosition() == RECYCLER_VIEW_FIRST_ITEM) {
             params?.apply {
                 gravity = Gravity.TOP
                 width = ViewGroup.LayoutParams.MATCH_PARENT
                 height = ViewGroup.LayoutParams.WRAP_CONTENT
-                y = itemViewDisplayInfo.itemPositionY() - diff
+                y = itemViewDisplayInfo.itemPositionY().minus(listItemHeight)
             }
             dialog?.window?.attributes = params
         } else {
@@ -118,7 +131,7 @@ class CommonDialog(
                 gravity = Gravity.TOP
                 width = ViewGroup.LayoutParams.MATCH_PARENT
                 height = ViewGroup.LayoutParams.WRAP_CONTENT
-                y = itemViewDisplayInfo.itemViewBottomY() - listItemHeight
+                y = itemViewDisplayInfo.itemPositionY()
             }
             dialog?.window?.attributes = params
         }
@@ -157,7 +170,6 @@ class CommonDialog(
     companion object {
         private const val RECYCLER_VIEW_FIRST_ITEM = 0
         private const val DELAY = 1L
-        private const val DIALOG_VIEW_HEIGHT = 300
         private const val DIALOG_TITLE_VIEW_HEIGHT = 250
         private const val DIALOG_BUTTON_GROUP_VIEW_HEIGHT = 50
     }

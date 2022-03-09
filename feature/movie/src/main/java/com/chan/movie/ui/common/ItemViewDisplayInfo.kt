@@ -14,7 +14,7 @@ data class ItemViewDisplayInfo(
 
     fun itemPosition(): Int = position
     fun itemPositionY(): Int = positionY.toInt()
-    fun itemViewBottomY(): Int = (positionY + viewHeight).toInt()
+//    fun itemViewBottomY(): Int = (positionY + viewHeight).toInt()
     fun itemViewHeight(): Int = viewHeight
 
     fun onChangedTouchItemView(position: Int, positionY: Float, viewWidth: Int, viewHeight: Int) {
