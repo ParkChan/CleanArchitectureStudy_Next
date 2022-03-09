@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.*
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.DialogFragment
 import com.chan.movie.databinding.DialogCommonBinding
 import timber.log.Timber
@@ -29,13 +30,16 @@ class CommonDialog(
         savedInstanceState: Bundle?
     ): View {
         binding = DialogCommonBinding.inflate(inflater, container, false)
+        if(itemViewDisplayInfo.itemPosition() == RECYCLER_VIEW_FIRST_ITEM){
+            viewLocationChangeOfTopAndBottomUI()
+        }
         return binding.root
     }
 
     override fun onResume() {
         super.onResume()
         initDialogWindow()
-        noneDefaultDialogPadding()
+        removeDialogPaddingAndDim()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -84,12 +88,36 @@ class CommonDialog(
             })
     }
 
-    private fun noneDefaultDialogPadding() {
-        val window = dialog?.window
-        window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+    private fun viewLocationChangeOfTopAndBottomUI() {
+        val buttonGroupLayoutParams: ConstraintLayout.LayoutParams =
+            ConstraintLayout.LayoutParams(
+                ConstraintLayout.LayoutParams.MATCH_PARENT,
+                ConstraintLayout.LayoutParams.WRAP_CONTENT).apply {
+                startToStart = ConstraintLayout.LayoutParams.PARENT_ID
+                endToEnd = ConstraintLayout.LayoutParams.PARENT_ID
+                topToTop = ConstraintLayout.LayoutParams.PARENT_ID
+                bottomToTop = binding.tvTitle.id
+            }
+        binding.clButtonGroup.layoutParams = buttonGroupLayoutParams
+
+        val titleLayoutParams: ConstraintLayout.LayoutParams =
+            ConstraintLayout.LayoutParams(
+                ConstraintLayout.LayoutParams.MATCH_PARENT,
+                ConstraintLayout.LayoutParams.WRAP_CONTENT).apply {
+                topToBottom = binding.clButtonGroup.id
+            }
+        binding.tvTitle.layoutParams = titleLayoutParams
+    }
+
+    private fun removeDialogPaddingAndDim() {
+        dialog?.window?.apply {
+            clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
+            setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        }
     }
 
     companion object {
-        private const val DELAY = 50L
+        private const val RECYCLER_VIEW_FIRST_ITEM = 0
+        private const val DELAY = 1L
     }
 }
