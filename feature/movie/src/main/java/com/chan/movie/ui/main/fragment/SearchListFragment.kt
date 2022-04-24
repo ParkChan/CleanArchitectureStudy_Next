@@ -12,8 +12,6 @@ import com.chan.movie.BR
 import com.chan.movie.R
 import com.chan.movie.databinding.FragmentSearchListBinding
 import com.chan.movie.domain.data.Item
-import com.chan.movie.ui.common.CommonDialog
-import com.chan.movie.ui.common.RecyclerViewItemTouchEvent
 import com.chan.movie.ui.common.ext.textInputAsFlow
 import com.chan.movie.ui.main.MovieSearchViewModel
 import com.chan.movie.ui.main.data.ProgressItem
@@ -55,8 +53,6 @@ internal class SearchListFragment : BaseFragment<FragmentSearchListBinding>(
         ConcatAdapter(baseAdapter, progressAdapter)
     }
 
-    private lateinit var recyclerViewItemTouchEvent: RecyclerViewItemTouchEvent
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -65,10 +61,6 @@ internal class SearchListFragment : BaseFragment<FragmentSearchListBinding>(
         initPagingListener()
         initViewModelObserve()
         initTextChangedListener()
-
-        recyclerViewItemTouchEvent =
-            RecyclerViewItemTouchEvent(binding.rvContent)
-
     }
 
     private fun initViewModel() {
@@ -119,28 +111,6 @@ internal class SearchListFragment : BaseFragment<FragmentSearchListBinding>(
         viewModel.movies.observe(viewLifecycleOwner) {
             baseAdapter.submitList(it)
         }
-
-        viewModel.showDialog.observe(viewLifecycleOwner) {
-            showDialog()
-        }
-    }
-
-    private fun showDialog() {
-        val dialog = CommonDialog(
-            getString(R.string.dialog_save_content),
-            recyclerViewItemTouchEvent.itemViewPositionInfo
-        )
-        dialog.positiveListener {
-            if (dialog.isAdded) {
-                dialog.dismiss()
-            }
-        }
-        dialog.negativeListener {
-            if (dialog.isAdded) {
-                dialog.dismiss()
-            }
-        }
-        dialog.show(childFragmentManager, null)
     }
 
     companion object {
@@ -148,5 +118,4 @@ internal class SearchListFragment : BaseFragment<FragmentSearchListBinding>(
         private const val INTERVAL_KEYWORD_SEARCH = 800L
         fun newInstance(): SearchListFragment = SearchListFragment()
     }
-
 }

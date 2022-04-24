@@ -50,9 +50,6 @@ internal class MovieSearchViewModel @Inject constructor(
     private val _bottomProgress = MutableLiveData<Boolean>()
     val bottomProgress: LiveData<Boolean> = _bottomProgress
 
-    private val _showDialog = MutableLiveData<Int>()
-    val showDialog: LiveData<Int> = _showDialog
-
     private val _message = MutableLiveData<Event<ClickEventMessage>>()
     val message: LiveData<Event<ClickEventMessage>> = _message
 
@@ -124,7 +121,6 @@ internal class MovieSearchViewModel @Inject constructor(
 
     //TODO : ClickEvent 인터페이스를 통해서 전달되도록 이관필요
     fun onClickSaveItem(content: Item) {
-        _showDialog.value = 1
         if (!saveList.contains(content)) {
             saveList = saveList + content
             _message.value = Event(ClickEventMessage.SAVE_SUCCESS)
