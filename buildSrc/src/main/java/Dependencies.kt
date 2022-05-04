@@ -100,6 +100,8 @@ object AndroidXConfig {
 
     const val viewModelSavedState = "androidx.lifecycle:lifecycle-viewmodel-savedstate:${Version.viewModelSavedState}"
 
+    const val startUp = "androidx.startup:startup-runtime:1.2.0-alpha01"
+
 }
 
 object GoogleConfig {

@@ -24,6 +24,7 @@ dependencies {
     implementation AndroidXConfig.viewpager2
     implementation AndroidXConfig.recyclerView
     implementation AndroidXConfig.viewModelSavedState
+    implementation AndroidXConfig.startUp
 
     api DaggerHiltConfig.android
     kapt DaggerHiltConfig.compiler

@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.chan.movie.BR
 import com.chan.movie.R
+import com.chan.movie.data.SearchManagerInitializer
 import com.chan.movie.databinding.FragmentSearchListBinding
 import com.chan.movie.domain.data.Item
 import com.chan.movie.ui.common.ext.textInputAsFlow
@@ -21,6 +22,7 @@ import com.chan.ui.adapter.BaseListAdapter
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import timber.log.Timber
 
 
 internal class SearchListFragment : BaseFragment<FragmentSearchListBinding>(
@@ -61,6 +63,8 @@ internal class SearchListFragment : BaseFragment<FragmentSearchListBinding>(
         initPagingListener()
         initViewModelObserve()
         initTextChangedListener()
+
+        Timber.d("SearchListFragment::SearchManagerInitializer 에서 초기화된 데이터 조회  ${SearchManagerInitializer.movieResponse}")
     }
 
     private fun initViewModel() {

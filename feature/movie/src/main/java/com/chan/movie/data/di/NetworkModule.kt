@@ -71,10 +71,10 @@ internal class NetworkModule {
             .build()
 
     companion object {
-        private const val BASE_URL = "https://openapi.naver.com/"
-        private const val NAVER_ID_KEY = "X-Naver-Client-Id"
-        private const val NAVER_SECRET_KEY = "X-Naver-Client-Secret"
-        private const val NAVER_DATE_FORMAT = "EEE, dd MMM yyyy HH:mm:ss Z"
+        const val BASE_URL = "https://openapi.naver.com/"
+        const val NAVER_ID_KEY = "X-Naver-Client-Id"
+        const val NAVER_SECRET_KEY = "X-Naver-Client-Secret"
+        const val NAVER_DATE_FORMAT = "EEE, dd MMM yyyy HH:mm:ss Z"
     }
 
 }
