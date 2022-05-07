@@ -19,8 +19,6 @@ import timber.log.Timber
 
 internal class SearchManagerInitializer : Initializer<MovieResponse> {
 
-
-
     override fun create(context: Context): MovieResponse {
 
         val retrofit = Retrofit.Builder()
@@ -64,10 +62,14 @@ internal class SearchManagerInitializer : Initializer<MovieResponse> {
         return movieResponse
     }
 
+
     override fun dependencies(): List<Class<out Initializer<*>>> {
         return emptyList()
     }
 
+    /**
+     * TODO : App Startup이 라이브러리 초기화는 참 좋은데 앱내 코드에 데이터를 제공 하는 형태라면 이 방법 뿐일까?..
+     */
     companion object {
         var movieResponse = MovieResponse()
             private set
