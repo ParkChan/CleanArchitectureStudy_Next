@@ -16,7 +16,7 @@
             tools:node="merge">
 
             <!-- This entry makes ExampleLoggerInitializer discoverable. -->
-            <meta-data  android:name="com.chan.movie.data.SearchManagerInitializer"
+            <meta-data  android:name="com.chan.movie.data.SecondInitializer"
                 android:value="androidx.startup" />
 
         </provider>
