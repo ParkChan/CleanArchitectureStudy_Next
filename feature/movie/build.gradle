@@ -35,6 +35,9 @@ dependencies {
     api NetworkConfig.loggingInterceptor
     api NetworkConfig.gsonConverter
 
+    api NetworkConfig.stetho
+    api NetworkConfig.stethoOkhttp
+
     implementation LogConfig.timber
 
     implementation Glide.glide

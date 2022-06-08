@@ -2,6 +2,7 @@ package com.chan.movie.data.di
 
 import com.chan.movie.BuildConfig
 import com.chan.movie.data.HeaderInterceptor
+import com.facebook.stetho.okhttp3.StethoInterceptor
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
@@ -21,19 +22,14 @@ internal class NetworkModule {
     @Provides
     @Singleton
     fun providesHttpLoggingInterceptor() = HttpLoggingInterceptor()
-        .apply {
-            level = if (BuildConfig.DEBUG) {
-                HttpLoggingInterceptor.Level.BODY
-            } else {
-                HttpLoggingInterceptor.Level.NONE
-            }
-        }
 
     @Provides
     @Singleton
     fun providesHeaderInterceptor() = HeaderInterceptor(
-        mapOf(NAVER_ID_KEY to BuildConfig.NAVER_CLIENT_ID,
-            NAVER_SECRET_KEY to BuildConfig.NAVER_CLIENT_SECRET)
+        mapOf(
+            NAVER_ID_KEY to BuildConfig.NAVER_CLIENT_ID,
+            NAVER_SECRET_KEY to BuildConfig.NAVER_CLIENT_SECRET
+        )
     )
 
     @Provides
@@ -56,7 +52,11 @@ internal class NetworkModule {
         OkHttpClient.Builder()
             .addInterceptor(loggingInterceptor)
             .addInterceptor(interceptor)
-            .build()
+            .apply {
+                if (BuildConfig.DEBUG) {
+                    addNetworkInterceptor(StethoInterceptor())
+                }
+            }.build()
 
     @Provides
     @Singleton

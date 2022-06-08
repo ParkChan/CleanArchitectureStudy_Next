@@ -68,6 +68,4 @@ dependencies {
     implementation DaggerHiltConfig.android
     kapt DaggerHiltConfig.compiler
 
-    implementation LogConfig.timber
-
 }

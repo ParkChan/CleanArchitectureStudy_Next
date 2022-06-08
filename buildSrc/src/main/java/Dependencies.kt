@@ -125,6 +125,9 @@ object NetworkConfig {
     const val moshiKotlin = "com.squareup.moshi:moshi-kotlin:${Version.moshi}"
     const val moshiKotlinCodegen = "com.squareup.moshi:moshi-kotlin-codegen:${Version.moshi}"
     const val moshiAdapters = "com.squareup.moshi:moshi-adapters:${Version.moshi}"
+
+    const val stetho = "com.facebook.stetho:stetho:1.6.0"
+    const val stethoOkhttp = "com.facebook.stetho:stetho-okhttp3:1.6.0"
 }
 
 object LogConfig {
