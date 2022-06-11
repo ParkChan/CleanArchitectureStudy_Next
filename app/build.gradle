@@ -30,7 +30,13 @@ android {
     }
 
     buildTypes {
+        debug {
+            debuggable true
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
         release {
+            debuggable true
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
@@ -59,6 +65,9 @@ dependencies {
     implementation AndroidXConfig.coreKtx
     implementation AndroidXConfig.appcompat
     implementation GoogleConfig.material
+
+    debugImplementation NetworkConfig.stetho
+    releaseImplementation NetworkConfig.stethoNoOp
 
     implementation TestConfig.junitJupiterApi
     implementation TestConfig.junitJupiterEngine

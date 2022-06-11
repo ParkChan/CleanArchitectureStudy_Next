@@ -3,6 +3,10 @@ buildscript {
         google()
         mavenCentral()
         gradlePluginPortal()
+        maven {
+            url "http://dl.bintray.com/igenius-code/maven"
+            allowInsecureProtocol = true
+        }
     }
     dependencies {
         classpath ProjectConfig.gradle

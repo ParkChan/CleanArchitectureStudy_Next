@@ -35,8 +35,7 @@ dependencies {
     api NetworkConfig.loggingInterceptor
     api NetworkConfig.gsonConverter
 
-    api NetworkConfig.stetho
-    api NetworkConfig.stethoOkhttp
+    debugImplementation NetworkConfig.stethoOkhttp3
 
     implementation LogConfig.timber
 
