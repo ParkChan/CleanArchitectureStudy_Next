@@ -126,8 +126,8 @@ object NetworkConfig {
     const val moshiKotlinCodegen = "com.squareup.moshi:moshi-kotlin-codegen:${Version.moshi}"
     const val moshiAdapters = "com.squareup.moshi:moshi-adapters:${Version.moshi}"
 
-    const val stetho = "com.facebook.stetho:stetho:1.6.1"
-    const val stethoOkhttp3 = "com.facebook.stetho:stetho-okhttp3:1.6.1"
+    const val stetho = "com.facebook.stetho:stetho:1.5.0"
+    const val stethoOkhttp3 = "com.facebook.stetho:stetho-okhttp3:1.5.0"
     const val stethoNoOp = "net.igenius:stetho-no-op:1.1"
 
 }

@@ -10,7 +10,6 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
@@ -21,7 +20,7 @@ internal class NetworkModule {
 
     @Provides
     @Singleton
-    fun providesHttpLoggingInterceptor() = HttpLoggingInterceptor()
+    fun providesStethoInterceptor() = StethoInterceptor()
 
     @Provides
     @Singleton
@@ -47,14 +46,13 @@ internal class NetworkModule {
     @Singleton
     fun providesOkHttpClient(
         interceptor: HeaderInterceptor,
-        loggingInterceptor: HttpLoggingInterceptor
+        stethoInterceptor: StethoInterceptor
     ): OkHttpClient =
         OkHttpClient.Builder()
-            .addInterceptor(loggingInterceptor)
             .addInterceptor(interceptor)
             .apply {
                 if (BuildConfig.DEBUG) {
-                    addNetworkInterceptor(StethoInterceptor())
+                    addNetworkInterceptor(stethoInterceptor)
                 }
             }.build()
 
