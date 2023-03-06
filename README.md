@@ -12,13 +12,16 @@
     - ViewModel
 
 - Network
-    - Retrofit
+    - Retrofit2
 
 - Async
     - Coroutine
     
 - DI
     - Hilt
+  
+- UI
+    - Compose 적용하기!
 
 - Unit Test
     - Junit5
